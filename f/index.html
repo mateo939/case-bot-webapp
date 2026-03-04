@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Открытие кейсов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--tg-theme-bg-color, #f0f0f0);
+            color: var(--tg-theme-text-color, #222);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .case {
+            background: var(--tg-theme-secondary-bg-color, #fff);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .case:hover {
+            transform: scale(1.05);
+        }
+        .case img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+        .price {
+            font-weight: bold;
+            color: var(--tg-theme-button-color, #40a7e3);
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--tg-theme-hint-color, #e0e0e0);
+            color: var(--tg-theme-text-color, #000);
+            display: none;
+        }
+        button {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-text-color, #fff);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎁 Магазин кейсов</h1>
+    <div id="cases">
+        <div class="case" data-case="basic">
+            <img src="https://via.placeholder.com/100?text=📦" alt="Базовый кейс">
+            <h3>Базовый кейс</h3>
+            <p class="price">50 ⭐</p>
+        </div>
+        <div class="case" data-case="rare">
+            <img src="https://via.placeholder.com/100?text=✨" alt="Редкий кейс">
+            <h3>Редкий кейс</h3>
+            <p class="price">100 ⭐</p>
+        </div>
+    </div>
+    <div id="result"></div>
+    <button id="close" style="display:none;">Закрыть</button>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        // Получаем объект WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Разворачиваем на весь экран
+
+        // Отправляем событие, что приложение готово
+        tg.ready();
+
+        // Получаем данные пользователя, если нужно
+        const user = tg.initDataUnsafe?.user;
+        console.log('Пользователь:', user);
+
+        // Функция открытия кейса
+        function openCase(caseType) {
+            // Здесь можно добавить анимацию вращения
+            // Например, показываем сообщение о начале открытия
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '🎲 Открываем кейс...';
+
+            // Имитация задержки (например, запрос к серверу)
+            setTimeout(() => {
+                // Генерируем случайный предмет (в реальности нужно получать от сервера)
+                const items = {
+                    basic: ['Стикер', 'Подарок', 'Редкий стикер', 'Эксклюзив'],
+                    rare: ['Обычный подарок', 'Необычный подарок', 'Редкий подарок', 'Легендарный подарок']
+                };
+                const chances = {
+                    basic: [50, 30, 15, 5],
+                    rare: [40, 30, 20, 10]
+                };
+                const randomIndex = (type) => {
+                    const weights = chances[type];
+                  const sum = weights.reduce((a, b) => a + b, 0);
+                    let rand = Math.random() * sum;
+                    for (let i = 0; i < weights.length; i++) {
+                        if (rand < weights[i]) return i;
+                        rand -= weights[i];
+                    }
+                    return 0;
+                };
+
+                const idx = randomIndex(caseType);
+                const item = items[caseType][idx];
+
+                // Отображаем результат
+                resultDiv.innerHTML =  Выпало ; <b>${item}</b>;
+
+                // Отправляем результат боту (опционально)
+                tg.sendData(JSON.stringify({
+                    case: caseType,
+                    item: item
+                }));
+            }, 2000);
+        }
+
+        // Навешиваем обработчики на кейсы
+        document.querySelectorAll('.case').forEach(caseEl => {
+            caseEl.addEventListener('click', () => {
+                const caseType = caseEl.dataset.case;
+                openCase(caseType);
+            });
+        });
+
+        // Кнопка закрытия Web App
+        document.getElementById('close').addEventListener('click', () => {
+            tg.close();
+        });
+    </script>
+</body>
+</html>
