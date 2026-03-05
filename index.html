@@ -64,8 +64,8 @@
         }
 
         .menu-item {
-            background: rgba(22, 33, 62, 0.7); /* полупрозрачный */
-            backdrop-filter: blur(5px);        /* размытие */
+            background: rgba(22, 33, 62, 0.7);
+            backdrop-filter: blur(5px);
             border-radius: 14px;
             padding: 12px 4px;
             text-align: center;
@@ -132,11 +132,11 @@
             display: inline-block;
             backdrop-filter: blur(5px);
         }
+
         /* Страница профиля */
         .profile-header {
             margin-bottom: 20px;
         }
-
         .welu {
             font-size: 2rem;
             font-weight: 700;
@@ -229,7 +229,6 @@
             font-weight: 700;
         }
 
-        /* Адаптация для маленьких экранов */
         @media (max-width: 400px) {
             .menu-item span {
                 font-size: 1.6rem;
@@ -340,11 +339,9 @@
 
         const user = tg?.initDataUnsafe?.user;
 
-        // Элементы страниц
         const homePage = document.getElementById('home-page');
         const profilePage = document.getElementById('profile-page');
 
-        // Заполняем профиль данными пользователя
         if (user) {
             document.getElementById('profile-welu').textContent = user.first_name.toUpperCase() || 'WELU';
             document.getElementById('profile-id-display').textContent = ID: ${user.id};
@@ -353,7 +350,6 @@
             document.getElementById('profile-id-display').textContent = 'ID: 1326919289';
         }
 
-        // Баланс и рефералы пока заглушки (позже можно обновлять через бота)
         document.getElementById('profile-balance').textContent = '0';
         document.getElementById('profile-referrals').textContent = '0';
 
@@ -367,114 +363,96 @@
             }
         }
 
-        // Переключение на главную
         function showHome() {
             homePage.style.display = 'block';
             profilePage.style.display = 'none';
-            // Обновляем активный пункт меню
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            document.getElementById('nav-home')?.classList.add('active');
-            document.getElementById('nav-home-from-profile')?.classList.add('active');
+            const nh = document.getElementById('nav-home');
+            const nhfp = document.getElementById('nav-home-from-profile');
+            if (nh) nh.classList.add('active');
+            if (nhfp) nhfp.classList.add('active');
         }
 
-        // Переключение на профиль
         function showProfile() {
             homePage.style.display = 'none';
             profilePage.style.display = 'block';
-            // Обновляем активный пункт меню
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            document.getElementById('nav-profile')?.classList.add('active');
-            document.getElementById('nav-profile-from-profile')?.classList.add('active');
+            const np = document.getElementById('nav-profile');
+            const npfp = document.getElementById('nav-profile-from-profile');
+            if (np) np.classList.add('active');
+            if (npfp) npfp.classList.add('active');
         }
 
-        // Обработчики навигации
+        // Навигация
         addHandler('nav-home', 'click', showHome);
         addHandler('nav-profile', 'click', showProfile);
         addHandler('nav-home-from-profile', 'click', showHome);
         addHandler('nav-profile-from-profile', 'click', showProfile);
 
-        // Обработчики основных кнопок
+        // Кейсы
         addHandler('casesBtn', 'click', () => {
             if (tg) {
                 tg.sendData(JSON.stringify({ action: 'open_cases' }));
+                tg.close();
             } else {
                 alert('Telegram Web App недоступен');
             }
         });
 
+        // Апгрейд
         addHandler('upgradeBtn', 'click', () => {
             if (tg) {
-                tg.showPopup({
-                    title: 'Апгрейд',
-                    message: 'Функция в разработке',
-                    buttons: [{ type: 'ok' }]
-                });
+                tg.showPopup({ title: 'Апгрейд', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
             } else {
                 alert('Функция в разработке');
             }
         });
 
-        addHandler('inventoryBtn', 'click', () => {
-            showProfile(); // Инвентарь ведёт на профиль
-        });
+        // Инвентарь -> профиль
+        addHandler('inventoryBtn', 'click', showProfile);
 
+        // Игры
         addHandler('gamesBtn', 'click', () => {
             if (tg) {
-                tg.showPopup({
-                    title: 'Игры',
-                    message: 'Функция в разработке',
-                    buttons: [{ type: 'ok' }]
-                });
+                tg.showPopup({ title: 'Игры', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
             } else {
                 alert('Функция в разработке');
             }
         });
 
+        // Задания
         addHandler('tasksBtn', 'click', () => {
             if (tg) {
-                tg.showPopup({
-                    title: 'Задания',
-                    message: 'Раздел в разработке',
-                    buttons: [{ type: 'ok' }]
-                });
+                tg.showPopup({ title: 'Задания', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
             } else {
                 alert('Раздел в разработке');
             }
         });
 
+        // Лотерея
         addHandler('lotteryBtn', 'click', () => {
             if (tg) {
-                tg.showPopup({
-                    title: 'Лотерея',
-                    message: 'Раздел в разработке',
-                    buttons: [{ type: 'ok' }]
-                });
+                tg.showPopup({ title: 'Лотерея', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
             } else {
                 alert('Раздел в разработке');
             }
         });
 
-        // Кнопка "Пригласить друга"
+        // Пригласить друга
         addHandler('invite-btn', 'click', () => {
             if (tg) {
-                tg.showPopup({
-                    title: 'Пригласить друга',
-                    message: 'Скопируйте свою реферальную ссылку и отправьте другу.',
-                    buttons: [{ type: 'ok' }]
-                });
-                // Здесь можно добавить логику копирования ссылки
+                tg.showPopup({ title: 'Пригласить друга', message: 'Скопируйте свою реферальную ссылку и отправьте другу.', buttons: [{ type: 'ok' }] });
             } else {
                 alert('Пригласить друга');
             }
         });
 
-        // Инициализация: показываем главную
+        // Показываем главную
         showHome();
 
-        // Простой таймер (пока статичный)
+        // Таймер
         function updateTimer() {
-            const timers = document.querySelectorAll('.timer');
-            timers.forEach(t => t.textContent = '⏳ 00:00');
+            document.querySelectorAll('.timer').forEach(t => t.textContent = '⏳ 00:00');
         }
         setInterval(updateTimer, 1000);
     </script>
