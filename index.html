@@ -222,6 +222,7 @@
         <button class="login-btn" id="back-home">⬅️ Назад</button>
     </div>
 
+    <!-- Правильный скрипт Telegram -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
@@ -253,10 +254,11 @@
             profilePage.style.display = 'none';
             homePage.style.display = 'block';
         });
-        // Кнопка "Обновить баланс" – отправляем запрос боту и закрываем Web App
+
+        // Кнопка "Обновить баланс"
         document.getElementById('refresh-balance').addEventListener('click', () => {
             tg.sendData(JSON.stringify({ action: 'get_profile' }));
-            tg.close(); // Закрываем Web App, чтобы пользователь увидел ответ в чате
+            tg.close();
         });
 
         // Открытие кейсов
@@ -264,28 +266,20 @@
             tg.sendData(JSON.stringify({ action: 'open_cases' }));
         });
 
-        // Информационные ссылки
+        // Обработчики ссылок
         document.getElementById('about').addEventListener('click', (e) => {
             e.preventDefault();
-            tg.showPopup({
-                title: 'О проекте',
-                message: 'CELSER BOT — это игровой бот, где вы можете открывать кейсы с подарками за звёзды Telegram.',
-                buttons: [{ type: 'ok' }]
-            });
+            tg.showPopup({ title: 'О проекте', message: 'CELSER BOT — игровой бот.', buttons: [{ type: 'ok' }] });
         });
 
         document.getElementById('faq').addEventListener('click', (e) => {
             e.preventDefault();
-            tg.showPopup({
-                title: 'Частые вопросы',
-                message: 'Как получить звёзды?\nКак открыть кейс?\nКак вывести призы?',
-                buttons: [{ type: 'ok' }]
-            });
+            tg.showPopup({ title: 'Частые вопросы', message: 'Как получить звёзды?\nКак открыть кейс?', buttons: [{ type: 'ok' }] });
         });
 
         document.getElementById('support').addEventListener('click', (e) => {
             e.preventDefault();
-            tg.openLink('https://t.me/your_support_bot'); // замените на реальную ссылку поддержки
+            tg.openLink('https://t.me/your_support_bot');
         });
     </script>
 </body>
