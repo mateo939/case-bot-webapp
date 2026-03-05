@@ -25,7 +25,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 30px 16px;
+            padding: 20px 16px;
             box-sizing: border-box;
         }
 
@@ -33,6 +33,9 @@
             max-width: 360px;
             width: 100%;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
         }
 
         h1 {
@@ -49,9 +52,10 @@
         .subtitle {
             font-size: 1rem;
             color: var(--tg-theme-hint-color, #aaa);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
+        /* Сетка из четырёх кнопок */
         .menu-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -62,7 +66,7 @@
         .menu-item {
             background: var(--tg-theme-secondary-bg-color, #16213e);
             border-radius: 16px;
-            padding: 16px 8px;
+            padding: 20px 8px;
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s, background 0.2s;
@@ -76,14 +80,147 @@
 
         .menu-item span {
             display: block;
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-bottom: 6px;
         }
 
         .menu-item p {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #fff);
+            margin-bottom: 4px;
+        }
+
+        .menu-item small {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            line-height: 1.2;
+        }
+
+        /* Нижнее навигационное меню */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background: var(--tg-theme-secondary-bg-color, #16213e);
+            border-radius: 30px;
+            padding: 8px 12px;
+            margin-top: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
             font-size: 0.9rem;
             font-weight: 500;
+            color: var(--tg-theme-hint-color, #aaa);
+            cursor: pointer;
+            transition: color 0.2s;
+            border-radius: 20px;
+        }
+
+        .nav-item.active {
+            color: var(--tg-theme-button-color, #40a7e3);
+            background: rgba(64, 167, 227, 0.1);
+        }
+
+        /* Страница профиля */
+        .profile-header {
+            margin-bottom: 20px;
+        }
+        .welu {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .profile-id {
+            font-size: 0.9rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            margin-bottom: 25px;
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--tg-theme-text-color, #fff);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            margin-top: 4px;
+        }
+
+        .referral-block {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .referral-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .referral-subtitle {
+            font-size: 0.8rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            margin-bottom: 15px;
+        }
+
+        .invite-btn {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-text-color, #fff);
+            border: none;
+            border-radius: 40px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(64, 167, 227, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .invite-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .best-drop {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--tg-theme-text-color, #fff);
+            margin-bottom: 20px;
+            text-align: left;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .best-drop span {
+            color: var(--tg-theme-button-color, #40a7e3);
+            font-weight: 700;
         }
 
         .info-links {
@@ -112,92 +249,57 @@
             color: var(--tg-theme-hint-color, #777);
         }
 
-        /* Стили для страницы профиля */
-        #profile-page h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        #profile-info {
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        #profile-info p {
-            margin: 10px 0;
-            font-size: 1rem;
-        }
-
-        #profile-info strong {
-            color: var(--tg-theme-button-color, #40a7e3);
-        }
-        .login-btn {
-            background: var(--tg-theme-button-color, #40a7e3);
-            color: var(--tg-theme-button-text-color, #fff);
-            border: none;
-            border-radius: 40px;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(64, 167, 227, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-            width: 100%;
-            max-width: 280px;
-            margin: 10px auto;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(64, 167, 227, 0.4);
-        }
-
-        #back-home {
-            background: var(--tg-theme-secondary-bg-color, #2a2a4a);
-        }
-
-        /* Адаптация для маленьких экранов */
+        /* Адаптация */
         @media (max-width: 400px) {
-            body {
-                padding: 20px 12px;
-            }
             .menu-item {
-                padding: 12px 5px;
+                padding: 16px 5px;
             }
             .menu-item span {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .menu-item p {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
             }
             h1 {
                 font-size: 2rem;
+            }
+            .stat-value {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
     <!-- Главная страница -->
-    <div id="home-page" class="container">
+    <div id="home-page" class="container" style="display: block;">
         <h1>CELSER BOT</h1>
-        <div class="subtitle">Открывай кейсы за звезды! ⭐️</div>
+        <div class="subtitle">Открывай кейсы за звёзды! ⭐️</div>
 
+        <!-- Четыре основные кнопки -->
         <div class="menu-grid">
-            <div class="menu-item" id="openCases">
+            <div class="menu-item" id="casesBtn">
                 <span>🎁</span>
-                <p>Открыть кейсы</p>
+                <p>КЕЙСЫ</p>
+                <small>ПОЛУЧАЙ ПОДАРКИ</small>
             </div>
-            <div class="menu-item" id="profileBtn">
-                <span>👤</span>
-                <p>Мой профиль</p>
+            <div class="menu-item" id="upgradeBtn">
+                <span>⬆️</span>
+                <p>АПГРЕЙД</p>
+                <small>УЛУЧШАЙ ПОДАРОК</small>
+            </div>
+            <div class="menu-item" id="inventoryBtn">
+                <span>📦</span>
+                <p>ИНВЕНТАРЬ</p>
+                <small>ВАШИ ПОДАРКИ</small>
+            </div>
+            <div class="menu-item" id="gamesBtn">
+                <span>🎮</span>
+                <p>ИГРЫ</p>
+                <small>ПОДНИМАЙ БАЛАНС</small>
             </div>
         </div>
 
+        <!-- Информационные ссылки (как на первом скриншоте) -->
         <div class="info-links">
             <a href="#" id="about">О проекте</a>
             <a href="#" id="faq">Частые вопросы</a>
@@ -207,115 +309,221 @@
         <div class="footer-note">
             v1.0 · Работает в Telegram
         </div>
-    </div>
 
-    <!-- Страница профиля (скрыта по умолчанию) -->
-    <div id="profile-page" class="container" style="display: none;">
-        <h2>Мой профиль</h2>
-        <div id="profile-info">
-            <p><strong>Имя:</strong> <span id="profile-name">Загрузка...</span></p>
-            <p><strong>ID:</strong> <span id="profile-id"></span></p>
-            <p><strong>Баланс:</strong> <span id="profile-balance">???</span> ⭐️</p>
-            <p><strong>Инвентарь:</strong> <span id="profile-inventory">...</span></p>
+        <!-- Нижнее навигационное меню -->
+        <div class="bottom-nav">
+            <div class="nav-item active" id="nav-home">ГЛАВНАЯ</div>
+            <div class="nav-item" id="nav-contests">КОНКУРСЫ</div>
+            <div class="nav-item" id="nav-profile">ПРОФИЛЬ</div>
         </div>
-        <button class="login-btn" id="refresh-balance">🔄 Обновить баланс</button>
-        <button class="login-btn" id="back-home">⬅️ Назад</button>
     </div>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-const tg = window.Telegram?.WebApp;
-if (tg) {
-    tg.expand();
-    tg.ready();
-} else {
-    console.warn('Telegram Web App не загружен');
-}
 
-const user = tg?.initDataUnsafe?.user;
+    <!-- Страница профиля (по дизайну второго скриншота) -->
+    <div id="profile-page" class="container" style="display: none;">
+        <div class="profile-header">
+            <div class="welu" id="profile-welu">WELU</div>
+            <div class="profile-id" id="profile-id-display">ID: 1326919289</div>
+        </div>
 
-const homePage = document.getElementById('home-page');
-const profilePage = document.getElementById('profile-page');
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value" id="profile-balance">0</div>
+                <div class="stat-label">БАЛАНС ★</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="profile-referrals">0</div>
+                <div class="stat-label">РЕФЕРАЛЫ ♥️</div>
+            </div>
+        </div>
 
-if (user) {
-    document.getElementById('profile-name').textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
-    document.getElementById('profile-id').textContent = user.id;
-} else {
-    document.getElementById('profile-name').textContent = 'Неизвестно';
-    document.getElementById('profile-id').textContent = '—';
-}
+        <div class="referral-block">
+            <div class="referral-title">ПРИГЛАСИТЬ ДРУГА</div>
+            <div class="referral-subtitle">ПОЛУЧАЙТЕ БОНУСЫ ВМЕСТЕ!</div>
+            <button class="invite-btn" id="invite-btn">ПРИГЛАСИТЬ ДРУГА</button>
+        </div>
 
-// Функция для безопасного добавления обработчиков
-function addHandler(id, event, fn) {
-    const el = document.getElementById(id);
-    if (el) {
-        el.addEventListener(event, fn);
-    } else {
-        console.error('Элемент с id', id, 'не найден');
-    }
-}
+        <div class="best-drop">
+            <span>ЛУЧШИЙ ДРОП</span> · Сейчас ничего нет
+        </div>
 
-// Переключение на профиль
-addHandler('profileBtn', 'click', () => {
-    if (homePage && profilePage) {
-        homePage.style.display = 'none';
-        profilePage.style.display = 'block';
-    } else {
-        console.error('homePage или profilePage не найдены');
-    }
-});
+        <!-- Нижнее навигационное меню (на странице профиля) -->
+        <div class="bottom-nav">
+            <div class="nav-item" id="nav-home-from-profile">ГЛАВНАЯ</div>
+            <div class="nav-item" id="nav-contests-from-profile">КОНКУРСЫ</div>
+            <div class="nav-item active" id="nav-profile-from-profile">ПРОФИЛЬ</div>
+        </div>
+    </div>
 
-// Назад на главную
-addHandler('back-home', 'click', () => {
-    if (homePage && profilePage) {
-        profilePage.style.display = 'none';
-        homePage.style.display = 'block';
-    }
-});
+    <!-- Правильный скрипт Telegram -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        const tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.expand();
+            tg.ready();
+        } else {
+            console.warn('Telegram Web App не загружен');
+        }
 
-// Обновить баланс
-addHandler('refresh-balance', 'click', () => {
-    if (tg) {
-        tg.sendData(JSON.stringify({ action: 'get_profile' }));
-        tg.close();
-    } else {
-        alert('Telegram Web App недоступен');
-    }
-});
+        const user = tg?.initDataUnsafe?.user;
 
-// Открыть кейсы
-addHandler('openCases', 'click', () => {
-    if (tg) {
-        tg.sendData(JSON.stringify({ action: 'open_cases' }));
-    }
-});
+        // Элементы страниц
+        const homePage = document.getElementById('home-page');
+        const profilePage = document.getElementById('profile-page');
 
-// Обработчики ссылок
-addHandler('about', 'click', (e) => {
-    e.preventDefault();
-    if (tg) {
-        tg.showPopup({ title: 'О проекте', message: 'CELSER BOT — игровой бот.', buttons: [{ type: 'ok' }] });
-    } else {
-        alert('О проекте: CELSER BOT');
-    }
-});
+        // Заполняем профиль данными пользователя
+        if (user) {
+            document.getElementById('profile-welu').textContent = user.first_name.toUpperCase() || 'WELU';
+            document.getElementById('profile-id-display').textContent = ID: ${user.id};
+        } else {
+            document.getElementById('profile-welu').textContent = 'WELU';
+            document.getElementById('profile-id-display').textContent = 'ID: 1326919289';
+        }
 
-addHandler('faq', 'click', (e) => {
-    e.preventDefault();
-    if (tg) {
-        tg.showPopup({ title: 'Частые вопросы', message: 'Как получить звёзды?\nКак открыть кейс?', buttons: [{ type: 'ok' }] });
-    } else {
-        alert('Частые вопросы: ...');
-    }
-});
+        // Баланс и рефералы пока заглушки (потом можно будет обновлять через бота)
+        document.getElementById('profile-balance').textContent = '0';
+        document.getElementById('profile-referrals').textContent = '0';
+        // Функция для безопасного добавления обработчиков
+        function addHandler(id, event, fn) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener(event, fn);
+            } else {
+                console.error('Элемент с id', id, 'не найден');
+            }
+        }
 
-addHandler('support', 'click', (e) => {
-    e.preventDefault();
-    if (tg) {
-        tg.openLink('https://t.me/your_support_bot');
-    } else {
-        window.open('https://t.me/your_support_bot', '_blank');
-    }
-});
-</script>
+        // Переключение на главную
+        function showHome() {
+            homePage.style.display = 'block';
+            profilePage.style.display = 'none';
+            // Обновляем активный пункт меню (на главной активна ГЛАВНАЯ)
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('nav-home')?.classList.add('active');
+            document.getElementById('nav-home-from-profile')?.classList.add('active');
+        }
+
+        // Переключение на профиль
+        function showProfile() {
+            homePage.style.display = 'none';
+            profilePage.style.display = 'block';
+            // Обновляем активный пункт меню (на профиле активна ПРОФИЛЬ)
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('nav-profile')?.classList.add('active');
+            document.getElementById('nav-profile-from-profile')?.classList.add('active');
+        }
+
+        // Обработчики навигации с главной
+        addHandler('nav-home', 'click', showHome);
+        addHandler('nav-profile', 'click', showProfile);
+        addHandler('nav-home-from-profile', 'click', showHome);
+        addHandler('nav-profile-from-profile', 'click', showProfile);
+
+        // Конкурсы (заглушка)
+        function showContests() {
+            if (tg) {
+                tg.showPopup({
+                    title: 'Конкурсы',
+                    message: 'Раздел в разработке. Скоро здесь появятся конкурсы!',
+                    buttons: [{ type: 'ok' }]
+                });
+            } else {
+                alert('Раздел в разработке');
+            }
+        }
+        addHandler('nav-contests', 'click', showContests);
+        addHandler('nav-contests-from-profile', 'click', showContests);
+
+        // Обработчики основных кнопок
+        addHandler('casesBtn', 'click', () => {
+            if (tg) {
+                tg.sendData(JSON.stringify({ action: 'open_cases' }));
+            } else {
+                alert('Telegram Web App недоступен');
+            }
+        });
+
+        addHandler('upgradeBtn', 'click', () => {
+            if (tg) {
+                tg.showPopup({
+                    title: 'Апгрейд',
+                    message: 'Функция в разработке',
+                    buttons: [{ type: 'ok' }]
+                });
+            } else {
+                alert('Функция в разработке');
+            }
+        });
+
+        addHandler('inventoryBtn', 'click', () => {
+            // Показываем профиль (инвентарь)
+            showProfile();
+        });
+
+        addHandler('gamesBtn', 'click', () => {
+            if (tg) {
+                tg.showPopup({
+                    title: 'Игры',
+                    message: 'Функция в разработке',
+                    buttons: [{ type: 'ok' }]
+                });
+            } else {
+                alert('Функция в разработке');
+            }
+        });
+
+        // Кнопка "Пригласить друга"
+        addHandler('invite-btn', 'click', () => {
+            if (tg) {
+                tg.showPopup({
+                    title: 'Пригласить друга',
+                    message: 'Скопируйте свою реферальную ссылку и отправьте другу.',
+                    buttons: [{ type: 'ok' }]
+                });
+                // Здесь можно добавить логику копирования ссылки
+            } else {
+                alert('Пригласить друга');
+            }
+        });
+
+        // Информационные ссылки
+        addHandler('about', 'click', (e) => {
+            e.preventDefault();
+            if (tg) {
+                tg.showPopup({
+                    title: 'О проекте',
+                    message: 'CELSER BOT — игровой бот для открытия кейсов.',
+                    buttons: [{ type: 'ok' }]
+                });
+            } else {
+                alert('О проекте: CELSER BOT');
+            }
+        });
+
+        addHandler('faq', 'click', (e) => {
+            e.preventDefault();
+            if (tg) {
+                tg.showPopup({
+                    title: 'Частые вопросы',
+                    message: 'Как получить звёзды?\nКак открыть кейс?',
+                    buttons: [{ type: 'ok' }]
+                });
+            } else {
+                alert('Частые вопросы: ...');
+            }
+        });
+
+        addHandler('support', 'click', (e) => {
+            e.preventDefault();
+            if (tg) {
+                tg.openLink('https://t.me/your_support_bot');
+            } else {
+                window.open('https://t.me/your_support_bot', '_blank');
+            }
+        });
+
+        // Инициализация: показываем главную
+        showHome();
+    </script>
 </body>
 </html>
