@@ -55,7 +55,6 @@
             margin-bottom: 20px;
         }
 
-        /* Сетка из шести кнопок (прозрачные) */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -91,7 +90,6 @@
             color: var(--tg-theme-text-color, #fff);
         }
 
-        /* Нижнее навигационное меню (прозрачное) */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -120,7 +118,6 @@
             background: rgba(64, 167, 227, 0.2);
         }
 
-        /* Таймер */
         .timer {
             margin-top: 12px;
             font-size: 1.2rem;
@@ -133,7 +130,6 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Страница профиля */
         .profile-header {
             margin-bottom: 20px;
         }
@@ -246,55 +242,31 @@
     </style>
 </head>
 <body>
-    <!-- Главная страница -->
     <div id="home-page" class="container" style="display: block;">
         <h1>CELSER BOT</h1>
         <div class="subtitle">Открывай кейсы за звёзды! ⭐️</div>
 
-        <!-- Шесть кнопок -->
         <div class="menu-grid">
-            <div class="menu-item" id="casesBtn">
-                <span>🎁</span>
-                <p>КЕЙСЫ</p>
-            </div>
-            <div class="menu-item" id="upgradeBtn">
-                <span>⬆️</span>
-                <p>АПГРЕЙД</p>
-            </div>
-            <div class="menu-item" id="inventoryBtn">
-                <span>📦</span>
-                <p>ИНВЕНТАРЬ</p>
-            </div>
-            <div class="menu-item" id="gamesBtn">
-                <span>🎮</span>
-                <p>ИГРЫ</p>
-            </div>
-            <div class="menu-item" id="tasksBtn">
-                <span>📋</span>
-                <p>ЗАДАНИЯ</p>
-            </div>
-            <div class="menu-item" id="lotteryBtn">
-                <span>🎲</span>
-                <p>ЛОТЕРЕЯ</p>
-            </div>
+            <div class="menu-item" id="casesBtn"><span>🎁</span><p>КЕЙСЫ</p></div>
+            <div class="menu-item" id="upgradeBtn"><span>⬆️</span><p>АПГРЕЙД</p></div>
+            <div class="menu-item" id="inventoryBtn"><span>📦</span><p>ИНВЕНТАРЬ</p></div>
+            <div class="menu-item" id="gamesBtn"><span>🎮</span><p>ИГРЫ</p></div>
+            <div class="menu-item" id="tasksBtn"><span>📋</span><p>ЗАДАНИЯ</p></div>
+            <div class="menu-item" id="lotteryBtn"><span>🎲</span><p>ЛОТЕРЕЯ</p></div>
         </div>
-        <!-- Нижняя навигация (ГЛАВНАЯ и ПРОФИЛЬ) -->
+
         <div class="bottom-nav">
             <div class="nav-item active" id="nav-home">ГЛАВНАЯ</div>
             <div class="nav-item" id="nav-profile">ПРОФИЛЬ</div>
         </div>
-
-        <!-- Таймер -->
         <div class="timer">⏳ 00:00</div>
     </div>
 
-    <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
             <div class="welu" id="profile-welu">WELU</div>
             <div class="profile-id" id="profile-id-display">ID: 1326919289</div>
         </div>
-
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="stat-value" id="profile-balance">0</div>
@@ -305,156 +277,82 @@
                 <div class="stat-label">РЕФЕРАЛЫ ♥️</div>
             </div>
         </div>
-
         <div class="referral-block">
             <div class="referral-title">ПРИГЛАСИТЬ ДРУГА</div>
             <div class="referral-subtitle">ПОЛУЧАЙТЕ БОНУСЫ ВМЕСТЕ!</div>
             <button class="invite-btn" id="invite-btn">ПРИГЛАСИТЬ ДРУГА</button>
         </div>
-
-        <div class="best-drop">
-            <span>ЛУЧШИЙ ДРОП</span> · Сейчас ничего нет
-        </div>
-
-        <!-- Нижняя навигация на странице профиля -->
+        <div class="best-drop"><span>ЛУЧШИЙ ДРОП</span> · Сейчас ничего нет</div>
         <div class="bottom-nav">
             <div class="nav-item" id="nav-home-from-profile">ГЛАВНАЯ</div>
             <div class="nav-item active" id="nav-profile-from-profile">ПРОФИЛЬ</div>
         </div>
-
-        <!-- Таймер на странице профиля -->
         <div class="timer">⏳ 00:00</div>
     </div>
 
-    <!-- Подключение Telegram Web App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         const tg = window.Telegram?.WebApp;
-        if (tg) {
-            tg.expand();
-            tg.ready();
-        } else {
-            console.warn('Telegram Web App не загружен');
-        }
+        if (tg) { tg.expand(); tg.ready(); }
 
         const user = tg?.initDataUnsafe?.user;
-
         const homePage = document.getElementById('home-page');
         const profilePage = document.getElementById('profile-page');
 
         if (user) {
             document.getElementById('profile-welu').textContent = user.first_name.toUpperCase() || 'WELU';
             document.getElementById('profile-id-display').textContent = ID: ${user.id};
-        } else {
-            document.getElementById('profile-welu').textContent = 'WELU';
-            document.getElementById('profile-id-display').textContent = 'ID: 1326919289';
         }
 
-        document.getElementById('profile-balance').textContent = '0';
-        document.getElementById('profile-referrals').textContent = '0';
-
-        // Функция для безопасного добавления обработчиков
         function addHandler(id, event, fn) {
             const el = document.getElementById(id);
-            if (el) {
-                el.addEventListener(event, fn);
-            } else {
-                console.error('Элемент с id', id, 'не найден');
-            }
+            if (el) el.addEventListener(event, fn);
+            else console.error('Элемент с id', id, 'не найден');
         }
 
         function showHome() {
             homePage.style.display = 'block';
             profilePage.style.display = 'none';
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            const nh = document.getElementById('nav-home');
-            const nhfp = document.getElementById('nav-home-from-profile');
-            if (nh) nh.classList.add('active');
-            if (nhfp) nhfp.classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            document.getElementById('nav-home')?.classList.add('active');
+            document.getElementById('nav-home-from-profile')?.classList.add('active');
         }
 
         function showProfile() {
             homePage.style.display = 'none';
             profilePage.style.display = 'block';
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            const np = document.getElementById('nav-profile');
-            const npfp = document.getElementById('nav-profile-from-profile');
-            if (np) np.classList.add('active');
-            if (npfp) npfp.classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            document.getElementById('nav-profile')?.classList.add('active');
+            document.getElementById('nav-profile-from-profile')?.classList.add('active');
         }
 
-        // Навигация
         addHandler('nav-home', 'click', showHome);
         addHandler('nav-profile', 'click', showProfile);
         addHandler('nav-home-from-profile', 'click', showHome);
         addHandler('nav-profile-from-profile', 'click', showProfile);
 
-        // Кейсы
         addHandler('casesBtn', 'click', () => {
-            if (tg) {
-                tg.sendData(JSON.stringify({ action: 'open_cases' }));
-                tg.close();
-            } else {
-                alert('Telegram Web App недоступен');
-            }
+            if (tg) { tg.sendData(JSON.stringify({ action: 'open_cases' })); tg.close(); }
         });
-
-        // Апгрейд
         addHandler('upgradeBtn', 'click', () => {
-            if (tg) {
-                tg.showPopup({ title: 'Апгрейд', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
-            } else {
-                alert('Функция в разработке');
-            }
+            if (tg) tg.showPopup({ title: 'Апгрейд', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
         });
-
-        // Инвентарь -> профиль
         addHandler('inventoryBtn', 'click', showProfile);
-
-        // Игры
         addHandler('gamesBtn', 'click', () => {
-            if (tg) {
-                tg.showPopup({ title: 'Игры', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
-            } else {
-                alert('Функция в разработке');
-            }
+            if (tg) tg.showPopup({ title: 'Игры', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
         });
-
-        // Задания
         addHandler('tasksBtn', 'click', () => {
-            if (tg) {
-                tg.showPopup({ title: 'Задания', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
-            } else {
-                alert('Раздел в разработке');
-            }
+            if (tg) tg.showPopup({ title: 'Задания', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
         });
-
-        // Лотерея
         addHandler('lotteryBtn', 'click', () => {
-            if (tg) {
-                tg.showPopup({ title: 'Лотерея', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
-            } else {
-                alert('Раздел в разработке');
-            }
+            if (tg) tg.showPopup({ title: 'Лотерея', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
         });
-
-        // Пригласить друга
         addHandler('invite-btn', 'click', () => {
-            if (tg) {
-                tg.showPopup({ title: 'Пригласить друга', message: 'Скопируйте свою реферальную ссылку и отправьте другу.', buttons: [{ type: 'ok' }] });
-            } else {
-                alert('Пригласить друга');
-            }
+            if (tg) tg.showPopup({ title: 'Пригласить друга', message: 'Скопируйте реферальную ссылку и отправьте другу.', buttons: [{ type: 'ok' }] });
         });
 
-        // Показываем главную
         showHome();
-
-        // Таймер
-        function updateTimer() {
-            document.querySelectorAll('.timer').forEach(t => t.textContent = '⏳ 00:00');
-        }
-        setInterval(updateTimer, 1000);
+        setInterval(() => document.querySelectorAll('.timer').forEach(t => t.textContent = '⏳ 00:00'), 1000);
     </script>
 </body>
 </html>
