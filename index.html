@@ -242,44 +242,50 @@ if (user) {
     document.getElementById('profile-name').textContent = 'Неизвестно';
     document.getElementById('profile-id').textContent = '—';
 }
+// Безопасное назначение обработчиков
+function safeAddListener(id, event, handler) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.addEventListener(event, handler);
+    } else {
+        console.warn('Элемент с id', id, 'не найден');
+    }
+}
 
-// Переключение на профиль
-document.getElementById('profileBtn').addEventListener('click', () => {
+safeAddListener('profileBtn', 'click', () => {
     homePage.style.display = 'none';
     profilePage.style.display = 'block';
 });
 
-// Назад на главную
-document.getElementById('back-home').addEventListener('click', () => {
+safeAddListener('back-home', 'click', () => {
     profilePage.style.display = 'none';
     homePage.style.display = 'block';
 });
 
-// Кнопка "Обновить баланс"
-document.getElementById('refresh-balance').addEventListener('click', () => {
+safeAddListener('refresh-balance', 'click', () => {
     tg.sendData(JSON.stringify({ action: 'get_profile' }));
     tg.close();
 });
 
-// Открытие кейсов
-document.getElementById('openCases').addEventListener('click', () => {
+safeAddListener('openCases', 'click', () => {
     tg.sendData(JSON.stringify({ action: 'open_cases' }));
 });
 
-// Обработчики ссылок
-document.getElementById('about').addEventListener('click', (e) => {
+safeAddListener('about', 'click', (e) => {
     e.preventDefault();
     tg.showPopup({ title: 'О проекте', message: 'CELSER BOT — игровой бот.', buttons: [{ type: 'ok' }] });
 });
 
-document.getElementById('faq').addEventListener('click', (e) => {
+safeAddListener('faq', 'click', (e) => {
     e.preventDefault();
     tg.showPopup({ title: 'Частые вопросы', message: 'Как получить звёзды?\nКак открыть кейс?', buttons: [{ type: 'ok' }] });
 });
 
-document.getElementById('support').addEventListener('click', (e) => {
+safeAddListener('support', 'click', (e) => {
     e.preventDefault();
     tg.openLink('https://t.me/your_support_bot');
+});
+
 });
 });
 </script>
