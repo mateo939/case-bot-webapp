@@ -55,18 +55,18 @@
             margin-bottom: 20px;
         }
 
-        /* Сетка из четырёх кнопок */
+        /* Сетка из шести кнопок */
         .menu-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
             margin-bottom: 30px;
         }
 
         .menu-item {
             background: var(--tg-theme-secondary-bg-color, #16213e);
-            border-radius: 16px;
-            padding: 20px 8px;
+            border-radius: 14px;
+            padding: 12px 4px;
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s, background 0.2s;
@@ -74,31 +74,23 @@
         }
 
         .menu-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             background: rgba(255, 255, 255, 0.1);
         }
 
         .menu-item span {
             display: block;
-            font-size: 2.2rem;
-            margin-bottom: 6px;
-        }
-
-        .menu-item p {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--tg-theme-text-color, #fff);
+            font-size: 1.8rem;
             margin-bottom: 4px;
         }
 
-        .menu-item small {
-            display: block;
-            font-size: 0.7rem;
-            color: var(--tg-theme-hint-color, #aaa);
-            line-height: 1.2;
+        .menu-item p {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #fff);
         }
 
-        /* Нижнее навигационное меню */
+        /* Нижнее навигационное меню (два пункта) */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -125,6 +117,19 @@
         .nav-item.active {
             color: var(--tg-theme-button-color, #40a7e3);
             background: rgba(64, 167, 227, 0.1);
+        }
+
+        /* Таймер */
+        .timer {
+            margin-top: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--tg-theme-button-color, #40a7e3);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            backdrop-filter: blur(5px);
         }
 
         /* Страница профиля */
@@ -223,6 +228,7 @@
             font-weight: 700;
         }
 
+        /* Информационные ссылки (если нужны, но на новых скринах их нет, оставим для полноты) */
         .info-links {
             display: flex;
             flex-wrap: wrap;
@@ -244,21 +250,18 @@
         }
 
         .footer-note {
-            margin-top: 25px;
+            margin-top: 15px;
             font-size: 0.7rem;
             color: var(--tg-theme-hint-color, #777);
         }
 
         /* Адаптация */
         @media (max-width: 400px) {
-            .menu-item {
-                padding: 16px 5px;
-            }
             .menu-item span {
-                font-size: 2rem;
+                font-size: 1.6rem;
             }
             .menu-item p {
-                font-size: 0.9rem;
+                font-size: 0.7rem;
             }
             h1 {
                 font-size: 2rem;
@@ -275,50 +278,45 @@
         <h1>CELSER BOT</h1>
         <div class="subtitle">Открывай кейсы за звёзды! ⭐️</div>
 
-        <!-- Четыре основные кнопки -->
+        <!-- Шесть кнопок -->
         <div class="menu-grid">
             <div class="menu-item" id="casesBtn">
                 <span>🎁</span>
                 <p>КЕЙСЫ</p>
-                <small>ПОЛУЧАЙ ПОДАРКИ</small>
             </div>
             <div class="menu-item" id="upgradeBtn">
                 <span>⬆️</span>
                 <p>АПГРЕЙД</p>
-                <small>УЛУЧШАЙ ПОДАРОК</small>
             </div>
             <div class="menu-item" id="inventoryBtn">
                 <span>📦</span>
                 <p>ИНВЕНТАРЬ</p>
-                <small>ВАШИ ПОДАРКИ</small>
             </div>
             <div class="menu-item" id="gamesBtn">
                 <span>🎮</span>
                 <p>ИГРЫ</p>
-                <small>ПОДНИМАЙ БАЛАНС</small>
+            </div>
+            <div class="menu-item" id="tasksBtn">
+                <span>📋</span>
+                <p>ЗАДАНИЯ</p>
+            </div>
+            <div class="menu-item" id="lotteryBtn">
+                <span>🎲</span>
+                <p>ЛОТЕРЕЯ</p>
             </div>
         </div>
 
-        <!-- Информационные ссылки (как на первом скриншоте) -->
-        <div class="info-links">
-            <a href="#" id="about">О проекте</a>
-            <a href="#" id="faq">Частые вопросы</a>
-            <a href="#" id="support">Поддержка</a>
-        </div>
-
-        <div class="footer-note">
-            v1.0 · Работает в Telegram
-        </div>
-
-        <!-- Нижнее навигационное меню -->
+        <!-- Нижняя навигация (два пункта) -->
         <div class="bottom-nav">
             <div class="nav-item active" id="nav-home">ГЛАВНАЯ</div>
-            <div class="nav-item" id="nav-contests">КОНКУРСЫ</div>
             <div class="nav-item" id="nav-profile">ПРОФИЛЬ</div>
         </div>
+
+        <!-- Таймер -->
+        <div class="timer">⏳ 00:00</div>
     </div>
 
-    <!-- Страница профиля (по дизайну второго скриншота) -->
+    <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
             <div class="welu" id="profile-welu">WELU</div>
@@ -346,12 +344,14 @@
             <span>ЛУЧШИЙ ДРОП</span> · Сейчас ничего нет
         </div>
 
-        <!-- Нижнее навигационное меню (на странице профиля) -->
+        <!-- Нижняя навигация на странице профиля -->
         <div class="bottom-nav">
             <div class="nav-item" id="nav-home-from-profile">ГЛАВНАЯ</div>
-            <div class="nav-item" id="nav-contests-from-profile">КОНКУРСЫ</div>
             <div class="nav-item active" id="nav-profile-from-profile">ПРОФИЛЬ</div>
         </div>
+
+        <!-- Таймер на странице профиля (опционально) -->
+        <div class="timer">⏳ 00:00</div>
     </div>
 
     <!-- Правильный скрипт Telegram -->
@@ -380,7 +380,7 @@
             document.getElementById('profile-id-display').textContent = 'ID: 1326919289';
         }
 
-        // Баланс и рефералы пока заглушки (потом можно будет обновлять через бота)
+        // Баланс и рефералы пока заглушки (потом можно обновлять через бота)
         document.getElementById('profile-balance').textContent = '0';
         document.getElementById('profile-referrals').textContent = '0';
         // Функция для безопасного добавления обработчиков
@@ -397,7 +397,7 @@
         function showHome() {
             homePage.style.display = 'block';
             profilePage.style.display = 'none';
-            // Обновляем активный пункт меню (на главной активна ГЛАВНАЯ)
+            // Обновляем активный пункт меню
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.getElementById('nav-home')?.classList.add('active');
             document.getElementById('nav-home-from-profile')?.classList.add('active');
@@ -407,32 +407,17 @@
         function showProfile() {
             homePage.style.display = 'none';
             profilePage.style.display = 'block';
-            // Обновляем активный пункт меню (на профиле активна ПРОФИЛЬ)
+            // Обновляем активный пункт меню
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.getElementById('nav-profile')?.classList.add('active');
             document.getElementById('nav-profile-from-profile')?.classList.add('active');
         }
 
-        // Обработчики навигации с главной
+        // Обработчики навигации
         addHandler('nav-home', 'click', showHome);
         addHandler('nav-profile', 'click', showProfile);
         addHandler('nav-home-from-profile', 'click', showHome);
         addHandler('nav-profile-from-profile', 'click', showProfile);
-
-        // Конкурсы (заглушка)
-        function showContests() {
-            if (tg) {
-                tg.showPopup({
-                    title: 'Конкурсы',
-                    message: 'Раздел в разработке. Скоро здесь появятся конкурсы!',
-                    buttons: [{ type: 'ok' }]
-                });
-            } else {
-                alert('Раздел в разработке');
-            }
-        }
-        addHandler('nav-contests', 'click', showContests);
-        addHandler('nav-contests-from-profile', 'click', showContests);
 
         // Обработчики основных кнопок
         addHandler('casesBtn', 'click', () => {
@@ -456,8 +441,7 @@
         });
 
         addHandler('inventoryBtn', 'click', () => {
-            // Показываем профиль (инвентарь)
-            showProfile();
+            showProfile(); // Инвентарь ведёт на профиль
         });
 
         addHandler('gamesBtn', 'click', () => {
@@ -469,6 +453,30 @@
                 });
             } else {
                 alert('Функция в разработке');
+            }
+        });
+
+        addHandler('tasksBtn', 'click', () => {
+            if (tg) {
+                tg.showPopup({
+                    title: 'Задания',
+                    message: 'Раздел в разработке',
+                    buttons: [{ type: 'ok' }]
+                });
+            } else {
+                alert('Раздел в разработке');
+            }
+        });
+
+        addHandler('lotteryBtn', 'click', () => {
+            if (tg) {
+                tg.showPopup({
+                    title: 'Лотерея',
+                    message: 'Раздел в разработке',
+                    buttons: [{ type: 'ok' }]
+                });
+            } else {
+                alert('Раздел в разработке');
             }
         });
 
@@ -486,44 +494,14 @@
             }
         });
 
-        // Информационные ссылки
-        addHandler('about', 'click', (e) => {
-            e.preventDefault();
-            if (tg) {
-                tg.showPopup({
-                    title: 'О проекте',
-                    message: 'CELSER BOT — игровой бот для открытия кейсов.',
-                    buttons: [{ type: 'ok' }]
-                });
-            } else {
-                alert('О проекте: CELSER BOT');
-            }
-        });
-
-        addHandler('faq', 'click', (e) => {
-            e.preventDefault();
-            if (tg) {
-                tg.showPopup({
-                    title: 'Частые вопросы',
-                    message: 'Как получить звёзды?\nКак открыть кейс?',
-                    buttons: [{ type: 'ok' }]
-                });
-            } else {
-                alert('Частые вопросы: ...');
-            }
-        });
-
-        addHandler('support', 'click', (e) => {
-            e.preventDefault();
-            if (tg) {
-                tg.openLink('https://t.me/your_support_bot');
-            } else {
-                window.open('https://t.me/your_support_bot', '_blank');
-            }
-        });
-
         // Инициализация: показываем главную
         showHome();
+        // Простой таймер (можно заменить на реальный позже)
+        function updateTimer() {
+            const timers = document.querySelectorAll('.timer');
+            timers.forEach(t => t.textContent = '⏳ 00:00');
+        }
+        setInterval(updateTimer, 1000);
     </script>
 </body>
 </html>
