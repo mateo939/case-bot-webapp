@@ -88,6 +88,18 @@
             transition: transform 0.2s, background 0.2s;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+        @media (max-width: 400px) {
+    .menu-item {
+        padding: 12px 6px;      /* Уменьшаем внутренние отступы */
+    }
+    .menu-item span {
+        font-size: 1.6rem;       /* Немного уменьшаем иконку */
+        margin-bottom: 4px;
+    }
+    .menu-item p {
+        font-size: 0.8rem;       /* Уменьшаем текст */
+    }
+}
 
         .menu-item:hover {
             transform: translateY(-2px);
