@@ -2,144 +2,144 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CELSER BOT</title>
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-    body {
-        background-image: url('background.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-color: var(--tg-theme-bg-color, #1a1a2e);
-        color: var(--tg-theme-text-color, #fff);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: var(--tg-theme-bg-color, #1a1a2e); /* резервный цвет */
+            color: var(--tg-theme-text-color, #fff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
 
-    .container {
-        max-width: 400px;
-        width: 100%;
-        text-align: center;
-    }
+        .container {
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+        }
 
-    h1 {
-        font-size: 2.5rem;
-        font-weight: 800;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-        background: linear-gradient(45deg, #ffd700, #ffb347);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-    }
+        h1 {
+            font-size: 2rem; /* чуть меньше */
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+        }
 
-    .subtitle {
-        font-size: 1.1rem;
-        color: var(--tg-theme-hint-color, #a0a0a0);
-        margin-bottom: 40px;
-    }
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            margin-bottom: 28px;
+        }
 
-    .login-btn {
-        background: var(--tg-theme-button-color, #40a7e3);
-        color: var(--tg-theme-button-text-color, #fff);
-        border: none;
-        border-radius: 50px;
-        padding: 15px 40px;
-        font-size: 1.2rem;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 8px 16px rgba(64, 167, 227, 0.3);
-        transition: transform 0.2s, box-shadow 0.2s;
-        margin-bottom: 50px;
-        width: 100%;
-        max-width: 280px;
-    }
+        .login-btn {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-text-color, #fff);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(64, 167, 227, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 240px;
+        }
 
-    .login-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 24px rgba(64, 167, 227, 0.4);
-    }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(64, 167, 227, 0.4);
+        }
 
-    .menu-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin-bottom: 40px;
-    }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
 
-    .menu-item {
-        background: var(--tg-theme-secondary-bg-color, #16213e);
-        border-radius: 16px;
-        padding: 20px 10px;
-        text-align: center;
-        cursor: pointer;
-        transition: transform 0.2s, background 0.2s;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-    }
+        .menu-item {
+            background: var(--tg-theme-secondary-bg-color, #16213e);
+            border-radius: 14px;
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
 
-    .menu-item:hover {
-        transform: translateY(-3px);
-        background: rgba(255, 255, 255, 0.05);
-    }
+        .menu-item:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+        }
 
-    .menu-item span {
-        display: block;
-        font-size: 2rem;
-        margin-bottom: 8px;
-    }
+        .menu-item span {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
 
-    .menu-item p {
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--tg-theme-text-color, #fff);
-    }
+        .menu-item p {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--tg-theme-text-color, #fff);
+        }
 
-    .info-links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 20px;
-        font-size: 0.9rem;
-        color: var(--tg-theme-hint-color, #a0a0a0);
-    }
+        .info-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: var(--tg-theme-hint-color, #aaa);
+        }
 
-    .info-links a {
-        color: var(--tg-theme-link-color, #40a7e3);
-        text-decoration: none;
-        transition: opacity 0.2s;
-    }
+        .info-links a {
+            color: var(--tg-theme-link-color, #40a7e3);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
 
-    .info-links a:hover {
-        opacity: 0.8;
-        text-decoration: underline;
-    }
+        .info-links a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
 
-    .footer-note {
-        margin-top: 30px;
-        font-size: 0.8rem;
-        color: var(--tg-theme-hint-color, #666);
-    }
-</style>
+        .footer-note {
+            margin-top: 24px;
+            font-size: 0.7rem;
+            color: var(--tg-theme-hint-color, #777);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>CELSER BOT</h1>
         <div class="subtitle">Открывай кейсы за звезды! ⭐️</div>
         <button class="login-btn" id="loginBtn">🚀 Войти с Telegram</button>
-        <!-- Основное меню -->
+
         <div class="menu-grid">
             <div class="menu-item" id="openCases">
                 <span>🎁</span>
@@ -151,7 +151,6 @@
             </div>
         </div>
 
-        <!-- Информационные ссылки -->
         <div class="info-links">
             <a href="#" id="about">О проекте</a>
             <a href="#" id="faq">Частые вопросы</a>
@@ -163,24 +162,18 @@
         </div>
     </div>
 
-    <!-- Скрипт Telegram Web App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Растягиваем на весь экран
-        tg.ready();  // Сообщаем, что приложение готово
+        tg.expand();
+        tg.ready();
 
-        // Получаем данные пользователя (если доступны)
         const user = tg.initDataUnsafe?.user;
         if (user) {
-            // Если пользователь уже авторизован, можно персонализировать приветствие
-            document.querySelector('.subtitle').innerHTML = 'С возвращением, ${user.first_name}! ⭐️';
+            document.querySelector('.subtitle').innerHTML = С возвращением, ${user.first_name}! ⭐️;
         }
 
-        // Обработчик кнопки входа
         document.getElementById('loginBtn').addEventListener('click', () => {
-            // Если пользователь не авторизован, можно показать сообщение или запросить данные
             if (!user) {
                 tg.showPopup({
                     title: 'Вход',
@@ -188,28 +181,23 @@
                     buttons: [{ type: 'ok' }]
                 });
             } else {
-                // Переход к открытию кейсов
                 tg.showPopup({
                     title: 'Добро пожаловать!',
-                    message: 'Вы вошли как ${user.first_name}. Нажмите "Открыть кейсы", чтобы начать.',
+                    message: Вы вошли как ${user.first_name}. Нажмите "Открыть кейсы", чтобы начать.,
                     buttons: [{ type: 'ok' }]
                 });
             }
         });
 
-        // Обработчики меню
         document.getElementById('openCases').addEventListener('click', () => {
-            // Здесь можно отправить данные боту или перейти на страницу с кейсами
             tg.sendData(JSON.stringify({ action: 'open_cases' }));
-            // Альтернативно: показать уведомление и закрыть
-            // tg.showPopup({ message: 'Функция открытия кейсов скоро появится!' });
         });
 
         document.getElementById('profile').addEventListener('click', () => {
             if (user) {
                 tg.showPopup({
                     title: 'Профиль',
-                    message: 'ID: ${user.id}\nИмя: ${user.first_name}\nБаланс: 100 ⭐️ (пример)',
+                    message: ID: ${user.id}\nИмя: ${user.first_name}\nБаланс: 100 ⭐️ (пример),
                     buttons: [{ type: 'ok' }]
                 });
             } else {
@@ -221,7 +209,6 @@
             }
         });
 
-        // Обработчики информационных ссылок (можно открывать в браузере или показывать попап)
         document.getElementById('about').addEventListener('click', (e) => {
             e.preventDefault();
             tg.showPopup({
@@ -239,13 +226,11 @@
                 buttons: [{ type: 'ok' }]
             });
         });
+
         document.getElementById('support').addEventListener('click', (e) => {
             e.preventDefault();
-            tg.openLink('https://t.me/your_support_bot'); // Замените на реальную ссылку поддержки
+            tg.openLink('https://t.me/your_support_bot'); // замените на реальную ссылку
         });
-
-        // Если нужно закрыть приложение
-        // tg.close();
     </script>
 </body>
 </html>
