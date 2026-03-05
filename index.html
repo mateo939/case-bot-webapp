@@ -281,6 +281,15 @@ document.getElementById('support').addEventListener('click', (e) => {
     e.preventDefault();
     tg.openLink('https://t.me/your_support_bot');
 });
+        console.log('Скрипт запущен');
+console.log('profileBtn:', document.getElementById('profileBtn'));
+console.log('homePage:', document.getElementById('home-page'));
+console.log('profilePage:', document.getElementById('profile-page'));
+
+document.getElementById('profileBtn').addEventListener('click', function() {
+    console.log('Клик по профилю!');
+    alert('Клик работает!');
+});
 </script>
 </body>
 </html>
