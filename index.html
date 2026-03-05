@@ -242,6 +242,7 @@
     </style>
 </head>
 <body>
+    <!-- Главная страница -->
     <div id="home-page" class="container" style="display: block;">
         <h1>CELSER BOT</h1>
         <div class="subtitle">Открывай кейсы за звёзды! ⭐️</div>
@@ -261,7 +262,7 @@
         </div>
         <div class="timer">⏳ 00:00</div>
     </div>
-
+    <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
             <div class="welu" id="profile-welu">WELU</div>
@@ -293,7 +294,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         const tg = window.Telegram?.WebApp;
-        if (tg) { tg.expand(); tg.ready(); }
+        if (tg) {
+            tg.expand();
+            tg.ready();
+        }
 
         const user = tg?.initDataUnsafe?.user;
         const homePage = document.getElementById('home-page');
@@ -334,19 +338,24 @@
         addHandler('casesBtn', 'click', () => {
             if (tg) { tg.sendData(JSON.stringify({ action: 'open_cases' })); tg.close(); }
         });
+
         addHandler('upgradeBtn', 'click', () => {
             if (tg) tg.showPopup({ title: 'Апгрейд', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
         });
+
         addHandler('inventoryBtn', 'click', showProfile);
+
         addHandler('gamesBtn', 'click', () => {
             if (tg) tg.showPopup({ title: 'Игры', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
         });
+
         addHandler('tasksBtn', 'click', () => {
             if (tg) tg.showPopup({ title: 'Задания', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
         });
         addHandler('lotteryBtn', 'click', () => {
             if (tg) tg.showPopup({ title: 'Лотерея', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
         });
+
         addHandler('invite-btn', 'click', () => {
             if (tg) tg.showPopup({ title: 'Пригласить друга', message: 'Скопируйте реферальную ссылку и отправьте другу.', buttons: [{ type: 'ok' }] });
         });
