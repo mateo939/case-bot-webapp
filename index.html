@@ -144,6 +144,26 @@
             font-size: 0.7rem;
             color: var(--tg-theme-hint-color, #777);
         }
+        @media (max-width: 600px) {
+    body {
+        background-attachment: scroll; /* отключаем фиксацию */
+    }
+    .menu-item {
+        padding: 10px 5px;   /* уменьшаем отступы */
+    }
+    .menu-item span {
+        font-size: 1.4rem;   /* иконка мельче */
+        margin-bottom: 2px;
+    }
+    .menu-item p {
+        font-size: 0.75rem;  /* текст мельче */
+    }
+    .login-btn {
+        padding: 10px 20px;  /* если кнопка входа тоже кажется крупной */
+        font-size: 0.9rem;
+        max-width: 200px;
+    }
+}
     </style>
 </head>
 <body>
