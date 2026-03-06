@@ -26,7 +26,7 @@
             position: relative;
         }
 
-        /* Фиксированная верхняя панель — чёрная */
+        /* Фиксированная верхняя панель */
         .top-bar-fixed {
             position: fixed;
             top: 0;
@@ -101,7 +101,7 @@
             transform: scale(1.1);
         }
 
-        /* Фиксированная нижняя навигация — чёрная, два пункта */
+        /* Фиксированная нижняя навигация (два пункта) */
         .bottom-nav-fixed {
             position: fixed;
             bottom: 0;
@@ -138,34 +138,38 @@
             margin: 0 auto;
             padding: 16px;
             text-align: center;
-            position: relative; /* для позиционирования стрелки назад */
+            position: relative;
         }
-        /* Кнопка назад (стрелка) */
-        .back-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 40px;
-            height: 40px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 50%;
-            display: flex;
+        /* Кнопка возврата на главную (стрелка + текст) */
+        .back-home-button {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            color: #fff;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 8px 18px;
+            margin: 5px 0 15px 0;
             cursor: pointer;
-            z-index: 10;
-            backdrop-filter: blur(3px);
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            width: fit-content;
+            font-size: 0.9rem;
+            color: #fff;
+            transition: background 0.2s;
         }
 
-        .back-button:hover {
-            background: rgba(0,0,0,0.7);
+        .back-home-button:hover {
+            background: rgba(0, 0, 0, 0.7);
         }
 
-        /* Стили для главной страницы */
+        .back-home-button span {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* Главная страница */
         .live-section {
             margin-bottom: 30px;
             text-align: left;
@@ -248,7 +252,7 @@
             margin-top: 5px;
         }
 
-        /* Сетка кнопок – с большим скруглением и объёмом */
+        /* Сетка главных кнопок */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -267,11 +271,11 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-
         .menu-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 24px rgba(0,0,0,0.5);
         }
+
         .menu-item span {
             display: block;
             font-size: 2rem;
@@ -284,7 +288,7 @@
             color: #fff;
         }
 
-        /* Страница игр — большая синяя кнопка */
+        /* Страница игр */
         .games-header {
             font-size: 2rem;
             font-weight: 700;
@@ -348,7 +352,7 @@
             line-height: 1.2;
         }
 
-        /* Кнопка обновления тёмная, без иконки */
+        /* Тёмная кнопка обновления (без иконки) */
         .refresh-btn-dark {
             background: #333;
             color: #fff;
@@ -368,7 +372,7 @@
             background: #444;
         }
 
-        /* Страница профиля – карточки с большим скруглением */
+        /* Страница профиля (без стрелки назад) */
         .profile-header {
             display: flex;
             align-items: center;
@@ -540,7 +544,7 @@
         <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
     </div>
 
-    <!-- Главная страница (без стрелки назад) -->
+    <!-- Главная страница -->
     <div id="home-page" class="container" style="display: block;">
         <div class="live-section">
             <div class="live-title">LIVE</div>
@@ -574,9 +578,9 @@
         </div>
     </div>
 
-    <!-- Страница игр (со стрелкой назад) -->
+    <!-- Страница игр (с кнопкой возврата на главную) -->
     <div id="games-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-games">←</div>
+        <div class="back-home-button" id="back-from-games"><span>←</span> на главную</div>
         <div class="games-header">ИГРЫ</div>
         <div class="game-button" id="rocket-game">
             <div class="game-title">ROCKET</div>
@@ -584,9 +588,9 @@
         </div>
     </div>
 
-    <!-- Страница инвентаря (со стрелкой назад и тёмной кнопкой без иконки) -->
+    <!-- Страница инвентаря (с кнопкой возврата на главную) -->
     <div id="inventory-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-inventory">←</div>
+        <div class="back-home-button" id="back-from-inventory"><span>←</span> на главную</div>
         <div class="cost-block">
             <div class="cost-label">СТОИМОСТЬ</div>
             <div class="cost-value" id="inventory-cost">0 ★</div>
@@ -594,9 +598,8 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
     </div>
 
-    <!-- Страница профиля (со стрелкой назад) -->
+    <!-- Страница профиля (без стрелки назад) -->
     <div id="profile-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-profile">←</div>
         <!-- Блок с аватаром и ID -->
         <div class="profile-header">
             <div class="profile-avatar" id="profile-avatar">Ш</div>
@@ -646,7 +649,7 @@
             const user = tg?.initDataUnsafe?.user;
 
             // Элементы
-         const userNameEl = document.getElementById('user-name');
+            const userNameEl = document.getElementById('user-name');
             const userAvatarEl = document.getElementById('user-avatar');
             const profileNameEl = document.getElementById('profile-name');
             const profileAvatarEl = document.getElementById('profile-avatar');
@@ -674,7 +677,7 @@
                 currentBalance = balance;
                 balanceDisplay.textContent = balance + ' ★';
                 profileBalance.textContent = balance;
-                inventoryCost.textContent = (balance * 2) + ' ★'; // пример
+                inventoryCost.textContent = (balance * 2) + ' ★';
             }
             updateBalances(0);
             profileReferrals.textContent = '0';
@@ -720,7 +723,7 @@
                 inventoryPage.style.display = 'none';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
-                document.getElementById('nav-home').classList.add('active'); // подсветка главной
+                document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
 
@@ -733,7 +736,6 @@
                 document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
-
             function showProfile() {
                 homePage.style.display = 'none';
                 gamesPage.style.display = 'none';
@@ -764,7 +766,7 @@
 
             // Кнопка в играх
             addHandler('rocket-game', 'click', () => {
-                if (tg) tg.showPopup({ title: 'Rocket🚀', message: 'Запуск игры...', buttons: [{ type: 'ok' }] });
+                if (tg) tg.showPopup({ title: 'Rocket', message: 'Запуск игры...', buttons: [{ type: 'ok' }] });
                 else alert('Игра');
             });
 
@@ -787,10 +789,9 @@
                 else alert('Пригласить друга');
             });
 
-            // Обработчики кнопок назад
+            // Обработчики кнопок возврата на главную (для игр и инвентаря)
             addHandler('back-from-games', 'click', showHome);
             addHandler('back-from-inventory', 'click', showHome);
-            addHandler('back-from-profile', 'click', showHome);
 
             // Показываем главную
             showHome();
