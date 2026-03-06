@@ -315,7 +315,7 @@
                 const welu = document.getElementById('profile-welu');
                 if (welu) welu.textContent = user.first_name.toUpperCase() || 'WELU';
                 const idDisplay = document.getElementById('profile-id-display');
-                if (idDisplay) idDisplay.textContent = ID: ${user.id};
+                if (idDisplay) idDisplay.textContent = 'ID: ${user.id}';
             }
 
             function addHandler(id, event, fn) {
@@ -392,3 +392,4 @@
     </script>
 </body>
 </html>
+
