@@ -140,24 +140,25 @@
             text-align: center;
             position: relative;
         }
-        /* Кнопка возврата на главную (стрелка + текст) */
+        /* Кнопка возврата на главную (уменьшена, прижата влево) */
         .back-home-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            border-radius: 40px;
-            padding: 8px 18px;
+            border-radius: 30px;
+            padding: 5px 12px;
             margin: 5px 0 15px 0;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             width: fit-content;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #fff;
             transition: background 0.2s;
+            margin-left: 0; /* прижимаем влево */
         }
 
         .back-home-button:hover {
@@ -165,7 +166,7 @@
         }
 
         .back-home-button span {
-            font-size: 1.2rem;
+            font-size: 1rem; /* уменьшенная стрелка */
             line-height: 1;
         }
 
