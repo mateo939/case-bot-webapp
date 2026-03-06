@@ -21,11 +21,11 @@
             background-color: var(--tg-theme-bg-color, #1a1a2e);
             color: var(--tg-theme-text-color, #fff);
             min-height: 100vh;
-            padding-bottom: 70px; /* отступ для фиксированной навигации */
+            padding-bottom: 60px; /* отступ для фиксированной навигации */
             position: relative;
         }
 
-        /* Фиксированная нижняя навигация */
+        /* Фиксированная нижняя навигация — уменьшенная и полностью чёрная */
         .bottom-nav-fixed {
             position: fixed;
             bottom: 0;
@@ -33,28 +33,28 @@
             width: 100%;
             display: flex;
             justify-content: space-around;
-            background: rgba(22, 33, 62, 0.8);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 16px;
+            background: #000000; /* полностью чёрный */
+            backdrop-filter: none;
+            border-top: 1px solid #333;
+            padding: 8px 12px; /* уменьшенные отступы */
             z-index: 1000;
         }
 
         .nav-item-fixed {
             flex: 1;
             text-align: center;
-            padding: 8px 0;
-            font-size: 1rem;
+            padding: 6px 0; /* уменьшено */
+            font-size: 0.9rem; /* чуть меньше */
             font-weight: 500;
-            color: var(--tg-theme-hint-color, #aaa);
+            color: #fff; /* белый текст */
             cursor: pointer;
-            border-radius: 20px;
+            border-radius: 16px;
             transition: all 0.2s;
         }
 
         .nav-item-fixed.active {
             color: var(--tg-theme-button-color, #40a7e3);
-            background: rgba(64, 167, 227, 0.2);
+            background: rgba(255,255,255,0.1); /* лёгкая подсветка */
         }
 
         .container {
@@ -135,11 +135,11 @@
         .plus-btn:hover {
             transform: scale(1.1);
         }
-
         /* Секция LIVE */
         .live-section {
             margin-bottom: 30px;
         }
+
         .live-title {
             font-size: 2rem;
             font-weight: 700;
@@ -216,7 +216,7 @@
             margin-top: 5px;
         }
 
-        /* Сетка кнопок */
+        /* Сетка кнопок — тёмные, прозрачные, без дополнительных подписей */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -225,8 +225,8 @@
         }
 
         .menu-item {
-            background: rgba(22, 33, 62, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.5); /* тёмный полупрозрачный */
+            backdrop-filter: blur(3px);
             border-radius: 14px;
             padding: 12px 4px;
             text-align: center;
@@ -241,17 +241,9 @@
         }
 
         .menu-item p {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: var(--tg-theme-text-color, #fff);
-            margin-bottom: 2px;
-        }
-
-        .menu-item small {
-            display: block;
-            font-size: 0.6rem;
-            color: var(--tg-theme-hint-color, #aaa);
-            line-height: 1.2;
+            color: #fff; /* белый текст */
         }
 
         /* Страница инвентаря */
@@ -444,7 +436,7 @@
     </style>
 </head>
 <body>
-    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) -->
+    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) — уменьшенная, чёрная -->
     <div class="bottom-nav-fixed">
         <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
         <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
@@ -477,27 +469,23 @@
             </div>
         </div>
 
-        <!-- Кнопки под колесом -->
+        <!-- Кнопки под колесом — без дополнительных подписей -->
         <div class="menu-grid">
             <div class="menu-item" id="casesBtn">
                 <span>🎁</span>
                 <p>КЕЙСЫ</p>
-                <small>получай подарки</small>
             </div>
             <div class="menu-item" id="upgradeBtn">
                 <span>⬆️</span>
                 <p>АПГРЕЙД</p>
-                <small>улучшай подарок</small>
             </div>
             <div class="menu-item" id="inventoryBtn">
                 <span>📦</span>
                 <p>ИНВЕНТАРЬ</p>
-                <small>ваши подарки</small>
             </div>
             <div class="menu-item" id="gamesBtn">
                 <span>🎮</span>
                 <p>ИГРЫ</p>
-                <small>поднимай баланс</small>
             </div>
         </div>
     </div>
@@ -534,7 +522,7 @@
             <div class="profile-title">CELSER</div>
             <div class="profile-name" id="profile-name">ШЕЛЛИ</div>
             <div class="profile-id" id="profile-id">ID: 1326919289</div>
-            </div>
+        </div>
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="stat-value" id="profile-balance">0</div>
@@ -632,8 +620,7 @@
                 inventoryPage.style.display = 'block';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
-                // При переходе в инвентарь активным остаётся ГЛАВНАЯ? Или можно не подсвечивать.
-                // Оставим без активного, либо подсветим ГЛАВНУЮ.
+                // можно подсветить главную или не подсвечивать
                 document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
