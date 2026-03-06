@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>CELSER BOT</title>
     <style>
         * {
@@ -37,62 +37,9 @@
             min-height: 100%;
         }
 
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-top: 10px;
-            margin-bottom: 8px;
-            background: linear-gradient(45deg, #ffd700, #ffb347);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            font-size: 1rem;
-            color: #ffffff;
-            margin-bottom: 30px;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 30px;
-        }
-
-        .menu-item {
-            background: rgba(22, 33, 62, 0.7);
-            backdrop-filter: blur(5px);
-            border-radius: 14px;
-            padding: 12px 4px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .menu-item span {
-            display: block;
-            font-size: 1.8rem;
-            margin-bottom: 4px;
-        }
-
-        .menu-item p {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--tg-theme-text-color, #fff);
-            margin-bottom: 2px;
-        }
-
-        .menu-item small {
-            display: block;
-            font-size: 0.6rem;
-            color: var(--tg-theme-hint-color, #aaa);
-            line-height: 1.2;
-        }
-
-        /* Стили для колеса */
+        /* Колесо */
         .wheel-section {
-            margin: 40px 0 60px;
+            margin: 20px 0 30px;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -111,7 +58,6 @@
             transition: transform 0.1s ease-out;
         }
 
-        /* Секторы колеса (8 секторов) */
         .sector {
             position: absolute;
             width: 50%;
@@ -160,13 +106,44 @@
             margin-top: 10px;
         }
 
-        .scroll-indicator {
-            margin-top: 20px;
-            color: var(--tg-theme-hint-color);
-            font-size: 0.8rem;
+        /* Сетка кнопок */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 30px;
         }
 
-        /* Нижняя навигация */
+        .menu-item {
+            background: rgba(22, 33, 62, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 14px;
+            padding: 12px 4px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item span {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 4px;
+        }
+        .menu-item p {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #fff);
+            margin-bottom: 2px;
+        }
+
+        .menu-item small {
+            display: block;
+            font-size: 0.6rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            line-height: 1.2;
+        }
+
+        /* Нижняя навигация (только ГЛАВНАЯ и ПРОФИЛЬ) */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -194,7 +171,85 @@
             background: rgba(64, 167, 227, 0.2);
         }
 
-        /* Стили для профиля (как на картинке) */
+        /* Страница инвентаря (по скриншоту) */
+        .inventory-header {
+            margin: 20px 0;
+        }
+
+        .inventory-name {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-block {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--tg-theme-hint-color, #aaa);
+        }
+
+        .plus-icon {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #40a7e3;
+            cursor: pointer;
+        }
+
+        .cost-block {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cost-label {
+            font-size: 1rem;
+            color: var(--tg-theme-text-color, #fff);
+        }
+
+        .cost-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .refresh-btn {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-text-color, #fff);
+            border: none;
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: fit-content;
+            margin: 0 auto 30px;
+        }
+
+        /* Страница профиля (как на скриншоте) */
         .profile-header {
             margin-bottom: 20px;
         }
@@ -230,7 +285,6 @@
         .stat-item {
             text-align: center;
         }
-
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
@@ -275,6 +329,7 @@
             cursor: pointer;
             width: 100%;
         }
+
         .best-drop {
             font-size: 1rem;
             font-weight: 500;
@@ -291,39 +346,43 @@
             font-weight: 700;
         }
 
+        /* Пространство для скролла на главной */
+        .scroll-space {
+            height: 200px;
+            width: 100%;
+        }
+
         @media (max-width: 400px) {
-            .menu-item span {
-                font-size: 1.6rem;
-            }
-            .menu-item p {
-                font-size: 0.7rem;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            .stat-value {
-                font-size: 1.8rem;
-            }
             .wheel {
                 width: 200px;
                 height: 200px;
             }
-        }
-
-        /* Добавляем высоту для скролла */
-        .scroll-space {
-            height: 300px;
-            width: 100%;
+            .stat-number {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Главная страница -->
+    <!-- Главная страница (колесо + кнопки) -->
     <div id="home-page" class="container" style="display: block;">
-        <h1>CELSER BOT</h1>
-        <div class="subtitle">Открывай кейсы за звёзды! ⭐️</div>
+        <!-- Колесо -->
+        <div class="wheel-section">
+            <div class="wheel" id="wheel">
+                <div class="sector"></div>
+                <div class="sector"></div>
+                <div class="sector"></div>
+                <div class="sector"></div>
+                <div class="sector"></div>
+                <div class="sector"></div>
+                <div class="sector"></div>
+                <div class="sector"></div>
+                <div class="wheel-center"></div>
+            </div>
+            <div class="free-spin-text">крути free spin</div>
+        </div>
 
-        <!-- Четыре кнопки -->
+        <!-- Четыре кнопки под колесом -->
         <div class="menu-grid">
             <div class="menu-item" id="casesBtn">
                 <span>🎁</span>
@@ -347,24 +406,7 @@
             </div>
         </div>
 
-        <!-- Секция с колесом -->
-        <div class="wheel-section">
-            <div class="wheel" id="wheel">
-                <div class="sector"></div>
-                <div class="sector"></div>
-                <div class="sector"></div>
-                <div class="sector"></div>
-                <div class="sector"></div>
-                <div class="sector"></div>
-                <div class="sector"></div>
-                <div class="sector"></div>
-                <div class="wheel-center"></div>
-            </div>
-            <div class="free-spin-text">крути free spin</div>
-            <div class="scroll-indicator">👇 прокрути вниз, чтобы крутить колесо 👇</div>
-        </div>
-
-        <!-- Пустое пространство для скролла -->
+        <!-- Пространство для скролла -->
         <div class="scroll-space"></div>
 
         <!-- Нижняя навигация -->
@@ -374,7 +416,38 @@
         </div>
     </div>
 
-    <!-- Страница профиля (точь-в-точь как на картинке) -->
+    <!-- Страница инвентаря -->
+    <div id="inventory-page" class="container" style="display: none;">
+        <div class="inventory-header">
+            <div class="inventory-name" id="inventory-name">ШЕЛЛИ</div>
+        </div>
+        <div class="stats-row">
+            <div class="stat-block">
+                <div class="stat-number" id="items-count">0</div>
+                <div class="stat-label">ПРЕДМЕТОВ</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-number" id="balance-display">0</div>
+                <div class="stat-label">★</div>
+            </div>
+            <div class="plus-icon" id="add-item">+</div>
+        </div>
+
+        <div class="cost-block">
+            <span class="cost-label">СТОИМОСТЬ</span>
+            <span class="cost-value" id="total-cost">0 ★</span>
+        </div>
+
+        <button class="refresh-btn" id="refresh-inventory">🔄 Обновить</button>
+
+        <!-- Нижняя навигация (такая же) -->
+        <div class="bottom-nav">
+            <div class="nav-item" id="nav-home-from-inventory">ГЛАВНАЯ</div>
+            <div class="nav-item" id="nav-profile-from-inventory">ПРОФИЛЬ</div>
+        </div>
+    </div>
+
+    <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
             <div class="profile-title">CELSER</div>
@@ -390,7 +463,7 @@
                 <div class="stat-value" id="profile-referrals">0</div>
                 <div class="stat-label">РЕФЕРАЛЫ ♥️</div>
             </div>
-            </div>
+        </div>
         <div class="referral-block">
             <div class="referral-title">ПРИГЛАСИТЬ ДРУГА</div>
             <div class="referral-subtitle">ПОЛУЧАЙТЕ БОНУСЫ ВМЕСТЕ!</div>
@@ -416,67 +489,81 @@
             }
 
             const user = tg?.initDataUnsafe?.user;
-            const homePage = document.getElementById('home-page');
-            const profilePage = document.getElementById('profile-page');
-            const wheel = document.getElementById('wheel');
 
-            // Заполняем профиль данными пользователя
+            // Страницы
+            const homePage = document.getElementById('home-page');
+            const inventoryPage = document.getElementById('inventory-page');
+            const profilePage = document.getElementById('profile-page');
+
+            // Заполняем имена пользователя
             if (user) {
-                const profileNameEl = document.getElementById('profile-name');
-                if (profileNameEl) profileNameEl.textContent = user.first_name.toUpperCase() || 'ШЕЛЛИ';
-                const profileIdEl = document.getElementById('profile-id');
-                if (profileIdEl) profileIdEl.textContent = 'ID: ${user.id}';
+                // Инвентарь
+                document.getElementById('inventory-name').textContent = user.first_name.toUpperCase() || 'ШЕЛЛИ';
+                // Профиль
+                document.getElementById('profile-name').textContent = user.first_name.toUpperCase() || 'ШЕЛЛИ';
+                document.getElementById('profile-id').textContent = 'ID: ${user.id}';
             }
 
-            // Вращение колеса при скролле
-            let lastScrollY = window.scrollY;
-            let rotation = 0;
-
+            // Колесо
+            const wheel = document.getElementById('wheel');
             function updateWheelRotation() {
                 const maxScroll = document.body.scrollHeight - window.innerHeight;
                 if (maxScroll > 0) {
                     const percent = window.scrollY / maxScroll;
-                    rotation = percent * 360; // от 0 до 360 градусов
-                    wheel.style.transform = 'rotate(${rotation}deg)';
+                    const rotation = percent * 360;
+                    if (wheel) wheel.style.transform = 'rotate(${rotation}deg)';
                 }
             }
-
             window.addEventListener('scroll', updateWheelRotation);
-            // Инициализация
-            setTimeout(updateWheelRotation, 100); // небольшая задержка для правильного расчёта высоты
-
+            setTimeout(updateWheelRotation, 100);
+            // Вспомогательная функция для назначения обработчиков
             function addHandler(id, event, fn) {
                 const el = document.getElementById(id);
                 if (el) el.addEventListener(event, fn);
                 else console.warn('Element with id', id, 'not found');
             }
 
+            // Функции показа страниц
             function showHome() {
                 homePage.style.display = 'block';
+                inventoryPage.style.display = 'none';
+                profilePage.style.display = 'none';
+                // Обновляем активный класс навигации
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                document.getElementById('nav-home')?.classList.add('active');
+                document.getElementById('nav-home-from-inventory')?.classList.add('active');
+                document.getElementById('nav-home-from-profile')?.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+
+            function showInventory() {
+                homePage.style.display = 'none';
+                inventoryPage.style.display = 'block';
                 profilePage.style.display = 'none';
                 document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                const navHome = document.getElementById('nav-home');
-                const navHomeFromProfile = document.getElementById('nav-home-from-profile');
-                if (navHome) navHome.classList.add('active');
-                if (navHomeFromProfile) navHomeFromProfile.classList.add('active');
-                // Сброс скролла при переходе на главную (опционально)
+                // На странице инвентаря не подсвечиваем конкретный пункт (или можно подсветить ГЛАВНУЮ)
+                // Оставим без активного класса или подсветим ГЛАВНУЮ – пусть будет ГЛАВНАЯ
+                document.getElementById('nav-home-from-inventory')?.classList.add('active');
+                document.getElementById('nav-home')?.classList.add('active');
                 window.scrollTo(0, 0);
             }
 
             function showProfile() {
                 homePage.style.display = 'none';
+                inventoryPage.style.display = 'none';
                 profilePage.style.display = 'block';
                 document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                const navProfile = document.getElementById('nav-profile');
-                const navProfileFromProfile = document.getElementById('nav-profile-from-profile');
-                if (navProfile) navProfile.classList.add('active');
-                if (navProfileFromProfile) navProfileFromProfile.classList.add('active');
-                // Сброс скролла при переходе на профиль
+                document.getElementById('nav-profile')?.classList.add('active');
+                document.getElementById('nav-profile-from-inventory')?.classList.add('active');
+                document.getElementById('nav-profile-from-profile')?.classList.add('active');
                 window.scrollTo(0, 0);
             }
+
             // Навигация
             addHandler('nav-home', 'click', showHome);
             addHandler('nav-profile', 'click', showProfile);
+            addHandler('nav-home-from-inventory', 'click', showHome);
+            addHandler('nav-profile-from-inventory', 'click', showProfile);
             addHandler('nav-home-from-profile', 'click', showHome);
             addHandler('nav-profile-from-profile', 'click', showProfile);
 
@@ -491,23 +578,38 @@
                 else alert('Функция в разработке');
             });
 
-            addHandler('inventoryBtn', 'click', showProfile);
+            addHandler('inventoryBtn', 'click', showInventory);
 
             addHandler('gamesBtn', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Игры', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
                 else alert('Функция в разработке');
             });
 
-            // Кнопка "Пригласить друга"
+            // Кнопка обновления в инвентаре
+            addHandler('refresh-inventory', 'click', () => {
+                if (tg) tg.sendData(JSON.stringify({ action: 'refresh_inventory' }));
+                else alert('Обновление инвентаря');
+                // Для демонстрации обновим цифры (позже будет через бота)
+                document.getElementById('items-count').textContent = '5';
+                document.getElementById('balance-display').textContent = '120';
+                document.getElementById('total-cost').textContent = '250 ★';
+            });
+
+            // Кнопка плюс в инвентаре (например, добавление предмета)
+            addHandler('add-item', 'click', () => {
+                if (tg) tg.showPopup({ title: 'Добавить', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
+                else alert('Добавление предмета');
+            });
+
+            // Кнопка "Пригласить друга" в профиле
             addHandler('invite-btn', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пригласить друга', message: 'Скопируйте реферальную ссылку и отправьте другу.', buttons: [{ type: 'ok' }] });
                 else alert('Пригласить друга');
             });
 
+            // Стартовая страница — главная
             showHome();
         })();
     </script>
 </body>
 </html>
-
-
