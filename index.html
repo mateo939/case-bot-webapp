@@ -147,12 +147,11 @@
             padding-left: 8px;
         }
         .live-title {
-            font-size: 1.8rem;  /* уменьшили */
+            font-size: 1.8rem;
             font-weight: 700;
             color: #ff0000;
             text-shadow: 0 0 10px rgba(255,0,0,0.5);
             margin-bottom: 10px;
-            margin-left: 0;       /* убрали лишний отступ */
         }
 
         .wheel-container {
@@ -223,7 +222,7 @@
             margin-top: 5px;
         }
 
-        /* Сетка кнопок – с более скруглёнными углами и объёмом */
+        /* Сетка кнопок – с большим скруглением и объёмом */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -234,7 +233,7 @@
         .menu-item {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            border-radius: 20px;        /* более скруглённые */
+            border-radius: 30px;
             padding: 16px 8px;
             text-align: center;
             cursor: pointer;
@@ -260,26 +259,82 @@
             color: #fff;
         }
 
-        /* Страница игр */
+        /* Страница игр — большая синяя кнопка */
         .games-header {
-            margin: 40px 0 30px;
-        }
-        .game-title {
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-size: 2rem;
+            font-weight: 700;
             background: linear-gradient(45deg, #ffd700, #ffb347);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
         }
-        .game-subtitle {
-            font-size: 1.2rem;
+
+        .game-button {
+            background: var(--tg-theme-button-color, #40a7e3);
+            border-radius: 50px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
+            transition: transform 0.2s;
+        }
+
+        .game-button:hover {
+            transform: translateY(-4px);
+        }
+
+        .game-button .game-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .game-button .game-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Страница инвентаря */
+        .cost-block {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 24px 20px;
+            margin: 20px 0 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
             color: var(--tg-theme-hint-color, #aaa);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
-        .rocket-icon {
-            font-size: 5rem;
-            margin: 30px 0;
-            filter: drop-shadow(0 0 20px orange);
+
+        .cost-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            line-height: 1.2;
+        }
+
+        .refresh-btn {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-text-color, #fff);
+            border: none;
+            border-radius: 50px;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: fit-content;
+            margin: 20px auto;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
         }
 
         /* Страница профиля – карточки с большим скруглением */
@@ -290,7 +345,7 @@
             margin-bottom: 30px;
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
-            border-radius: 30px;         /* сильнее скругление */
+            border-radius: 40px;
             padding: 12px 20px;
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
@@ -334,7 +389,7 @@
             flex: 1;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            border-radius: 30px;          /* более скруглённые */
+            border-radius: 40px;
             padding: 20px 8px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -353,18 +408,16 @@
             color: #fff;
             margin-top: 6px;
         }
-
         /* Синяя рамка для приглашения друга */
         .invite-blue-block {
             background: var(--tg-theme-button-color, #40a7e3);
-            border-radius: 30px;          /* сильнее скругление */
+            border-radius: 50px;
             padding: 18px 24px;
             margin-bottom: 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            border: none;
             box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
         }
 
@@ -399,7 +452,6 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-        /* Лучший дроп */
         .best-drop-section {
             text-align: left;
             margin-bottom: 30px;
@@ -411,57 +463,17 @@
             color: #fff;
             margin-bottom: 12px;
         }
+
         .no-drops {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            border-radius: 30px;           /* сильнее скругление */
+            border-radius: 40px;
             padding: 18px;
             text-align: center;
             color: var(--tg-theme-hint-color, #aaa);
             font-size: 1.1rem;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-        }
-
-        /* Страница инвентаря – по образу 2-го фото */
-        .cost-block {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border-radius: 30px;
-            padding: 24px 20px;
-            margin: 20px 0 30px;
-            text-align: center;           /* центрируем текст */
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-        }
-
-        .cost-label {
-            font-size: 0.9rem;            /* мелкий шрифт */
-            font-weight: 500;
-            color: var(--tg-theme-hint-color, #aaa);
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .cost-value {
-            font-size: 2.5rem;            /* крупно */
-            font-weight: 700;
-            color: #ffd700;
-            line-height: 1.2;
-        }
-
-        .refresh-btn {
-            background: var(--tg-theme-button-color, #40a7e3);
-            color: var(--tg-theme-button-text-color, #fff);
-            border: none;
-            border-radius: 40px;
-            padding: 14px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: fit-content;
-            margin: 20px auto;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
         }
 
         @media (max-width: 400px) {
@@ -530,14 +542,14 @@
             </div>
         </div>
     </div>
+
     <!-- Страница игр -->
     <div id="games-page" class="container" style="display: none;">
-        <div class="games-header">
+        <div class="games-header">ИГРЫ</div>
+        <div class="game-button" id="rocket-game">
             <div class="game-title">ROCKET</div>
             <div class="game-subtitle">fly to the mars</div>
         </div>
-        <div class="rocket-icon">🚀</div>
-        <button class="refresh-btn" id="play-rocket" style="margin-top: 20px;">ИГРАТЬ</button>
     </div>
 
     <!-- Страница инвентаря -->
@@ -621,9 +633,8 @@
                 userAvatarEl.textContent = initial;
                 profileIdEl.textContent = 'ID: ${user.id}';
             }
-
             // Баланс (заглушка)
-         let currentBalance = 0;
+            let currentBalance = 0;
             function updateBalances(balance) {
                 currentBalance = balance;
                 balanceDisplay.textContent = balance + ' ★';
@@ -713,10 +724,10 @@
             });
 
             addHandler('inventoryBtn', 'click', showInventory);
-
             addHandler('gamesBtn', 'click', showGames);
+
             // Кнопка в играх
-            addHandler('play-rocket', 'click', () => {
+            addHandler('rocket-game', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Rocket', message: 'Запуск игры...', buttons: [{ type: 'ok' }] });
                 else alert('Игра');
             });
