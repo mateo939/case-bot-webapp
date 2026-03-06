@@ -117,11 +117,12 @@
             background: rgba(64, 167, 227, 0.2);
         }
 
+        /* Стили для страницы профиля */
         .profile-header {
             margin-bottom: 20px;
         }
 
-        .welu {
+        .profile-name {
             font-size: 2rem;
             font-weight: 700;
             background: linear-gradient(45deg, #ffd700, #ffb347);
@@ -141,10 +142,10 @@
             justify-content: space-around;
             margin-bottom: 25px;
         }
-
         .stat-item {
             text-align: center;
         }
+
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
@@ -262,9 +263,10 @@
             </div>
         </div>
 
-        <!-- Нижняя навигация (только ГЛАВНАЯ и ПРОФИЛЬ) -->
+        <!-- Нижняя навигация (три пункта) -->
         <div class="bottom-nav">
             <div class="nav-item active" id="nav-home">ГЛАВНАЯ</div>
+            <div class="nav-item" id="nav-contests">КОНКУРСЫ</div>
             <div class="nav-item" id="nav-profile">ПРОФИЛЬ</div>
         </div>
     </div>
@@ -272,8 +274,8 @@
     <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
-            <div class="welu" id="profile-welu">WELU</div>
-            <div class="profile-id" id="profile-id-display">ID: 1326919289</div>
+            <div class="profile-name" id="profile-name">ШЕЛЛИ</div>
+            <div class="profile-id" id="profile-id">ID: 1326919289</div>
         </div>
         <div class="stats-grid">
             <div class="stat-item">
@@ -290,10 +292,13 @@
             <div class="referral-subtitle">ПОЛУЧАЙТЕ БОНУСЫ ВМЕСТЕ!</div>
             <button class="invite-btn" id="invite-btn">ПРИГЛАСИТЬ ДРУГА</button>
         </div>
-        <div class="best-drop"><span>ЛУЧШИЙ ДРОП</span> · Сейчас ничего нет</div>
+        <div class="best-drop">
+            <span>❤️ ЛУЧШИЙ ДРОП</span> · Скоро здесь появится информация
+        </div>
         <!-- Нижняя навигация на странице профиля -->
         <div class="bottom-nav">
             <div class="nav-item" id="nav-home-from-profile">ГЛАВНАЯ</div>
+            <div class="nav-item" id="nav-contests-from-profile">КОНКУРСЫ</div>
             <div class="nav-item active" id="nav-profile-from-profile">ПРОФИЛЬ</div>
         </div>
     </div>
@@ -311,11 +316,14 @@
             const homePage = document.getElementById('home-page');
             const profilePage = document.getElementById('profile-page');
 
+            // Заполняем профиль данными пользователя, если есть
             if (user) {
-                const welu = document.getElementById('profile-welu');
-                if (welu) welu.textContent = user.first_name.toUpperCase() || 'WELU';
-                const idDisplay = document.getElementById('profile-id-display');
-                if (idDisplay) idDisplay.textContent = 'ID: ${user.id}';
+                const profileNameEl = document.getElementById('profile-name');
+                if (profileNameEl) profileNameEl.textContent = user.first_name.toUpperCase() || 'ШЕЛЛИ';
+                const profileIdEl = document.getElementById('profile-id');
+                if (profileIdEl) profileIdEl.textContent = 'ID: ${user.id}';
+            } else {
+                // Если нет данных, оставляем заглушку "ШЕЛЛИ"
             }
 
             function addHandler(id, event, fn) {
@@ -347,11 +355,20 @@
                     if (navProfileFromProfile) navProfileFromProfile.classList.add('active');
                 }
             }
+            function showContests() {
+                if (tg) {
+                    tg.showPopup({ title: 'Конкурсы', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
+                } else {
+                    alert('Раздел в разработке');
+                }
+            }
 
             // Навигация
             addHandler('nav-home', 'click', showHome);
+            addHandler('nav-contests', 'click', showContests);
             addHandler('nav-profile', 'click', showProfile);
             addHandler('nav-home-from-profile', 'click', showHome);
+            addHandler('nav-contests-from-profile', 'click', showContests);
             addHandler('nav-profile-from-profile', 'click', showProfile);
 
             // Кнопки на главной
@@ -359,6 +376,7 @@
                 if (tg) tg.sendData(JSON.stringify({ action: 'open_cases' }));
                 else alert('Telegram Web App недоступен');
             });
+
             addHandler('upgradeBtn', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Апгрейд', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
                 else alert('Функция в разработке');
@@ -392,4 +410,3 @@
     </script>
 </body>
 </html>
-
