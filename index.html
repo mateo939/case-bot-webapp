@@ -374,7 +374,7 @@
             background: #444;
         }
 
-        /* Страница кейсов — сетка с двумя колонками */
+        /* Страница кейсов — одна карточка */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -386,7 +386,7 @@
 
         .cases-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr; /* одна колонка */
             gap: 16px;
             margin-bottom: 30px;
         }
@@ -395,7 +395,7 @@
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             border-radius: 30px;
-            padding: 16px 8px;
+            padding: 20px 16px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
@@ -407,29 +407,30 @@
             transform: translateY(-4px);
         }
         .case-image {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 12px;
-            background: rgba(255, 255, 255, 0.1);
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 16px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #ffd700;
+            overflow: hidden;
             border: 2px solid rgba(255,215,0,0.5);
             box-shadow: 0 0 15px rgba(255,215,0,0.3);
         }
 
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .case-name {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
 
         .case-value {
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: #ffd700;
             font-weight: 600;
         }
@@ -660,28 +661,24 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
     </div>
 
-    <!-- Страница кейсов с двумя карточками -->
+    <!-- Страница кейсов (один кейс) -->
     <div id="cases-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
         <div class="cases-header">КЕЙСЫ</div>
         <div class="cases-grid">
             <div class="case-card" id="case1">
-                <div class="case-image">🎁</div>
-                <div class="case-name">SC</div>
-                <div class="case-value">2500</div>
-            </div>
-            <div class="case-card" id="case2">
-                <div class="case-image">🎁</div>
-                <div class="case-name">BOELI</div>
-                <div class="case-value">3000</div>
+                <div class="case-image">
+                    <!-- Сюда нужно загрузить изображение case-common.png в корень репозитория -->
+                    <img src="case-common.png" alt="Обычный кейс">
+                </div>
+                <div class="case-name">обычный кейс</div>
+                <div class="case-value">140 ⭐️</div>
             </div>
         </div>
-        <!-- Можно добавить ещё карточки по необходимости -->
     </div>
 
     <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
-        <!-- Блок с аватаром и ID -->
         <div class="profile-header">
             <div class="profile-avatar" id="profile-avatar">Ш</div>
             <div class="profile-info">
@@ -690,7 +687,6 @@
             </div>
         </div>
 
-        <!-- Блоки баланса и рефералов -->
         <div class="stats-row">
             <div class="stat-item">
                 <div class="stat-value" id="profile-balance">0</div>
@@ -702,7 +698,6 @@
             </div>
         </div>
 
-        <!-- Блок приглашения друга в синей рамке -->
         <div class="invite-blue-block" id="invite-btn">
             <div class="invite-text">
                 <div class="invite-title">ПРИГЛАСИТЬ ДРУГА</div>
@@ -711,7 +706,6 @@
             <div class="invite-plus">+</div>
         </div>
 
-        <!-- Лучший дроп -->
         <div class="best-drop-section">
             <div class="best-drop-title">ЛУЧШИЙ ДРОП</div>
             <div class="no-drops">ПОКА НЕТ ДРОПОВ</div>
@@ -762,6 +756,7 @@
             }
             updateBalances(0);
             profileReferrals.textContent = '0';
+
             // Колесо
             const wheel = document.getElementById('wheel');
             function updateWheelRotation() {
@@ -845,6 +840,7 @@
 
             addHandler('nav-home', 'click', showHome);
             addHandler('nav-profile', 'click', showProfile);
+
             // Кнопки на главной
             addHandler('casesBtn', 'click', showCases);
             addHandler('upgradeBtn', 'click', () => {
@@ -884,20 +880,15 @@
             addHandler('back-from-inventory', 'click', showHome);
             addHandler('back-from-cases', 'click', showHome);
 
+            // Обработчик клика по карточке кейса
+            addHandler('case1', 'click', () => {
+                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'обычный', price: 140 }));
+                else alert('Обычный кейс');
+            });
+
             // Показываем главную
             showHome();
-
-            // Обработчики кликов по карточкам кейсов (можно добавить логику)
-            addHandler('case1', 'click', () => {
-                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'SC', price: 2500 }));
-                else alert('Кейс SC');
-            });
-            addHandler('case2', 'click', () => {
-                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'BOELI', price: 3000 }));
-                else alert('Кейс BOELI');
-            });
         })();
     </script>
 </body>
 </html>
-
