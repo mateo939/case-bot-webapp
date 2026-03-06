@@ -21,11 +21,11 @@
             background-color: var(--tg-theme-bg-color, #1a1a2e);
             color: var(--tg-theme-text-color, #fff);
             min-height: 100vh;
-            padding-bottom: 60px; /* отступ для фиксированной навигации */
+            padding-bottom: 60px;
             position: relative;
         }
 
-        /* Фиксированная нижняя навигация — уменьшенная и полностью чёрная */
+        /* Фиксированная нижняя навигация — чёрная, уменьшенная, три пункта */
         .bottom-nav-fixed {
             position: fixed;
             bottom: 0;
@@ -33,20 +33,19 @@
             width: 100%;
             display: flex;
             justify-content: space-around;
-            background: #000000; /* полностью чёрный */
-            backdrop-filter: none;
+            background: #000000;
             border-top: 1px solid #333;
-            padding: 8px 12px; /* уменьшенные отступы */
+            padding: 8px 12px;
             z-index: 1000;
         }
 
         .nav-item-fixed {
             flex: 1;
             text-align: center;
-            padding: 6px 0; /* уменьшено */
-            font-size: 0.9rem; /* чуть меньше */
+            padding: 6px 0;
+            font-size: 0.9rem;
             font-weight: 500;
-            color: #fff; /* белый текст */
+            color: #fff;
             cursor: pointer;
             border-radius: 16px;
             transition: all 0.2s;
@@ -54,7 +53,7 @@
 
         .nav-item-fixed.active {
             color: var(--tg-theme-button-color, #40a7e3);
-            background: rgba(255,255,255,0.1); /* лёгкая подсветка */
+            background: rgba(255,255,255,0.1);
         }
 
         .container {
@@ -64,7 +63,7 @@
             text-align: center;
         }
 
-        /* Верхняя панель с профилем и балансом */
+        /* Верхняя панель с именем и балансом */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -135,17 +134,19 @@
         .plus-btn:hover {
             transform: scale(1.1);
         }
+
         /* Секция LIVE */
         .live-section {
             margin-bottom: 30px;
+            text-align: left; /* выравнивание по левому краю */
         }
-
         .live-title {
             font-size: 2rem;
             font-weight: 700;
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+            color: #ff0000; /* красный */
+            text-shadow: 0 0 10px rgba(255,0,0,0.5);
             margin-bottom: 10px;
+            margin-left: 10px; /* небольшой отступ слева */
         }
 
         .wheel-container {
@@ -216,7 +217,7 @@
             margin-top: 5px;
         }
 
-        /* Сетка кнопок — тёмные, прозрачные, без дополнительных подписей */
+        /* Сетка кнопок */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -225,7 +226,7 @@
         }
 
         .menu-item {
-            background: rgba(0, 0, 0, 0.5); /* тёмный полупрозрачный */
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(3px);
             border-radius: 14px;
             padding: 12px 4px;
@@ -243,10 +244,105 @@
         .menu-item p {
             font-size: 0.9rem;
             font-weight: 600;
-            color: #fff; /* белый текст */
+            color: #fff;
         }
 
-        /* Страница инвентаря */
+        /* Страница профиля */
+        .profile-header {
+            margin-bottom: 20px;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .profile-id {
+            font-size: 1rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            margin-bottom: 30px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        .stat-label {
+            font-size: 1rem;
+            color: var(--tg-theme-text-color, #fff);
+            margin-top: 4px;
+        }
+
+        .referral-block {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .referral-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .referral-subtitle {
+            font-size: 0.9rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            margin-bottom: 15px;
+        }
+
+        .invite-btn {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-text-color, #fff);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .best-drop-section {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .best-drop-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #fff);
+            margin-bottom: 10px;
+        }
+
+        .no-drops {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            color: var(--tg-theme-hint-color, #aaa);
+            font-size: 1rem;
+        }
+
+        /* Страница инвентаря (оставляем без изменений) */
         .inventory-header {
             margin: 20px 0;
         }
@@ -260,7 +356,7 @@
             margin-bottom: 20px;
         }
 
-        .stats-row {
+        .stats-row-inv {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -277,6 +373,7 @@
             font-weight: 700;
             color: #ffd700;
         }
+
         .stat-label {
             font-size: 0.8rem;
             color: var(--tg-theme-hint-color, #aaa);
@@ -323,128 +420,31 @@
             margin: 0 auto 30px;
         }
 
-        /* Страница профиля */
-        .profile-header {
-            margin-bottom: 20px;
-        }
-
-        .profile-title {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ffd700, #ffb347);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-        }
-
-        .profile-name {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--tg-theme-text-color, #fff);
-            margin-bottom: 4px;
-        }
-
-        .profile-id {
-            font-size: 0.9rem;
-            color: var(--tg-theme-hint-color, #aaa);
-            margin-bottom: 25px;
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 25px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--tg-theme-text-color, #fff);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--tg-theme-hint-color, #aaa);
-            margin-top: 4px;
-        }
-
-        .referral-block {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .referral-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .referral-subtitle {
-            font-size: 0.8rem;
-            color: var(--tg-theme-hint-color, #aaa);
-            margin-bottom: 15px;
-        }
-
-        .invite-btn {
-            background: var(--tg-theme-button-color, #40a7e3);
-            color: var(--tg-theme-button-text-color, #fff);
-            border: none;
-            border-radius: 40px;
-            padding: 14px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .best-drop {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--tg-theme-text-color, #fff);
-            margin-bottom: 20px;
-            text-align: left;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-        }
-
-        .best-drop span {
-            color: var(--tg-theme-button-color, #40a7e3);
-            font-weight: 700;
-        }
-
         @media (max-width: 400px) {
             .wheel {
                 width: 200px;
                 height: 200px;
             }
+            .stat-value {
+                font-size: 1.8rem;
+            }
             .stat-number {
                 font-size: 2rem;
-            }
-            .balance-value {
-                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) — уменьшенная, чёрная -->
+    <!-- Фиксированная нижняя навигация (три пункта) -->
     <div class="bottom-nav-fixed">
         <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
+        <div class="nav-item-fixed" id="nav-contests">КОНКУРСЫ</div>
         <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
     </div>
 
     <!-- Контейнер для главной страницы -->
     <div id="home-page" class="container" style="display: block;">
-        <!-- Верхняя панель с именем, балансом и плюсом -->
+        <!-- Верхняя панель с именем и балансом -->
         <div class="top-bar">
             <div class="user-info">
                 <div class="user-avatar" id="user-avatar">Ш</div>
@@ -456,7 +456,7 @@
             </div>
         </div>
 
-        <!-- Секция LIVE -->
+        <!-- Секция LIVE с красным заголовком слева -->
         <div class="live-section">
             <div class="live-title">LIVE</div>
             <div class="wheel-container">
@@ -465,11 +465,11 @@
                     <div class="sector"></div><div class="sector"></div><div class="sector"></div><div class="sector"></div>
                     <div class="wheel-center"></div>
                 </div>
-                <div class="spin-text">КРУТИ СПИН PVP</div>
+                <div class="spin-text">FREE SPIN</div>
             </div>
         </div>
 
-        <!-- Кнопки под колесом — без дополнительных подписей -->
+        <!-- Четыре кнопки -->
         <div class="menu-grid">
             <div class="menu-item" id="casesBtn">
                 <span>🎁</span>
@@ -496,7 +496,7 @@
             <div class="inventory-name" id="inventory-name">ШЕЛЛИ</div>
         </div>
 
-        <div class="stats-row">
+        <div class="stats-row-inv">
             <div class="stat-block">
                 <div class="stat-number" id="items-count">0</div>
                 <div class="stat-label">ПРЕДМЕТОВ</div>
@@ -519,18 +519,18 @@
     <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
-            <div class="profile-title">CELSER</div>
             <div class="profile-name" id="profile-name">ШЕЛЛИ</div>
             <div class="profile-id" id="profile-id">ID: 1326919289</div>
         </div>
-        <div class="stats-grid">
+
+        <div class="stats-row">
             <div class="stat-item">
                 <div class="stat-value" id="profile-balance">0</div>
-                <div class="stat-label">БАЛАНС ★</div>
+                <div class="stat-label">БАЛАНС ⭐️</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value" id="profile-referrals">0</div>
-                <div class="stat-label">РЕФЕРАЛЫ ♥️</div>
+                <div class="stat-label">РЕФЕРАЛЫ 🎁</div>
             </div>
         </div>
         <div class="referral-block">
@@ -538,8 +538,10 @@
             <div class="referral-subtitle">ПОЛУЧАЙТЕ БОНУСЫ ВМЕСТЕ!</div>
             <button class="invite-btn" id="invite-btn">ПРИГЛАСИТЬ ДРУГА</button>
         </div>
-        <div class="best-drop">
-            <span>❤️ ЛУЧШИЙ ДРОП</span> · Скоро здесь появится информация
+
+        <div class="best-drop-section">
+            <div class="best-drop-title">ЛУЧШИЙ ДРОП</div>
+            <div class="no-drops">ПОКА НЕТ ДРОПОВ</div>
         </div>
     </div>
 
@@ -554,12 +556,12 @@
 
             const user = tg?.initDataUnsafe?.user;
 
-            // Элементы для отображения имени и аватара
+            // Элементы
             const userNameEl = document.getElementById('user-name');
             const userAvatarEl = document.getElementById('user-avatar');
-            const inventoryNameEl = document.getElementById('inventory-name');
             const profileNameEl = document.getElementById('profile-name');
             const profileIdEl = document.getElementById('profile-id');
+            const inventoryNameEl = document.getElementById('inventory-name');
             const balanceDisplay = document.getElementById('balance-display');
             const invBalance = document.getElementById('inv-balance');
             const profileBalance = document.getElementById('profile-balance');
@@ -595,13 +597,12 @@
             window.addEventListener('scroll', updateWheelRotation);
             setTimeout(updateWheelRotation, 100);
 
-            // Функция добавления обработчиков
+            // Навигация
             function addHandler(id, event, fn) {
                 const el = document.getElementById(id);
                 if (el) el.addEventListener(event, fn);
             }
 
-            // Страницы
             const homePage = document.getElementById('home-page');
             const inventoryPage = document.getElementById('inventory-page');
             const profilePage = document.getElementById('profile-page');
@@ -615,16 +616,15 @@
                 document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
+
             function showInventory() {
                 homePage.style.display = 'none';
                 inventoryPage.style.display = 'block';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
-                // можно подсветить главную или не подсвечивать
-                document.getElementById('nav-home').classList.add('active');
+                document.getElementById('nav-home').classList.add('active'); // подсветим главную или можно ничего
                 window.scrollTo(0, 0);
             }
-
             function showProfile() {
                 homePage.style.display = 'none';
                 inventoryPage.style.display = 'none';
@@ -634,8 +634,13 @@
                 window.scrollTo(0, 0);
             }
 
-            // Навигация
+            function showContests() {
+                if (tg) tg.showPopup({ title: 'Конкурсы', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
+                else alert('Раздел в разработке');
+            }
+
             addHandler('nav-home', 'click', showHome);
+            addHandler('nav-contests', 'click', showContests);
             addHandler('nav-profile', 'click', showProfile);
 
             // Кнопки на главной
@@ -656,29 +661,28 @@
                 else alert('Функция в разработке');
             });
 
-            // Кнопка плюс (пополнение баланса)
+            // Плюс (пополнение)
             addHandler('add-balance', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пополнение', message: 'Функция пополнения скоро появится', buttons: [{ type: 'ok' }] });
                 else alert('Пополнение');
             });
 
-            // Кнопка плюс в инвентаре
+            // Кнопка в инвентаре
             addHandler('add-item', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Добавить предмет', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
                 else alert('Добавление предмета');
             });
 
-            // Кнопка обновления инвентаря
+            // Обновление инвентаря
             addHandler('refresh-inventory', 'click', () => {
                 if (tg) tg.sendData(JSON.stringify({ action: 'refresh_inventory' }));
                 else alert('Обновление');
-                // Демо-обновление цифр
                 document.getElementById('items-count').textContent = '5';
                 document.getElementById('total-cost').textContent = '250 ★';
-                updateBalances(120); // обновим баланс везде
+                updateBalances(120);
             });
 
-            // Кнопка "Пригласить друга" в профиле
+            // Пригласить друга
             addHandler('invite-btn', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пригласить друга', message: 'Скопируйте реферальную ссылку и отправьте другу.', buttons: [{ type: 'ok' }] });
                 else alert('Пригласить друга');
