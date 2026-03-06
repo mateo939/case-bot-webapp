@@ -21,8 +21,8 @@
             background-color: var(--tg-theme-bg-color, #1a1a2e);
             color: var(--tg-theme-text-color, #fff);
             min-height: 100vh;
-            padding-top: 70px; /* отступ для фиксированной верхней панели */
-            padding-bottom: 60px; /* отступ для фиксированной нижней навигации */
+            padding-top: 70px;
+            padding-bottom: 60px;
             position: relative;
         }
 
@@ -255,10 +255,11 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 30px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
             border-radius: 50px;
             padding: 8px 16px;
-            backdrop-filter: blur(3px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .profile-avatar {
@@ -283,12 +284,11 @@
             font-weight: 700;
             color: #fff;
         }
-
         .profile-id {
             font-size: 0.8rem;
             color: var(--tg-theme-hint-color, #aaa);
         }
-        /* Блоки баланса и рефералов — в стиле кнопок на главной */
+
         .stats-row {
             display: flex;
             gap: 8px;
@@ -350,6 +350,10 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .best-drop-section {
@@ -375,72 +379,14 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Страница инвентаря (оставляем без изменений, но тоже подкорректируем стили под общую тему) */
+        /* Страница инвентаря (упрощённая) */
         .inventory-header {
             margin: 20px 0;
-        }
-
-        .inventory-name {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ffd700, #ffb347);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        .stats-row-inv {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-block {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffd700;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--tg-theme-hint-color, #aaa);
-        }
-
-        .plus-icon {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #40a7e3;
-            cursor: pointer;
-        }
-
-        .cost-block {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(3px);
-            border-radius: 14px;
-            padding: 15px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .cost-label {
-            font-size: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
             color: #fff;
         }
 
-        .cost-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #ffd700;
-        }
         .refresh-btn {
             background: var(--tg-theme-button-color, #40a7e3);
             color: var(--tg-theme-button-text-color, #fff);
@@ -451,7 +397,7 @@
             font-weight: 600;
             cursor: pointer;
             width: fit-content;
-            margin: 0 auto 30px;
+            margin: 20px auto;
         }
 
         @media (max-width: 400px) {
@@ -462,14 +408,11 @@
             .stat-value {
                 font-size: 1.8rem;
             }
-            .stat-number {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Фиксированная верхняя панель — чёрная, с аватаром, именем и балансом -->
+    <!-- Фиксированная верхняя панель -->
     <div class="top-bar-fixed">
         <div class="user-info">
             <div class="user-avatar" id="user-avatar">Ш</div>
@@ -481,15 +424,13 @@
         </div>
     </div>
 
-    <!-- Фиксированная нижняя навигация (только ГЛАВНАЯ и ПРОФИЛЬ) -->
+    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) -->
     <div class="bottom-nav-fixed">
         <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
         <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
     </div>
-
-    <!-- Контейнер для главной страницы -->
+    <!-- Главная страница -->
     <div id="home-page" class="container" style="display: block;">
-        <!-- Секция LIVE -->
         <div class="live-section">
             <div class="live-title">LIVE</div>
             <div class="wheel-container">
@@ -502,7 +443,6 @@
             </div>
         </div>
 
-        <!-- Четыре кнопки -->
         <div class="menu-grid">
             <div class="menu-item" id="casesBtn">
                 <span>🎁</span>
@@ -523,35 +463,15 @@
         </div>
     </div>
 
-    <!-- Страница инвентаря -->
+    <!-- Страница инвентаря (только кнопка обновления) -->
     <div id="inventory-page" class="container" style="display: none;">
-        <div class="inventory-header">
-            <div class="inventory-name" id="inventory-name">ШЕЛЛИ</div>
-        </div>
-
-        <div class="stats-row-inv">
-            <div class="stat-block">
-                <div class="stat-number" id="items-count">0</div>
-                <div class="stat-label">ПРЕДМЕТОВ</div>
-            </div>
-            <div class="stat-block">
-                <div class="stat-number" id="inv-balance">0</div>
-                <div class="stat-label">★</div>
-            </div>
-            <div class="plus-icon" id="add-item">+</div>
-        </div>
-
-        <div class="cost-block">
-            <span class="cost-label">СТОИМОСТЬ</span>
-            <span class="cost-value" id="total-cost">0 ★</span>
-        </div>
-
+        <div class="inventory-header">ИНВЕНТАРЬ</div>
         <button class="refresh-btn" id="refresh-inventory">🔄 Обновить</button>
     </div>
 
     <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
-        <!-- Верхний блок с аватаром и ID (как на фото) -->
+        <!-- Блок с аватаром и ID (тёмный) -->
         <div class="profile-header">
             <div class="profile-avatar" id="profile-avatar">Ш</div>
             <div class="profile-info">
@@ -560,7 +480,7 @@
             </div>
         </div>
 
-        <!-- Блоки баланса и рефералов в стиле кнопок на главной -->
+        <!-- Блоки баланса и рефералов -->
         <div class="stats-row">
             <div class="stat-item">
                 <div class="stat-value" id="profile-balance">0</div>
@@ -572,11 +492,11 @@
             </div>
         </div>
 
-        <!-- Блок приглашения друга -->
+        <!-- Блок приглашения друга с синей кнопкой и плюсиком -->
         <div class="referral-block">
             <div class="referral-title">ПРИГЛАСИТЬ ДРУГА</div>
             <div class="referral-subtitle">ПОЛУЧАЙТЕ БОНУСЫ ВМЕСТЕ!</div>
-            <button class="invite-btn" id="invite-btn">ПРИГЛАСИТЬ ДРУГА</button>
+            <button class="invite-btn" id="invite-btn">➕ ПРИГЛАСИТЬ ДРУГА</button>
         </div>
 
         <!-- Лучший дроп -->
@@ -603,19 +523,15 @@
             const profileNameEl = document.getElementById('profile-name');
             const profileAvatarEl = document.getElementById('profile-avatar');
             const profileIdEl = document.getElementById('profile-id');
-            const inventoryNameEl = document.getElementById('inventory-name');
             const balanceDisplay = document.getElementById('balance-display');
-            const invBalance = document.getElementById('inv-balance');
             const profileBalance = document.getElementById('profile-balance');
             const profileReferrals = document.getElementById('profile-referrals');
-
             if (user) {
                 const firstName = user.first_name || 'ШЕЛЛИ';
                 const upperName = firstName.toUpperCase();
                 const initial = firstName.charAt(0).toUpperCase();
 
                 userNameEl.textContent = upperName;
-                inventoryNameEl.textContent = upperName;
                 profileNameEl.textContent = upperName;
                 profileAvatarEl.textContent = initial;
                 userAvatarEl.textContent = initial;
@@ -627,7 +543,6 @@
             function updateBalances(balance) {
                 currentBalance = balance;
                 balanceDisplay.textContent = balance + ' ★';
-                invBalance.textContent = balance;
                 profileBalance.textContent = balance;
             }
             updateBalances(0);
@@ -645,6 +560,7 @@
             }
             window.addEventListener('scroll', updateWheelRotation);
             setTimeout(updateWheelRotation, 100);
+
             // Навигация
             function addHandler(id, event, fn) {
                 const el = document.getElementById(id);
@@ -670,7 +586,7 @@
                 inventoryPage.style.display = 'block';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
-                document.getElementById('nav-home').classList.add('active'); // подсветим главную
+                document.getElementById('nav-home').classList.add('active'); // подсветка главной
                 window.scrollTo(0, 0);
             }
 
@@ -703,27 +619,17 @@
                 if (tg) tg.showPopup({ title: 'Игры', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
                 else alert('Функция в разработке');
             });
-
             // Плюс (пополнение)
             addHandler('add-balance', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пополнение', message: 'Функция пополнения скоро появится', buttons: [{ type: 'ok' }] });
                 else alert('Пополнение');
             });
 
-            // Кнопка в инвентаре
-            addHandler('add-item', 'click', () => {
-                if (tg) tg.showPopup({ title: 'Добавить предмет', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
-                else alert('Добавление предмета');
-            });
-
             // Обновление инвентаря
             addHandler('refresh-inventory', 'click', () => {
                 if (tg) tg.sendData(JSON.stringify({ action: 'refresh_inventory' }));
                 else alert('Обновление');
-                document.getElementById('items-count').textContent = '5';
-                document.getElementById('total-cost').textContent = '250 ★';
-                updateBalances(120);
-                profileReferrals.textContent = '3'; // пример для рефералов
+                // Здесь можно было бы обновить данные, но пока заглушка
             });
 
             // Пригласить друга
