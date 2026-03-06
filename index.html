@@ -71,7 +71,7 @@
             align-items: center;
             gap: 8px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            border-radius: 30px;
             padding: 4px 12px;
         }
 
@@ -94,6 +94,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .plus-btn:hover {
@@ -122,13 +123,14 @@
             font-weight: 500;
             color: #fff;
             cursor: pointer;
-            border-radius: 16px;
+            border-radius: 30px;
             transition: all 0.2s;
         }
 
         .nav-item-fixed.active {
             color: var(--tg-theme-button-color, #40a7e3);
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .container {
@@ -142,14 +144,15 @@
         .live-section {
             margin-bottom: 30px;
             text-align: left;
+            padding-left: 8px;
         }
         .live-title {
-            font-size: 2rem;
+            font-size: 1.8rem;  /* уменьшили */
             font-weight: 700;
             color: #ff0000;
             text-shadow: 0 0 10px rgba(255,0,0,0.5);
             margin-bottom: 10px;
-            margin-left: 10px;
+            margin-left: 0;       /* убрали лишний отступ */
         }
 
         .wheel-container {
@@ -220,57 +223,88 @@
             margin-top: 5px;
         }
 
+        /* Сетка кнопок – с более скруглёнными углами и объёмом */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+            gap: 12px;
             margin-bottom: 30px;
         }
 
         .menu-item {
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(3px);
-            border-radius: 14px;
-            padding: 12px 4px;
+            backdrop-filter: blur(5px);
+            border-radius: 20px;        /* более скруглённые */
+            padding: 16px 8px;
             text-align: center;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5);
         }
 
         .menu-item span {
             display: block;
-            font-size: 1.8rem;
-            margin-bottom: 4px;
+            font-size: 2rem;
+            margin-bottom: 6px;
         }
 
         .menu-item p {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 600;
             color: #fff;
         }
 
-        /* Страница профиля */
+        /* Страница игр */
+        .games-header {
+            margin: 40px 0 30px;
+        }
+        .game-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        .game-subtitle {
+            font-size: 1.2rem;
+            color: var(--tg-theme-hint-color, #aaa);
+        }
+        .rocket-icon {
+            font-size: 5rem;
+            margin: 30px 0;
+            filter: drop-shadow(0 0 20px orange);
+        }
+
+        /* Страница профиля – карточки с большим скруглением */
         .profile-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             margin-bottom: 30px;
             background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(3px);
-            border-radius: 50px;
-            padding: 8px 16px;
-            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 30px;         /* сильнее скругление */
+            padding: 12px 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
         .profile-avatar {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: linear-gradient(45deg, #ffd700, #ffb347);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 600;
             color: #1a1a2e;
         }
@@ -280,55 +314,58 @@
         }
 
         .profile-name {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #fff;
         }
+
         .profile-id {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--tg-theme-hint-color, #aaa);
         }
 
         .stats-row {
             display: flex;
-            gap: 8px;
+            gap: 12px;
             margin-bottom: 30px;
         }
 
         .stat-item {
             flex: 1;
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(3px);
-            border-radius: 14px;
-            padding: 16px 8px;
+            backdrop-filter: blur(5px);
+            border-radius: 30px;          /* более скруглённые */
+            padding: 20px 8px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
         }
 
         .stat-value {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #ffd700;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 600;
             color: #fff;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
-        /* Синяя рамка для приглашения друга (как кнопка) */
+        /* Синяя рамка для приглашения друга */
         .invite-blue-block {
             background: var(--tg-theme-button-color, #40a7e3);
-            border-radius: 14px;
-            padding: 16px 20px;
+            border-radius: 30px;          /* сильнее скругление */
+            padding: 18px 24px;
             margin-bottom: 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
             border: none;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
         }
 
         .invite-text {
@@ -336,90 +373,95 @@
         }
 
         .invite-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #fff;
             line-height: 1.3;
         }
 
         .invite-subtitle {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
             margin-top: 4px;
         }
 
         .invite-plus {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             background: rgba(255,255,255,0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 600;
             color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
+        /* Лучший дроп */
         .best-drop-section {
             text-align: left;
             margin-bottom: 30px;
         }
 
         .best-drop-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #fff;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
-
         .no-drops {
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(3px);
-            border-radius: 14px;
-            padding: 15px;
+            backdrop-filter: blur(5px);
+            border-radius: 30px;           /* сильнее скругление */
+            padding: 18px;
             text-align: center;
             color: var(--tg-theme-hint-color, #aaa);
-            font-size: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
-        /* Страница инвентаря */
+        /* Страница инвентаря – по образу 2-го фото */
         .cost-block {
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(3px);
-            border-radius: 14px;
-            padding: 20px;
+            backdrop-filter: blur(5px);
+            border-radius: 30px;
+            padding: 24px 20px;
             margin: 20px 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;           /* центрируем текст */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
         .cost-label {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #fff;
+            font-size: 0.9rem;            /* мелкий шрифт */
+            font-weight: 500;
+            color: var(--tg-theme-hint-color, #aaa);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
         .cost-value {
-            font-size: 2rem;
+            font-size: 2.5rem;            /* крупно */
             font-weight: 700;
             color: #ffd700;
+            line-height: 1.2;
         }
 
         .refresh-btn {
             background: var(--tg-theme-button-color, #40a7e3);
             color: var(--tg-theme-button-text-color, #fff);
             border: none;
-            border-radius: 30px;
-            padding: 12px 30px;
-            font-size: 1rem;
+            border-radius: 40px;
+            padding: 14px 30px;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             width: fit-content;
             margin: 20px auto;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
         }
 
         @media (max-width: 400px) {
@@ -428,11 +470,11 @@
                 height: 200px;
             }
             .stat-value {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .cost-value {
-                font-size: 1.8rem;
-                }
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
@@ -449,7 +491,7 @@
         </div>
     </div>
 
-    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) без КОНКУРСЫ -->
+    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) -->
     <div class="bottom-nav-fixed">
         <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
         <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
@@ -488,19 +530,28 @@
             </div>
         </div>
     </div>
+    <!-- Страница игр -->
+    <div id="games-page" class="container" style="display: none;">
+        <div class="games-header">
+            <div class="game-title">ROCKET</div>
+            <div class="game-subtitle">fly to the mars</div>
+        </div>
+        <div class="rocket-icon">🚀</div>
+        <button class="refresh-btn" id="play-rocket" style="margin-top: 20px;">ИГРАТЬ</button>
+    </div>
 
-    <!-- Страница инвентаря с блоком СТОИМОСТЬ -->
+    <!-- Страница инвентаря -->
     <div id="inventory-page" class="container" style="display: none;">
         <div class="cost-block">
-            <span class="cost-label">СТОИМОСТЬ</span>
-            <span class="cost-value" id="inventory-cost">0 ★</span>
+            <div class="cost-label">СТОИМОСТЬ</div>
+            <div class="cost-value" id="inventory-cost">0 ★</div>
         </div>
         <button class="refresh-btn" id="refresh-inventory">🔄 Обновить</button>
     </div>
 
     <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
-        <!-- Блок с аватаром и ID (тёмный) -->
+        <!-- Блок с аватаром и ID -->
         <div class="profile-header">
             <div class="profile-avatar" id="profile-avatar">Ш</div>
             <div class="profile-info">
@@ -521,7 +572,7 @@
             </div>
         </div>
 
-        <!-- Блок приглашения друга в синей рамке с плюсом -->
+        <!-- Блок приглашения друга в синей рамке -->
         <div class="invite-blue-block" id="invite-btn">
             <div class="invite-text">
                 <div class="invite-title">ПРИГЛАСИТЬ ДРУГА</div>
@@ -536,6 +587,7 @@
             <div class="no-drops">ПОКА НЕТ ДРОПОВ</div>
         </div>
     </div>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         (function() {
@@ -570,14 +622,13 @@
                 profileIdEl.textContent = 'ID: ${user.id}';
             }
 
-            // Баланс и рефералы (заглушка)
-            let currentBalance = 0;
+            // Баланс (заглушка)
+         let currentBalance = 0;
             function updateBalances(balance) {
                 currentBalance = balance;
                 balanceDisplay.textContent = balance + ' ★';
                 profileBalance.textContent = balance;
-                // также обновим стоимость в инвентаре (например, как баланс * 2)
-                inventoryCost.textContent = (balance * 2) + ' ★';
+                inventoryCost.textContent = (balance * 2) + ' ★'; // пример
             }
             updateBalances(0);
             profileReferrals.textContent = '0';
@@ -602,12 +653,14 @@
             }
 
             const homePage = document.getElementById('home-page');
+            const gamesPage = document.getElementById('games-page');
             const inventoryPage = document.getElementById('inventory-page');
             const profilePage = document.getElementById('profile-page');
             const navItems = document.querySelectorAll('.nav-item-fixed');
 
             function showHome() {
                 homePage.style.display = 'block';
+                gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'none';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
@@ -615,16 +668,29 @@
                 window.scrollTo(0, 0);
             }
 
-            function showInventory() {
+            function showGames() {
                 homePage.style.display = 'none';
-                inventoryPage.style.display = 'block';
+                gamesPage.style.display = 'block';
+                inventoryPage.style.display = 'none';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
                 document.getElementById('nav-home').classList.add('active'); // подсветка главной
                 window.scrollTo(0, 0);
             }
+
+            function showInventory() {
+                homePage.style.display = 'none';
+                gamesPage.style.display = 'none';
+                inventoryPage.style.display = 'block';
+                profilePage.style.display = 'none';
+                navItems.forEach(i => i.classList.remove('active'));
+                document.getElementById('nav-home').classList.add('active');
+                window.scrollTo(0, 0);
+            }
+
             function showProfile() {
                 homePage.style.display = 'none';
+                gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'none';
                 profilePage.style.display = 'block';
                 navItems.forEach(i => i.classList.remove('active'));
@@ -648,9 +714,11 @@
 
             addHandler('inventoryBtn', 'click', showInventory);
 
-            addHandler('gamesBtn', 'click', () => {
-                if (tg) tg.showPopup({ title: 'Игры', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
-                else alert('Функция в разработке');
+            addHandler('gamesBtn', 'click', showGames);
+            // Кнопка в играх
+            addHandler('play-rocket', 'click', () => {
+                if (tg) tg.showPopup({ title: 'Rocket', message: 'Запуск игры...', buttons: [{ type: 'ok' }] });
+                else alert('Игра');
             });
 
             // Плюс (пополнение)
@@ -663,11 +731,10 @@
             addHandler('refresh-inventory', 'click', () => {
                 if (tg) tg.sendData(JSON.stringify({ action: 'refresh_inventory' }));
                 else alert('Обновление');
-                // для демо увеличим баланс
                 updateBalances(currentBalance + 10);
             });
 
-            // Блок приглашения друга (синяя рамка) – обрабатываем клик
+            // Блок приглашения друга
             addHandler('invite-btn', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пригласить друга', message: 'Скопируйте реферальную ссылку и отправьте другу.', buttons: [{ type: 'ok' }] });
                 else alert('Пригласить друга');
@@ -679,4 +746,3 @@
     </script>
 </body>
 </html>
-    
