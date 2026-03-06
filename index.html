@@ -24,10 +24,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* justify-content: center; убрали, чтобы контент начинался сверху */
             justify-content: flex-start;
             padding: 20px 16px;
-            box-sizing: border-box;
         }
 
         .container {
@@ -42,13 +40,11 @@
         h1 {
             font-size: 2.2rem;
             font-weight: 800;
-            letter-spacing: 1px;
-            margin-top: 10px;          /* небольшой отступ сверху */
+            margin-top: 10px;
             margin-bottom: 8px;
             background: linear-gradient(45deg, #ffd700, #ffb347);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
         .subtitle {
@@ -71,13 +67,7 @@
             padding: 12px 4px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
             border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .menu-item:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.15);
         }
 
         .menu-item span {
@@ -92,7 +82,6 @@
             color: var(--tg-theme-text-color, #fff);
         }
 
-        /* Нижняя навигация – прозрачная, прижата к низу */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -100,7 +89,7 @@
             backdrop-filter: blur(5px);
             border-radius: 30px;
             padding: 8px 12px;
-            margin-top: auto;   /* прижимает к низу */
+            margin-top: auto;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -112,7 +101,6 @@
             font-weight: 500;
             color: var(--tg-theme-hint-color, #aaa);
             cursor: pointer;
-            transition: color 0.2s;
             border-radius: 20px;
         }
 
@@ -121,10 +109,11 @@
             background: rgba(64, 167, 227, 0.2);
         }
 
-        /* Стили для страницы профиля (без таймера) */
+        /* Стили для профиля */
         .profile-header {
             margin-bottom: 20px;
         }
+
         .welu {
             font-size: 2rem;
             font-weight: 700;
@@ -155,7 +144,6 @@
             font-weight: 700;
             color: var(--tg-theme-text-color, #fff);
         }
-
         .stat-label {
             font-size: 0.8rem;
             color: var(--tg-theme-hint-color, #aaa);
@@ -193,12 +181,6 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 4px 12px rgba(64, 167, 227, 0.3);
-            transition: transform 0.2s;
-        }
-
-        .invite-btn:hover {
-            transform: translateY(-2px);
         }
 
         .best-drop {
@@ -215,21 +197,6 @@
         .best-drop span {
             color: var(--tg-theme-button-color, #40a7e3);
             font-weight: 700;
-        }
-
-        @media (max-width: 400px) {
-            .menu-item span {
-                font-size: 1.6rem;
-            }
-            .menu-item p {
-                font-size: 0.7rem;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            .stat-value {
-                font-size: 1.8rem;
-            }
         }
     </style>
 </head>
@@ -248,12 +215,12 @@
             <div class="menu-item" id="lotteryBtn"><span>🎲</span><p>ЛОТЕРЕЯ</p></div>
         </div>
 
-        <!-- Нижняя навигация (прижата к низу) -->
         <div class="bottom-nav">
             <div class="nav-item active" id="nav-home">ГЛАВНАЯ</div>
             <div class="nav-item" id="nav-profile">ПРОФИЛЬ</div>
         </div>
     </div>
+
     <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
@@ -276,8 +243,6 @@
             <button class="invite-btn" id="invite-btn">ПРИГЛАСИТЬ ДРУГА</button>
         </div>
         <div class="best-drop"><span>ЛУЧШИЙ ДРОП</span> · Сейчас ничего нет</div>
-
-        <!-- Нижняя навигация на странице профиля -->
         <div class="bottom-nav">
             <div class="nav-item" id="nav-home-from-profile">ГЛАВНАЯ</div>
             <div class="nav-item active" id="nav-profile-from-profile">ПРОФИЛЬ</div>
@@ -287,40 +252,39 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         const tg = window.Telegram?.WebApp;
-        if (tg) {
-            tg.expand();
-            tg.ready();
-        }
-
+        if (tg) { tg.expand(); tg.ready(); }
         const user = tg?.initDataUnsafe?.user;
         const homePage = document.getElementById('home-page');
         const profilePage = document.getElementById('profile-page');
 
         if (user) {
-            document.getElementById('profile-welu').textContent = user.first_name.toUpperCase() || 'WELU';
+            document.getElementById('profile-welu').textContent = user.first_name.toUpperCase();
             document.getElementById('profile-id-display').textContent = ID: ${user.id};
         }
 
         function addHandler(id, event, fn) {
             const el = document.getElementById(id);
             if (el) el.addEventListener(event, fn);
-            else console.error('Элемент с id', id, 'не найден');
         }
 
         function showHome() {
             homePage.style.display = 'block';
             profilePage.style.display = 'none';
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            document.getElementById('nav-home')?.classList.add('active');
-            document.getElementById('nav-home-from-profile')?.classList.add('active');
+            const nh = document.getElementById('nav-home');
+            const nhfp = document.getElementById('nav-home-from-profile');
+            if (nh) nh.classList.add('active');
+            if (nhfp) nhfp.classList.add('active');
         }
 
         function showProfile() {
             homePage.style.display = 'none';
             profilePage.style.display = 'block';
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            document.getElementById('nav-profile')?.classList.add('active');
-            document.getElementById('nav-profile-from-profile')?.classList.add('active');
+            const np = document.getElementById('nav-profile');
+            const npfp = document.getElementById('nav-profile-from-profile');
+            if (np) np.classList.add('active');
+            if (npfp) npfp.classList.add('active');
         }
 
         addHandler('nav-home', 'click', showHome);
@@ -329,7 +293,7 @@
         addHandler('nav-profile-from-profile', 'click', showProfile);
 
         addHandler('casesBtn', 'click', () => {
-            if (tg) { tg.sendData(JSON.stringify({ action: 'open_cases' })); tg.close(); }
+            if (tg) tg.sendData(JSON.stringify({ action: 'open_cases' }));
         });
 
         addHandler('upgradeBtn', 'click', () => {
@@ -345,6 +309,7 @@
         addHandler('tasksBtn', 'click', () => {
             if (tg) tg.showPopup({ title: 'Задания', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
         });
+
         addHandler('lotteryBtn', 'click', () => {
             if (tg) tg.showPopup({ title: 'Лотерея', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
         });
