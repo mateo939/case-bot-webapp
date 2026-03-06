@@ -24,7 +24,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            /* justify-content: center; убрали, чтобы контент начинался сверху */
+            justify-content: flex-start;
             padding: 20px 16px;
             box-sizing: border-box;
         }
@@ -42,6 +43,7 @@
             font-size: 2.2rem;
             font-weight: 800;
             letter-spacing: 1px;
+            margin-top: 10px;          /* небольшой отступ сверху */
             margin-bottom: 8px;
             background: linear-gradient(45deg, #ffd700, #ffb347);
             -webkit-background-clip: text;
@@ -52,7 +54,7 @@
         .subtitle {
             font-size: 1rem;
             color: var(--tg-theme-hint-color, #aaa);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .menu-grid {
@@ -90,6 +92,7 @@
             color: var(--tg-theme-text-color, #fff);
         }
 
+        /* Нижняя навигация – прозрачная, прижата к низу */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -97,7 +100,7 @@
             backdrop-filter: blur(5px);
             border-radius: 30px;
             padding: 8px 12px;
-            margin-top: auto;
+            margin-top: auto;   /* прижимает к низу */
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -118,18 +121,7 @@
             background: rgba(64, 167, 227, 0.2);
         }
 
-        .timer {
-            margin-top: 12px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--tg-theme-button-color, #40a7e3);
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 16px;
-            border-radius: 40px;
-            display: inline-block;
-            backdrop-filter: blur(5px);
-        }
-
+        /* Стили для страницы профиля (без таймера) */
         .profile-header {
             margin-bottom: 20px;
         }
@@ -256,11 +248,11 @@
             <div class="menu-item" id="lotteryBtn"><span>🎲</span><p>ЛОТЕРЕЯ</p></div>
         </div>
 
+        <!-- Нижняя навигация (прижата к низу) -->
         <div class="bottom-nav">
             <div class="nav-item active" id="nav-home">ГЛАВНАЯ</div>
             <div class="nav-item" id="nav-profile">ПРОФИЛЬ</div>
         </div>
-        <div class="timer">⏳ 00:00</div>
     </div>
     <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
@@ -284,11 +276,12 @@
             <button class="invite-btn" id="invite-btn">ПРИГЛАСИТЬ ДРУГА</button>
         </div>
         <div class="best-drop"><span>ЛУЧШИЙ ДРОП</span> · Сейчас ничего нет</div>
+
+        <!-- Нижняя навигация на странице профиля -->
         <div class="bottom-nav">
             <div class="nav-item" id="nav-home-from-profile">ГЛАВНАЯ</div>
             <div class="nav-item active" id="nav-profile-from-profile">ПРОФИЛЬ</div>
         </div>
-        <div class="timer">⏳ 00:00</div>
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -361,7 +354,6 @@
         });
 
         showHome();
-        setInterval(() => document.querySelectorAll('.timer').forEach(t => t.textContent = '⏳ 00:00'), 1000);
     </script>
 </body>
 </html>
