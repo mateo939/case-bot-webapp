@@ -140,25 +140,25 @@
             text-align: center;
             position: relative;
         }
-        /* Кнопка возврата на главную (уменьшена, прижата влево) */
+        /* Кнопка возврата на главную — максимально влево и меньше */
         .back-home-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 3px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            border-radius: 30px;
-            padding: 5px 12px;
-            margin: 5px 0 15px 0;
+            border-radius: 20px;
+            padding: 3px 8px;
+            margin: 5px 0 15px -16px;  /* выдвигаем влево на ширину padding контейнера */
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             width: fit-content;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #fff;
             transition: background 0.2s;
-            margin-left: 0; /* прижимаем влево */
+            padding-left: 16px; /* чтобы текст не уходил за край */
         }
 
         .back-home-button:hover {
@@ -166,7 +166,7 @@
         }
 
         .back-home-button span {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1;
         }
 
@@ -272,6 +272,7 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .menu-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 24px rgba(0,0,0,0.5);
@@ -373,27 +374,64 @@
             background: #444;
         }
 
-        /* Страница кейсов (временная заглушка, будет заменена позже) */
-        .cases-placeholder {
+        /* Страница кейсов — сетка с двумя колонками */
+        .cases-header {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0 20px;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .case-card {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            border-radius: 40px;
-            padding: 40px 20px;
-            margin: 20px 0;
+            border-radius: 30px;
+            padding: 16px 8px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
+            cursor: pointer;
         }
 
-        .cases-placeholder h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
+        .case-card:hover {
+            transform: translateY(-4px);
+        }
+        .case-image {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
             color: #ffd700;
+            border: 2px solid rgba(255,215,0,0.5);
+            box-shadow: 0 0 15px rgba(255,215,0,0.3);
         }
 
-        .cases-placeholder p {
+        .case-name {
             font-size: 1.2rem;
+            font-weight: 700;
             color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .case-value {
+            font-size: 1rem;
+            color: #ffd700;
+            font-weight: 600;
         }
 
         /* Страница профиля */
@@ -409,6 +447,7 @@
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
+
         .profile-avatar {
             width: 56px;
             height: 56px;
@@ -522,7 +561,6 @@
             color: #fff;
             margin-bottom: 12px;
         }
-
         .no-drops {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
@@ -561,6 +599,7 @@
             <span class="plus-btn" id="add-balance">+</span>
         </div>
     </div>
+
     <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) -->
     <div class="bottom-nav-fixed">
         <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
@@ -621,14 +660,23 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
     </div>
 
-    <!-- Страница кейсов (временная заглушка) -->
+    <!-- Страница кейсов с двумя карточками -->
     <div id="cases-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
-        <div class="cases-placeholder">
-            <h2>КЕЙСЫ</h2>
-            <p>Здесь будет список кейсов</p>
-            <p>Фото будет добавлено позже</p>
+        <div class="cases-header">КЕЙСЫ</div>
+        <div class="cases-grid">
+            <div class="case-card" id="case1">
+                <div class="case-image">🎁</div>
+                <div class="case-name">SC</div>
+                <div class="case-value">2500</div>
+            </div>
+            <div class="case-card" id="case2">
+                <div class="case-image">🎁</div>
+                <div class="case-name">BOELI</div>
+                <div class="case-value">3000</div>
+            </div>
         </div>
+        <!-- Можно добавить ещё карточки по необходимости -->
     </div>
 
     <!-- Страница профиля -->
@@ -662,6 +710,7 @@
             </div>
             <div class="invite-plus">+</div>
         </div>
+
         <!-- Лучший дроп -->
         <div class="best-drop-section">
             <div class="best-drop-title">ЛУЧШИЙ ДРОП</div>
@@ -700,7 +749,7 @@
                 profileNameEl.textContent = upperName;
                 profileAvatarEl.textContent = initial;
                 userAvatarEl.textContent = initial;
-                profileIdEl.textContent = 'ID: ${user.id}';
+                profileIdEl.textContent = ID: ${user.id};
             }
 
             // Баланс (заглушка)
@@ -713,7 +762,6 @@
             }
             updateBalances(0);
             profileReferrals.textContent = '0';
-
             // Колесо
             const wheel = document.getElementById('wheel');
             function updateWheelRotation() {
@@ -721,7 +769,7 @@
                 if (maxScroll > 0) {
                     const percent = window.scrollY / maxScroll;
                     const rotation = percent * 360;
-                    if (wheel) wheel.style.transform = 'rotate(${rotation}deg)';
+                    if (wheel) wheel.style.transform = rotate(${rotation}deg);
                 }
             }
             window.addEventListener('scroll', updateWheelRotation);
@@ -750,6 +798,7 @@
                 document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
+
             function showGames() {
                 homePage.style.display = 'none';
                 gamesPage.style.display = 'block';
@@ -779,7 +828,7 @@
                 casesPage.style.display = 'block';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
-                document.getElementById('nav-home').classList.add('active'); // подсветка главной
+                document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
 
@@ -796,7 +845,6 @@
 
             addHandler('nav-home', 'click', showHome);
             addHandler('nav-profile', 'click', showProfile);
-
             // Кнопки на главной
             addHandler('casesBtn', 'click', showCases);
             addHandler('upgradeBtn', 'click', () => {
@@ -838,6 +886,16 @@
 
             // Показываем главную
             showHome();
+
+            // Обработчики кликов по карточкам кейсов (можно добавить логику)
+            addHandler('case1', 'click', () => {
+                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'SC', price: 2500 }));
+                else alert('Кейс SC');
+            });
+            addHandler('case2', 'click', () => {
+                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'BOELI', price: 3000 }));
+                else alert('Кейс BOELI');
+            });
         })();
     </script>
 </body>
