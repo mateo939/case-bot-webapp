@@ -21,11 +21,86 @@
             background-color: var(--tg-theme-bg-color, #1a1a2e);
             color: var(--tg-theme-text-color, #fff);
             min-height: 100vh;
-            padding-bottom: 60px;
+            padding-top: 70px; /* отступ для фиксированной верхней панели */
+            padding-bottom: 60px; /* отступ для фиксированной нижней навигации */
             position: relative;
         }
 
-        /* Фиксированная нижняя навигация — чёрная, уменьшенная, три пункта */
+        /* Фиксированная верхняя панель — чёрная */
+        .top-bar-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #000000;
+            border-bottom: 1px solid #333;
+            padding: 8px 16px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .user-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .balance-block {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 4px 12px;
+        }
+
+        .balance-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .plus-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .plus-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Фиксированная нижняя навигация — чёрная, два пункта */
         .bottom-nav-fixed {
             position: fixed;
             bottom: 0;
@@ -63,90 +138,18 @@
             text-align: center;
         }
 
-        /* Верхняя панель с именем и балансом */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(22, 33, 62, 0.6);
-            backdrop-filter: blur(5px);
-            border-radius: 30px;
-            padding: 8px 16px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ffd700, #ffb347);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-
-        .user-name {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--tg-theme-text-color, #fff);
-        }
-
-        .balance-block {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            padding: 4px 12px;
-        }
-
-        .balance-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #ffd700;
-        }
-
-        .plus-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--tg-theme-button-color, #40a7e3);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .plus-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Секция LIVE */
+        /* Стили для главной страницы */
         .live-section {
             margin-bottom: 30px;
-            text-align: left; /* выравнивание по левому краю */
+            text-align: left;
         }
         .live-title {
             font-size: 2rem;
             font-weight: 700;
-            color: #ff0000; /* красный */
+            color: #ff0000;
             text-shadow: 0 0 10px rgba(255,0,0,0.5);
             margin-bottom: 10px;
-            margin-left: 10px; /* небольшой отступ слева */
+            margin-left: 10px;
         }
 
         .wheel-container {
@@ -217,7 +220,6 @@
             margin-top: 5px;
         }
 
-        /* Сетка кнопок */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -249,32 +251,58 @@
 
         /* Страница профиля */
         .profile-header {
-            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50px;
+            padding: 8px 16px;
+            backdrop-filter: blur(3px);
+        }
+
+        .profile-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .profile-info {
+            text-align: left;
         }
 
         .profile-name {
-            font-size: 2rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            background: linear-gradient(45deg, #ffd700, #ffb347);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
+            color: #fff;
         }
 
         .profile-id {
-            font-size: 1rem;
+            font-size: 0.8rem;
             color: var(--tg-theme-hint-color, #aaa);
-            margin-bottom: 30px;
         }
-
+        /* Блоки баланса и рефералов — в стиле кнопок на главной */
         .stats-row {
             display: flex;
-            justify-content: space-around;
+            gap: 8px;
             margin-bottom: 30px;
         }
 
         .stat-item {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            border-radius: 14px;
+            padding: 16px 8px;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .stat-value {
@@ -282,18 +310,20 @@
             font-weight: 700;
             color: #ffd700;
         }
+
         .stat-label {
-            font-size: 1rem;
-            color: var(--tg-theme-text-color, #fff);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
             margin-top: 4px;
         }
 
         .referral-block {
             background: rgba(0, 0, 0, 0.5);
-            border-radius: 16px;
+            backdrop-filter: blur(3px);
+            border-radius: 14px;
             padding: 20px;
             margin-bottom: 30px;
-            backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -301,6 +331,7 @@
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 8px;
+            color: #fff;
         }
 
         .referral-subtitle {
@@ -329,20 +360,22 @@
         .best-drop-title {
             font-size: 1.2rem;
             font-weight: 600;
-            color: var(--tg-theme-text-color, #fff);
+            color: #fff;
             margin-bottom: 10px;
         }
 
         .no-drops {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            border-radius: 14px;
             padding: 15px;
             text-align: center;
             color: var(--tg-theme-hint-color, #aaa);
             font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Страница инвентаря (оставляем без изменений) */
+        /* Страница инвентаря (оставляем без изменений, но тоже подкорректируем стили под общую тему) */
         .inventory-header {
             margin: 20px 0;
         }
@@ -387,18 +420,20 @@
         }
 
         .cost-block {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            border-radius: 14px;
             padding: 15px;
             margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .cost-label {
             font-size: 1rem;
-            color: var(--tg-theme-text-color, #fff);
+            color: #fff;
         }
 
         .cost-value {
@@ -406,7 +441,6 @@
             font-weight: 700;
             color: #ffd700;
         }
-
         .refresh-btn {
             background: var(--tg-theme-button-color, #40a7e3);
             color: var(--tg-theme-button-text-color, #fff);
@@ -435,28 +469,27 @@
     </style>
 </head>
 <body>
-    <!-- Фиксированная нижняя навигация (три пункта) -->
+    <!-- Фиксированная верхняя панель — чёрная, с аватаром, именем и балансом -->
+    <div class="top-bar-fixed">
+        <div class="user-info">
+            <div class="user-avatar" id="user-avatar">Ш</div>
+            <span class="user-name" id="user-name">ШЕЛЛИ</span>
+        </div>
+        <div class="balance-block">
+            <span class="balance-value" id="balance-display">0 ★</span>
+            <span class="plus-btn" id="add-balance">+</span>
+        </div>
+    </div>
+
+    <!-- Фиксированная нижняя навигация (только ГЛАВНАЯ и ПРОФИЛЬ) -->
     <div class="bottom-nav-fixed">
         <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
-        <div class="nav-item-fixed" id="nav-contests">КОНКУРСЫ</div>
         <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
     </div>
 
     <!-- Контейнер для главной страницы -->
     <div id="home-page" class="container" style="display: block;">
-        <!-- Верхняя панель с именем и балансом -->
-        <div class="top-bar">
-            <div class="user-info">
-                <div class="user-avatar" id="user-avatar">Ш</div>
-                <span class="user-name" id="user-name">ШЕЛЛИ</span>
-            </div>
-            <div class="balance-block">
-                <span class="balance-value" id="balance-display">0 ★</span>
-                <span class="plus-btn" id="add-balance">+</span>
-            </div>
-        </div>
-
-        <!-- Секция LIVE с красным заголовком слева -->
+        <!-- Секция LIVE -->
         <div class="live-section">
             <div class="live-title">LIVE</div>
             <div class="wheel-container">
@@ -518,27 +551,35 @@
 
     <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
+        <!-- Верхний блок с аватаром и ID (как на фото) -->
         <div class="profile-header">
-            <div class="profile-name" id="profile-name">ШЕЛЛИ</div>
-            <div class="profile-id" id="profile-id">ID: 1326919289</div>
+            <div class="profile-avatar" id="profile-avatar">Ш</div>
+            <div class="profile-info">
+                <div class="profile-name" id="profile-name">ШЕЛЛИ</div>
+                <div class="profile-id" id="profile-id">ID: 1326919289</div>
+            </div>
         </div>
 
+        <!-- Блоки баланса и рефералов в стиле кнопок на главной -->
         <div class="stats-row">
             <div class="stat-item">
                 <div class="stat-value" id="profile-balance">0</div>
-                <div class="stat-label">БАЛАНС ⭐️</div>
+                <div class="stat-label">БАЛАНС ★</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value" id="profile-referrals">0</div>
-                <div class="stat-label">РЕФЕРАЛЫ 🎁</div>
+                <div class="stat-label">РЕФЕРАЛЫ ♥️</div>
             </div>
         </div>
+
+        <!-- Блок приглашения друга -->
         <div class="referral-block">
             <div class="referral-title">ПРИГЛАСИТЬ ДРУГА</div>
             <div class="referral-subtitle">ПОЛУЧАЙТЕ БОНУСЫ ВМЕСТЕ!</div>
             <button class="invite-btn" id="invite-btn">ПРИГЛАСИТЬ ДРУГА</button>
         </div>
 
+        <!-- Лучший дроп -->
         <div class="best-drop-section">
             <div class="best-drop-title">ЛУЧШИЙ ДРОП</div>
             <div class="no-drops">ПОКА НЕТ ДРОПОВ</div>
@@ -560,29 +601,37 @@
             const userNameEl = document.getElementById('user-name');
             const userAvatarEl = document.getElementById('user-avatar');
             const profileNameEl = document.getElementById('profile-name');
+            const profileAvatarEl = document.getElementById('profile-avatar');
             const profileIdEl = document.getElementById('profile-id');
             const inventoryNameEl = document.getElementById('inventory-name');
             const balanceDisplay = document.getElementById('balance-display');
             const invBalance = document.getElementById('inv-balance');
             const profileBalance = document.getElementById('profile-balance');
+            const profileReferrals = document.getElementById('profile-referrals');
 
             if (user) {
                 const firstName = user.first_name || 'ШЕЛЛИ';
                 const upperName = firstName.toUpperCase();
+                const initial = firstName.charAt(0).toUpperCase();
+
                 userNameEl.textContent = upperName;
                 inventoryNameEl.textContent = upperName;
                 profileNameEl.textContent = upperName;
+                profileAvatarEl.textContent = initial;
+                userAvatarEl.textContent = initial;
                 profileIdEl.textContent = 'ID: ${user.id}';
-                userAvatarEl.textContent = firstName.charAt(0).toUpperCase();
             }
 
-            // Баланс (пока заглушка)
+            // Баланс и рефералы (заглушка)
+            let currentBalance = 0;
             function updateBalances(balance) {
+                currentBalance = balance;
                 balanceDisplay.textContent = balance + ' ★';
                 invBalance.textContent = balance;
                 profileBalance.textContent = balance;
             }
             updateBalances(0);
+            profileReferrals.textContent = '0';
 
             // Колесо
             const wheel = document.getElementById('wheel');
@@ -596,7 +645,6 @@
             }
             window.addEventListener('scroll', updateWheelRotation);
             setTimeout(updateWheelRotation, 100);
-
             // Навигация
             function addHandler(id, event, fn) {
                 const el = document.getElementById(id);
@@ -622,9 +670,10 @@
                 inventoryPage.style.display = 'block';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
-                document.getElementById('nav-home').classList.add('active'); // подсветим главную или можно ничего
+                document.getElementById('nav-home').classList.add('active'); // подсветим главную
                 window.scrollTo(0, 0);
             }
+
             function showProfile() {
                 homePage.style.display = 'none';
                 inventoryPage.style.display = 'none';
@@ -634,13 +683,7 @@
                 window.scrollTo(0, 0);
             }
 
-            function showContests() {
-                if (tg) tg.showPopup({ title: 'Конкурсы', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
-                else alert('Раздел в разработке');
-            }
-
             addHandler('nav-home', 'click', showHome);
-            addHandler('nav-contests', 'click', showContests);
             addHandler('nav-profile', 'click', showProfile);
 
             // Кнопки на главной
@@ -680,6 +723,7 @@
                 document.getElementById('items-count').textContent = '5';
                 document.getElementById('total-cost').textContent = '250 ★';
                 updateBalances(120);
+                profileReferrals.textContent = '3'; // пример для рефералов
             });
 
             // Пригласить друга
