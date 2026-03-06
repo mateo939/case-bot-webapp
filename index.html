@@ -49,13 +49,13 @@
 
         .subtitle {
             font-size: 1rem;
-            color: var(--tg-theme-hint-color, #aaa);
+            color: #ffffff; /* ярко-белый, чтобы было видно */
             margin-bottom: 30px;
         }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* две колонки для четырёх кнопок */
             gap: 8px;
             margin-bottom: 30px;
         }
@@ -117,12 +117,12 @@
             background: rgba(64, 167, 227, 0.2);
         }
 
-        /* Стили для страницы профиля */
+        /* Стили для страницы профиля (точь-в-точь как на картинке) */
         .profile-header {
             margin-bottom: 20px;
         }
 
-        .profile-name {
+        .profile-title {
             font-size: 2rem;
             font-weight: 700;
             background: linear-gradient(45deg, #ffd700, #ffb347);
@@ -131,6 +131,12 @@
             margin-bottom: 5px;
         }
 
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #fff);
+            margin-bottom: 4px;
+        }
         .profile-id {
             font-size: 0.9rem;
             color: var(--tg-theme-hint-color, #aaa);
@@ -142,6 +148,7 @@
             justify-content: space-around;
             margin-bottom: 25px;
         }
+
         .stat-item {
             text-align: center;
         }
@@ -229,7 +236,7 @@
         <h1>CELSER BOT</h1>
         <div class="subtitle">Открывай кейсы за звёзды! ⭐️</div>
 
-        <!-- Шесть кнопок с двойными подписями -->
+        <!-- Четыре кнопки с двойными подписями -->
         <div class="menu-grid">
             <div class="menu-item" id="casesBtn">
                 <span>🎁</span>
@@ -251,29 +258,19 @@
                 <p>ИГРЫ</p>
                 <small>ПОДНИМАЙ БАЛАНС</small>
             </div>
-            <div class="menu-item" id="tasksBtn">
-                <span>📋</span>
-                <p>ЗАДАНИЯ</p>
-                <small>ВЫПОЛНЯЙ</small>
-            </div>
-            <div class="menu-item" id="lotteryBtn">
-                <span>🎲</span>
-                <p>ЛОТЕРЕЯ</p>
-                <small>ПОДАРКИ ЗА БИЛЕТЫ</small>
-            </div>
         </div>
 
-        <!-- Нижняя навигация (три пункта) -->
+        <!-- Нижняя навигация: только ГЛАВНАЯ и ПРОФИЛЬ -->
         <div class="bottom-nav">
             <div class="nav-item active" id="nav-home">ГЛАВНАЯ</div>
-            <div class="nav-item" id="nav-contests">КОНКУРСЫ</div>
             <div class="nav-item" id="nav-profile">ПРОФИЛЬ</div>
         </div>
     </div>
 
-    <!-- Страница профиля -->
+    <!-- Страница профиля (точь-в-точь как на картинке) -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
+            <div class="profile-title">CELSER</div>
             <div class="profile-name" id="profile-name">ШЕЛЛИ</div>
             <div class="profile-id" id="profile-id">ID: 1326919289</div>
         </div>
@@ -295,10 +292,9 @@
         <div class="best-drop">
             <span>❤️ ЛУЧШИЙ ДРОП</span> · Скоро здесь появится информация
         </div>
-        <!-- Нижняя навигация на странице профиля -->
+        <!-- Нижняя навигация на странице профиля (тоже два пункта) -->
         <div class="bottom-nav">
             <div class="nav-item" id="nav-home-from-profile">ГЛАВНАЯ</div>
-            <div class="nav-item" id="nav-contests-from-profile">КОНКУРСЫ</div>
             <div class="nav-item active" id="nav-profile-from-profile">ПРОФИЛЬ</div>
         </div>
     </div>
@@ -316,14 +312,12 @@
             const homePage = document.getElementById('home-page');
             const profilePage = document.getElementById('profile-page');
 
-            // Заполняем профиль данными пользователя, если есть
+            // Заполняем профиль данными пользователя, если они есть
             if (user) {
                 const profileNameEl = document.getElementById('profile-name');
                 if (profileNameEl) profileNameEl.textContent = user.first_name.toUpperCase() || 'ШЕЛЛИ';
                 const profileIdEl = document.getElementById('profile-id');
                 if (profileIdEl) profileIdEl.textContent = 'ID: ${user.id}';
-            } else {
-                // Если нет данных, оставляем заглушку "ШЕЛЛИ"
             }
 
             function addHandler(id, event, fn) {
@@ -355,22 +349,12 @@
                     if (navProfileFromProfile) navProfileFromProfile.classList.add('active');
                 }
             }
-            function showContests() {
-                if (tg) {
-                    tg.showPopup({ title: 'Конкурсы', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
-                } else {
-                    alert('Раздел в разработке');
-                }
-            }
 
-            // Навигация
+            // Навигация (только главная и профиль)
             addHandler('nav-home', 'click', showHome);
-            addHandler('nav-contests', 'click', showContests);
             addHandler('nav-profile', 'click', showProfile);
             addHandler('nav-home-from-profile', 'click', showHome);
-            addHandler('nav-contests-from-profile', 'click', showContests);
             addHandler('nav-profile-from-profile', 'click', showProfile);
-
             // Кнопки на главной
             addHandler('casesBtn', 'click', () => {
                 if (tg) tg.sendData(JSON.stringify({ action: 'open_cases' }));
@@ -389,17 +373,7 @@
                 else alert('Функция в разработке');
             });
 
-            addHandler('tasksBtn', 'click', () => {
-                if (tg) tg.showPopup({ title: 'Задания', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
-                else alert('Раздел в разработке');
-            });
-
-            addHandler('lotteryBtn', 'click', () => {
-                if (tg) tg.showPopup({ title: 'Лотерея', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
-                else alert('Раздел в разработке');
-            });
-
-            // Кнопка "Пригласить друга"
+            // Кнопка "Пригласить друга" в профиле
             addHandler('invite-btn', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пригласить друга', message: 'Скопируйте реферальную ссылку и отправьте другу.', buttons: [{ type: 'ok' }] });
                 else alert('Пригласить друга');
