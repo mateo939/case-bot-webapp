@@ -166,7 +166,7 @@
         }
 
         .back-home-button span {
-            font-size: 1rem; /* уменьшенная стрелка */
+            font-size: 1rem;
             line-height: 1;
         }
 
@@ -373,7 +373,30 @@
             background: #444;
         }
 
-        /* Страница профиля (без стрелки назад) */
+        /* Страница кейсов (временная заглушка, будет заменена позже) */
+        .cases-placeholder {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .cases-placeholder h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .cases-placeholder p {
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        /* Страница профиля */
         .profile-header {
             display: flex;
             align-items: center;
@@ -386,7 +409,6 @@
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
-
         .profile-avatar {
             width: 56px;
             height: 56px;
@@ -420,6 +442,7 @@
             gap: 12px;
             margin-bottom: 30px;
         }
+
         .stat-item {
             flex: 1;
             background: rgba(0, 0, 0, 0.5);
@@ -538,7 +561,6 @@
             <span class="plus-btn" id="add-balance">+</span>
         </div>
     </div>
-
     <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) -->
     <div class="bottom-nav-fixed">
         <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
@@ -579,7 +601,7 @@
         </div>
     </div>
 
-    <!-- Страница игр (с кнопкой возврата на главную) -->
+    <!-- Страница игр -->
     <div id="games-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-games"><span>←</span> на главную</div>
         <div class="games-header">ИГРЫ</div>
@@ -589,7 +611,7 @@
         </div>
     </div>
 
-    <!-- Страница инвентаря (с кнопкой возврата на главную) -->
+    <!-- Страница инвентаря -->
     <div id="inventory-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-inventory"><span>←</span> на главную</div>
         <div class="cost-block">
@@ -599,7 +621,17 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
     </div>
 
-    <!-- Страница профиля (без стрелки назад) -->
+    <!-- Страница кейсов (временная заглушка) -->
+    <div id="cases-page" class="container" style="display: none;">
+        <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
+        <div class="cases-placeholder">
+            <h2>КЕЙСЫ</h2>
+            <p>Здесь будет список кейсов</p>
+            <p>Фото будет добавлено позже</p>
+        </div>
+    </div>
+
+    <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <!-- Блок с аватаром и ID -->
         <div class="profile-header">
@@ -630,7 +662,6 @@
             </div>
             <div class="invite-plus">+</div>
         </div>
-
         <!-- Лучший дроп -->
         <div class="best-drop-section">
             <div class="best-drop-title">ЛУЧШИЙ ДРОП</div>
@@ -705,6 +736,7 @@
             const homePage = document.getElementById('home-page');
             const gamesPage = document.getElementById('games-page');
             const inventoryPage = document.getElementById('inventory-page');
+            const casesPage = document.getElementById('cases-page');
             const profilePage = document.getElementById('profile-page');
             const navItems = document.querySelectorAll('.nav-item-fixed');
 
@@ -712,16 +744,17 @@
                 homePage.style.display = 'block';
                 gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'none';
+                casesPage.style.display = 'none';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
                 document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
-
             function showGames() {
                 homePage.style.display = 'none';
                 gamesPage.style.display = 'block';
                 inventoryPage.style.display = 'none';
+                casesPage.style.display = 'none';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
                 document.getElementById('nav-home').classList.add('active');
@@ -732,15 +765,29 @@
                 homePage.style.display = 'none';
                 gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'block';
+                casesPage.style.display = 'none';
                 profilePage.style.display = 'none';
                 navItems.forEach(i => i.classList.remove('active'));
                 document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
+
+            function showCases() {
+                homePage.style.display = 'none';
+                gamesPage.style.display = 'none';
+                inventoryPage.style.display = 'none';
+                casesPage.style.display = 'block';
+                profilePage.style.display = 'none';
+                navItems.forEach(i => i.classList.remove('active'));
+                document.getElementById('nav-home').classList.add('active'); // подсветка главной
+                window.scrollTo(0, 0);
+            }
+
             function showProfile() {
                 homePage.style.display = 'none';
                 gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'none';
+                casesPage.style.display = 'none';
                 profilePage.style.display = 'block';
                 navItems.forEach(i => i.classList.remove('active'));
                 document.getElementById('nav-profile').classList.add('active');
@@ -751,18 +798,12 @@
             addHandler('nav-profile', 'click', showProfile);
 
             // Кнопки на главной
-            addHandler('casesBtn', 'click', () => {
-                if (tg) tg.sendData(JSON.stringify({ action: 'open_cases' }));
-                else alert('Telegram Web App недоступен');
-            });
-
+            addHandler('casesBtn', 'click', showCases);
             addHandler('upgradeBtn', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Апгрейд', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
                 else alert('Функция в разработке');
             });
-
             addHandler('inventoryBtn', 'click', showInventory);
-
             addHandler('gamesBtn', 'click', showGames);
 
             // Кнопка в играх
@@ -790,9 +831,10 @@
                 else alert('Пригласить друга');
             });
 
-            // Обработчики кнопок возврата на главную (для игр и инвентаря)
+            // Обработчики кнопок возврата на главную
             addHandler('back-from-games', 'click', showHome);
             addHandler('back-from-inventory', 'click', showHome);
+            addHandler('back-from-cases', 'click', showHome);
 
             // Показываем главную
             showHome();
