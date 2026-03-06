@@ -1,0 +1,7 @@
+body {
+    background-image: url('background.jpg'); /* замените на имя вашего файла */
+    background-size: cover;          /* растянуть на весь экран */
+    background-position: center;      /* центрировать */
+    background-repeat: no-repeat;     /* не повторять */
+    background-attachment: fixed;     /* фиксировать при прокрутке */
+}
