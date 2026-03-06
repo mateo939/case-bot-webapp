@@ -132,14 +132,6 @@
             background: rgba(255,255,255,0.15);
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-
-        .container {
-            max-width: 360px;
-            margin: 0 auto;
-            padding: 16px;
-            text-align: center;
-            position: relative;
-        }
         /* Кнопка возврата на главную — максимально влево и меньше */
         .back-home-button {
             display: inline-flex;
@@ -150,7 +142,7 @@
             backdrop-filter: blur(5px);
             border-radius: 20px;
             padding: 3px 8px;
-            margin: 5px 0 15px -16px;  /* выдвигаем влево на ширину padding контейнера */
+            margin: 5px 0 15px -16px;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
@@ -158,7 +150,7 @@
             font-size: 0.7rem;
             color: #fff;
             transition: background 0.2s;
-            padding-left: 16px; /* чтобы текст не уходил за край */
+            padding-left: 16px;
         }
 
         .back-home-button:hover {
@@ -272,7 +264,6 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-
         .menu-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 24px rgba(0,0,0,0.5);
@@ -374,7 +365,7 @@
             background: #444;
         }
 
-        /* Страница кейсов — одна карточка */
+        /* ========== УЛУЧШЕННЫЕ СТИЛИ ДЛЯ КАРТОЧКИ КЕЙСА ========== */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -386,34 +377,41 @@
 
         .cases-grid {
             display: grid;
-            grid-template-columns: 1fr; /* одна колонка */
+            grid-template-columns: 1fr;
             gap: 16px;
             margin-bottom: 30px;
         }
 
         .case-card {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border-radius: 30px;
-            padding: 20px 16px;
+            background: linear-gradient(145deg, rgba(20, 30, 50, 0.9), rgba(0, 0, 0, 0.7));
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 24px 16px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-            transition: transform 0.2s;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .case-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
+            box-shadow: 0 25px 35px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(255, 215, 0, 0.4);
         }
         .case-image {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 16px;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
             border-radius: 50%;
             overflow: hidden;
-            border: 2px solid rgba(255,215,0,0.5);
-            box-shadow: 0 0 15px rgba(255,215,0,0.3);
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .case-image img {
@@ -422,17 +420,33 @@
             object-fit: cover;
         }
 
+        .case-image:empty::before {
+            content: "🎁";
+            font-size: 3rem;
+            color: #ffd700;
+        }
+
         .case-name {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: #fff;
-            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
         }
 
         .case-value {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: #ffd700;
-            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            background: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            backdrop-filter: blur(5px);
         }
 
         /* Страница профиля */
@@ -507,7 +521,6 @@
             margin-top: 6px;
         }
 
-        /* Синяя рамка для приглашения друга */
         .invite-blue-block {
             background: var(--tg-theme-button-color, #40a7e3);
             border-radius: 50px;
@@ -536,7 +549,6 @@
             color: rgba(255,255,255,0.9);
             margin-top: 4px;
         }
-
         .invite-plus {
             width: 40px;
             height: 40px;
@@ -562,6 +574,7 @@
             color: #fff;
             margin-bottom: 12px;
         }
+
         .no-drops {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
@@ -653,6 +666,14 @@
 
     <!-- Страница инвентаря -->
     <div id="inventory-page" class="container" style="display: none;">
+
+        .container {
+            max-width: 360px;
+            margin: 0 auto;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+        }
         <div class="back-home-button" id="back-from-inventory"><span>←</span> на главную</div>
         <div class="cost-block">
             <div class="cost-label">СТОИМОСТЬ</div>
@@ -661,7 +682,7 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
     </div>
 
-    <!-- Страница кейсов (один кейс) -->
+    <!-- Страница кейсов (один кейс, улучшенный дизайн) -->
     <div id="cases-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
         <div class="cases-header">КЕЙСЫ</div>
@@ -671,8 +692,8 @@
                     <!-- Сюда нужно загрузить изображение case-common.png в корень репозитория -->
                     <img src="case-common.png" alt="Обычный кейс">
                 </div>
-                <div class="case-name">обычный кейс</div>
-                <div class="case-value">140 ⭐️</div>
+                <div class="case-name">celser</div>
+                <div class="case-value">140 ★</div>
             </div>
         </div>
     </div>
@@ -745,7 +766,6 @@
                 userAvatarEl.textContent = initial;
                 profileIdEl.textContent = 'ID: ${user.id}';
             }
-
             // Баланс (заглушка)
             let currentBalance = 0;
             function updateBalances(balance) {
