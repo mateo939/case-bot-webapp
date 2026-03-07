@@ -372,7 +372,7 @@
             background: #444;
         }
 
-        /* ========== СТРАНИЦА КЕЙСОВ (ФИНАЛЬНЫЙ ДИЗАЙН) ========== */
+        /* ========== СТРАНИЦА КЕЙСОВ (БЕЗ РАМКИ) ========== */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -391,7 +391,7 @@
 
         .case-card {
             background: transparent;               /* полностью прозрачный фон */
-            border: 2px solid rgba(255, 215, 0, 0.5);
+            /* Убираем border */
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.2);
             backdrop-filter: blur(5px);
             border-radius: 40px;
@@ -686,7 +686,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница кейсов (ФИНАЛЬНЫЙ ВАРИАНТ: только изображение, название и цена) -->
+    <!-- Страница кейсов (БЕЗ РАМКИ, ТОЛЬКО СВЕЧЕНИЕ) -->
     <div id="cases-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
         <div class="cases-header">КЕЙСЫ</div>
@@ -695,6 +695,7 @@
                 <div class="case-image">
                     <img src="case-common.png" alt="Обычный кейс">
                 </div>
+                <!-- Только один элемент с названием -->
                 <div class="case-name">celser</div>
                 <div class="case-value">140 ★</div>
             </div>
@@ -917,4 +918,3 @@
     </script>
 </body>
 </html>
-
