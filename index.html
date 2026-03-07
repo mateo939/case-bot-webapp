@@ -372,7 +372,7 @@
             background: #444;
         }
 
-        /* ===== УБИРАЕМ КРУЖОК, ЗАЛИВАЕМ ПОЛНОСТЬЮ ===== */
+        /* ========== СТРАНИЦА КЕЙСОВ (ФИНАЛЬНЫЙ ДИЗАЙН) ========== */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -390,12 +390,12 @@
         }
 
         .case-card {
-            background: transparent;              /* полностью прозрачный фон */
+            background: transparent;               /* полностью прозрачный фон */
             border: 2px solid rgba(255, 215, 0, 0.5);
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.2);
             backdrop-filter: blur(5px);
             border-radius: 40px;
-            padding: 0;                           /* убираем внутренние отступы */
+            padding: 0;                            /* убираем внутренние отступы */
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
@@ -408,14 +408,14 @@
             box-shadow: 0 25px 35px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(255, 215, 0, 0.4);
         }
         .case-image {
-            width: 100%;                          /* занимает всю ширину карточки */
+            width: 100%;                           /* изображение занимает всю ширину */
             height: auto;
             margin: 0;
-            border-radius: 0;                      /* убираем круглую форму */
+            border-radius: 0;                       /* убираем круглую форму */
             border: none;
             box-shadow: none;
             background: transparent;
-            line-height: 0;                         /* убираем лишние отступы */
+            line-height: 0;
         }
 
         .case-image img {
@@ -426,13 +426,13 @@
         }
 
         .case-name {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
             color: #fff;
-            text-transform: uppercase;
+            text-transform: lowercase;              /* маленькие буквы */
             letter-spacing: 2px;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            margin: 16px 0 8px;                     /* отступы сверху и снизу */
+            margin: 16px 0 8px;
         }
 
         .case-value {
@@ -446,7 +446,7 @@
             border-radius: 40px;
             border: 1px solid rgba(255, 215, 0, 0.5);
             backdrop-filter: blur(5px);
-            margin-bottom: 16px;                    /* отступ снизу */
+            margin-bottom: 16px;
         }
 
         /* Страница профиля */
@@ -587,7 +587,7 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
-        /* Копирайт внизу всех страниц */
+        /* Копирайт */
         .footer-copyright {
             text-align: center;
             font-size: 0.7rem;
@@ -661,7 +661,6 @@
                 <p>ИГРЫ</p>
             </div>
         </div>
-        <!-- Копирайт только на главной (можно добавить везде, но пока тут) -->
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
@@ -687,7 +686,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница кейсов (один кейс, без кружка, изображение на всю ширину) -->
+    <!-- Страница кейсов (ФИНАЛЬНЫЙ ВАРИАНТ: только изображение, название и цена) -->
     <div id="cases-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
         <div class="cases-header">КЕЙСЫ</div>
@@ -908,8 +907,8 @@
 
             // Обработчик клика по карточке кейса
             addHandler('case1', 'click', () => {
-                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'обычный', price: 140 }));
-                else alert('Обычный кейс');
+                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'celser', price: 140 }));
+                else alert('Кейс celser');
             });
 
             // Показываем главную
