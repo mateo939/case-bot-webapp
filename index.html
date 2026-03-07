@@ -372,7 +372,7 @@
             background: #444;
         }
 
-        /* ========== СТРАНИЦА КЕЙСОВ (ДВЕ КОЛОНКИ) ========== */
+        /* ========== СТРАНИЦА КЕЙСОВ (ТРИ КЕЙСА В ДВУХ РЯДАХ) ========== */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -422,7 +422,7 @@
             object-fit: cover;
         }
         .case-name {
-            font-size: 1.3rem;  /* чуть меньше, чтобы умещалось */
+            font-size: 1.2rem;
             font-weight: 700;
             color: #fff;
             text-transform: lowercase;
@@ -681,7 +681,7 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
-    <!-- Страница кейсов (два кейса в ряд) -->
+    <!-- Страница кейсов (три кейса в два ряда) -->
     <div id="cases-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
         <div class="cases-header">КЕЙСЫ</div>
@@ -698,6 +698,13 @@
                     <img src="case-common2.png" alt="Сигара">
                 </div>
                 <div class="case-name">сигара</div>
+                <div class="case-value">140 ★</div>
+            </div>
+            <div class="case-card" id="case3">
+                <div class="case-image">
+                    <img src="case-common3.png" alt="Клевер">
+                </div>
+                <div class="case-name">клевер</div>
                 <div class="case-value">140 ★</div>
             </div>
         </div>
@@ -766,13 +773,13 @@
                 const firstName = user.first_name || 'ШЕЛЛИ';
                 const upperName = firstName.toUpperCase();
                 const initial = firstName.charAt(0).toUpperCase();
-
                 userNameEl.textContent = upperName;
                 profileNameEl.textContent = upperName;
                 profileAvatarEl.textContent = initial;
                 userAvatarEl.textContent = initial;
                 profileIdEl.textContent = 'ID: ${user.id}';
             }
+
             // Баланс (заглушка)
             let currentBalance = 0;
             function updateBalances(balance) {
@@ -853,7 +860,6 @@
                 document.getElementById('nav-home').classList.add('active');
                 window.scrollTo(0, 0);
             }
-
             function showProfile() {
                 homePage.style.display = 'none';
                 gamesPage.style.display = 'none';
@@ -915,6 +921,10 @@
             addHandler('case2', 'click', () => {
                 if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'сигара', price: 140 }));
                 else alert('Кейс сигара');
+            });
+            addHandler('case3', 'click', () => {
+                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'клевер', price: 140 }));
+                else alert('Кейс клевер');
             });
 
             // Показываем главную
