@@ -372,7 +372,7 @@
             background: #444;
         }
 
-        /* ========== СТРАНИЦА КЕЙСОВ (БЕЗ РАМКИ, СВЕЧЕНИЕ ТОЛЬКО ВНУТРИ) ========== */
+        /* ========== СТРАНИЦА КЕЙСОВ (ПОЛНОСТЬЮ УБРАНА РАМКА) ========== */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -392,26 +392,22 @@
         .case-card {
             background: transparent;               /* полностью прозрачный фон */
             border: none;                           /* убираем границу */
-            box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.2); /* только внутреннее свечение */
-            backdrop-filter: blur(5px);
-            border-radius: 40px;
-            padding: 0;                            /* убираем внутренние отступы */
+            box-shadow: none;                        /* убираем все тени */
+            backdrop-filter: none;                   /* убираем размытие */
+            border-radius: 0;                        /* убираем скругление */
+            padding: 0;                              /* убираем внутренние отступы */
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
         .case-card:hover {
             transform: translateY(-6px);
-            box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.4);
         }
         .case-image {
             width: 100%;                           /* изображение занимает всю ширину */
             height: auto;
             margin: 0;
-            border-radius: 0;                       /* убираем круглую форму */
             border: none;
             box-shadow: none;
             background: transparent;
@@ -686,7 +682,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница кейсов (БЕЗ РАМКИ, ТОЛЬКО ВНУТРЕННЕЕ СВЕЧЕНИЕ) -->
+    <!-- Страница кейсов (ПОЛНОСТЬЮ БЕЗ РАМКИ) -->
     <div id="cases-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
         <div class="cases-header">КЕЙСЫ</div>
@@ -695,8 +691,7 @@
                 <div class="case-image">
                     <img src="case-common.png" alt="Обычный кейс">
                 </div>
-                <!-- Текст под изображением -->
-                <div class="case-name">обычный кейс</div>
+                <div class="case-name">объёмный кейс</div>
                 <div class="case-value">140 ★</div>
             </div>
         </div>
@@ -908,8 +903,8 @@
 
             // Обработчик клика по карточке кейса
             addHandler('case1', 'click', () => {
-                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'обычный', price: 140 }));
-                else alert('Обычный кейс');
+                if (tg) tg.sendData(JSON.stringify({ action: 'open_case', case: 'объёмный', price: 140 }));
+                else alert('Объёмный кейс');
             });
 
             // Показываем главную
