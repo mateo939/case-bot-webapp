@@ -22,7 +22,7 @@
             color: var(--tg-theme-text-color, #fff);
             min-height: 100vh;
             padding-top: 70px;
-            padding-bottom: 60px;
+            padding-bottom: 70px; /* для фиксированной навигации */
             position: relative;
         }
 
@@ -504,6 +504,8 @@
             border-radius: 30px;
             padding: 20px;
             margin-bottom: 30px;
+            max-height: 300px;
+            overflow-y: auto;  /* вертикальная прокрутка */
         }
 
         .drop-item {
@@ -565,11 +567,11 @@
             font-weight: 700;
             color: #fff;
         }
-
         .profile-id {
             font-size: 0.9rem;
             color: var(--tg-theme-hint-color, #aaa);
         }
+
         .stats-row {
             display: flex;
             gap: 12px;
@@ -703,8 +705,11 @@
         </div>
     </div>
 
-    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) – будет дублироваться на каждой странице, но мы управляем через display страниц, поэтому здесь оставим пустой? Нет, это общая навигация для всех страниц, но мы добавим её отдельно в каждую страницу. Удалим этот блок и вставим навигацию внутрь каждой страницы. -->
-    <!-- Убираем общую навигацию, так как каждая страница имеет свою -->
+    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) -->
+    <div class="bottom-nav-fixed">
+        <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
+        <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
+    </div>
     <!-- Главная страница -->
     <div id="home-page" class="container" style="display: block;">
         <div class="live-section">
@@ -738,11 +743,6 @@
             </div>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
-        <!-- Нижняя навигация внутри главной страницы -->
-        <div class="bottom-nav-fixed" style="position: static; margin-top: 20px;">
-            <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
-            <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
-        </div>
     </div>
 
     <!-- Страница игр -->
@@ -754,10 +754,6 @@
             <div class="game-subtitle">fly to the mars</div>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
-        <div class="bottom-nav-fixed" style="position: static; margin-top: 20px;">
-            <div class="nav-item-fixed" id="nav-home-from-games">ГЛАВНАЯ</div>
-            <div class="nav-item-fixed" id="nav-profile-from-games">ПРОФИЛЬ</div>
-        </div>
     </div>
 
     <!-- Страница инвентаря -->
@@ -769,10 +765,6 @@
         </div>
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
         <div class="footer-copyright">© CELSER BOT</div>
-        <div class="bottom-nav-fixed" style="position: static; margin-top: 20px;">
-            <div class="nav-item-fixed" id="nav-home-from-inventory">ГЛАВНАЯ</div>
-            <div class="nav-item-fixed" id="nav-profile-from-inventory">ПРОФИЛЬ</div>
-        </div>
     </div>
 
     <!-- Страница списка кейсов -->
@@ -803,13 +795,9 @@
             </div>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
-        <div class="bottom-nav-fixed" style="position: static; margin-top: 20px;">
-            <div class="nav-item-fixed" id="nav-home-from-cases">ГЛАВНАЯ</div>
-            <div class="nav-item-fixed" id="nav-profile-from-cases">ПРОФИЛЬ</div>
-        </div>
     </div>
 
-    <!-- Страница деталей кейса (универсальная, заполняется динамически) -->
+    <!-- Страница деталей кейса (универсальная) -->
     <div id="case-detail-page" class="container" style="display: none;">
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
         <div class="case-detail-title" id="detail-case-name">обычный кейс</div>
@@ -826,10 +814,6 @@
             <!-- Сюда будут вставлены предметы через JavaScript -->
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
-        <div class="bottom-nav-fixed" style="position: static; margin-top: 20px;">
-            <div class="nav-item-fixed" id="nav-home-from-detail">ГЛАВНАЯ</div>
-            <div class="nav-item-fixed" id="nav-profile-from-detail">ПРОФИЛЬ</div>
-        </div>
     </div>
 
     <!-- Страница профиля -->
@@ -866,10 +850,6 @@
             <div class="no-drops">ПОКА НЕТ ДРОПОВ</div>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
-        <div class="bottom-nav-fixed" style="position: static; margin-top: 20px;">
-            <div class="nav-item-fixed" id="nav-home-from-profile">ГЛАВНАЯ</div>
-            <div class="nav-item-fixed" id="nav-profile-from-profile">ПРОФИЛЬ</div>
-        </div>
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -882,6 +862,7 @@
             }
 
             const user = tg?.initDataUnsafe?.user;
+
             // Элементы
             const userNameEl = document.getElementById('user-name');
             const userAvatarEl = document.getElementById('user-avatar');
@@ -915,7 +896,6 @@
             }
             updateBalances(0);
             profileReferrals.textContent = '0';
-
             // Колесо
             const wheel = document.getElementById('wheel');
             function updateWheelRotation() {
@@ -971,12 +951,20 @@
                 const el = document.getElementById(id);
                 if (el) el.addEventListener(event, fn);
             }
+
             const homePage = document.getElementById('home-page');
             const gamesPage = document.getElementById('games-page');
             const inventoryPage = document.getElementById('inventory-page');
             const casesPage = document.getElementById('cases-page');
             const caseDetailPage = document.getElementById('case-detail-page');
             const profilePage = document.getElementById('profile-page');
+            const navHome = document.getElementById('nav-home');
+            const navProfile = document.getElementById('nav-profile');
+
+            function setActiveNav(activeId) {
+                document.querySelectorAll('.nav-item-fixed').forEach(item => item.classList.remove('active'));
+                document.getElementById(activeId)?.classList.add('active');
+            }
 
             function showHome() {
                 homePage.style.display = 'block';
@@ -985,6 +973,7 @@
                 casesPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
+                setActiveNav('nav-home');
                 window.scrollTo(0, 0);
             }
 
@@ -995,6 +984,7 @@
                 casesPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
+                setActiveNav('nav-home'); // Или можно сделать отдельный nav, но у нас только две кнопки, поэтому главная подсвечена
                 window.scrollTo(0, 0);
             }
 
@@ -1005,6 +995,7 @@
                 casesPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
+                setActiveNav('nav-home');
                 window.scrollTo(0, 0);
             }
 
@@ -1015,11 +1006,11 @@
                 casesPage.style.display = 'block';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
+                setActiveNav('nav-home');
                 window.scrollTo(0, 0);
             }
 
             function showCaseDetail(caseId) {
-                // Заполняем данными
                 const data = caseData[caseId];
                 document.getElementById('detail-case-name').textContent = data.name;
                 document.getElementById('detail-case-price').textContent = data.price + ' ★';
@@ -1039,6 +1030,7 @@
                 casesPage.style.display = 'none';
                 caseDetailPage.style.display = 'block';
                 profilePage.style.display = 'none';
+                setActiveNav('nav-home'); // можно не менять
                 window.scrollTo(0, 0);
             }
 
@@ -1049,24 +1041,13 @@
                 casesPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'block';
+                setActiveNav('nav-profile');
                 window.scrollTo(0, 0);
             }
 
-            // Навигация на главной
+            // Нижняя навигация
             addHandler('nav-home', 'click', showHome);
             addHandler('nav-profile', 'click', showProfile);
-            // Навигация на странице игр
-            addHandler('nav-home-from-games', 'click', showHome);
-            addHandler('nav-profile-from-games', 'click', showProfile);
-            // Навигация на странице инвентаря
-            addHandler('nav-home-from-inventory', 'click', showHome);
-            addHandler('nav-profile-from-inventory', 'click', showProfile);
-            // Навигация на странице списка кейсов
-            addHandler('nav-home-from-cases', 'click', showHome);
-            addHandler('nav-profile-from-cases', 'click', showProfile);
-            // Навигация на странице деталей кейса
-            addHandler('nav-home-from-detail', 'click', showHome);
-            addHandler('nav-profile-from-detail', 'click', showProfile);
 
             // Кнопки на главной
             addHandler('casesBtn', 'click', showCases);
@@ -1088,7 +1069,6 @@
                 if (tg) tg.showPopup({ title: 'Пополнение', message: 'Функция пополнения скоро появится', buttons: [{ type: 'ok' }] });
                 else alert('Пополнение');
             });
-
             // Обновление инвентаря (имитация)
             addHandler('refresh-inventory', 'click', () => {
                 if (tg) tg.sendData(JSON.stringify({ action: 'refresh_inventory' }));
@@ -1119,4 +1099,3 @@
     </script>
 </body>
 </html>
-
