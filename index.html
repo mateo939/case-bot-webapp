@@ -132,7 +132,15 @@
             background: rgba(255,255,255,0.15);
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-        /* Кнопка возврата на главную — максимально влево и меньше */
+
+        .container {
+            max-width: 360px;
+            margin: 0 auto;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+        }
+        /* Кнопка возврата на главную */
         .back-home-button {
             display: inline-flex;
             align-items: center;
@@ -345,7 +353,6 @@
             line-height: 1.2;
         }
 
-        /* Тёмная кнопка обновления (без иконки) */
         .refresh-btn-dark {
             background: #333;
             color: #fff;
@@ -365,7 +372,7 @@
             background: #444;
         }
 
-        /* ========== УЛУЧШЕННЫЕ СТИЛИ ДЛЯ КАРТОЧКИ КЕЙСА ========== */
+        /* ===== УБИРАЕМ КРУЖОК, ЗАЛИВАЕМ ПОЛНОСТЬЮ ===== */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -383,13 +390,13 @@
         }
 
         .case-card {
-            background: transparent;
-            backdrop-filter: blur(5px);
-            border-radius: 40px;
-            padding: 24px 16px;
-            text-align: center;
+            background: transparent;              /* полностью прозрачный фон */
             border: 2px solid rgba(255, 215, 0, 0.5);
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 0;                           /* убираем внутренние отступы */
+            text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
             position: relative;
@@ -401,29 +408,21 @@
             box-shadow: 0 25px 35px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(255, 215, 0, 0.4);
         }
         .case-image {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #ffd700;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%;                          /* занимает всю ширину карточки */
+            height: auto;
+            margin: 0;
+            border-radius: 0;                      /* убираем круглую форму */
+            border: none;
+            box-shadow: none;
+            background: transparent;
+            line-height: 0;                         /* убираем лишние отступы */
         }
 
         .case-image img {
             width: 100%;
-            height: 100%;
+            height: auto;
+            display: block;
             object-fit: cover;
-        }
-
-        .case-image:empty::before {
-            content: "🎁";
-            font-size: 3rem;
-            color: #ffd700;
         }
 
         .case-name {
@@ -433,7 +432,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            margin-bottom: 10px;
+            margin: 16px 0 8px;                     /* отступы сверху и снизу */
         }
 
         .case-value {
@@ -447,6 +446,7 @@
             border-radius: 40px;
             border: 1px solid rgba(255, 215, 0, 0.5);
             backdrop-filter: blur(5px);
+            margin-bottom: 16px;                    /* отступ снизу */
         }
 
         /* Страница профиля */
@@ -587,6 +587,15 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
+        /* Копирайт внизу всех страниц */
+        .footer-copyright {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--tg-theme-hint-color, #777);
+            margin-top: 20px;
+            padding-bottom: 10px;
+        }
+
         @media (max-width: 400px) {
             .wheel {
                 width: 200px;
@@ -652,6 +661,8 @@
                 <p>ИГРЫ</p>
             </div>
         </div>
+        <!-- Копирайт только на главной (можно добавить везде, но пока тут) -->
+        <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
     <!-- Страница игр -->
@@ -662,40 +673,34 @@
             <div class="game-title">ROCKET</div>
             <div class="game-subtitle">fly to the mars</div>
         </div>
+        <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
     <!-- Страница инвентаря -->
     <div id="inventory-page" class="container" style="display: none;">
-
-        .container {
-            max-width: 360px;
-            margin: 0 auto;
-            padding: 16px;
-            text-align: center;
-            position: relative;
-        }
         <div class="back-home-button" id="back-from-inventory"><span>←</span> на главную</div>
         <div class="cost-block">
             <div class="cost-label">СТОИМОСТЬ</div>
             <div class="cost-value" id="inventory-cost">0 ★</div>
         </div>
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
+        <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница кейсов (один кейс, улучшенный дизайн) -->
+    <!-- Страница кейсов (один кейс, без кружка, изображение на всю ширину) -->
     <div id="cases-page" class="container" style="display: none;">
         <div class="back-home-button" id="back-from-cases"><span>←</span> на главную</div>
         <div class="cases-header">КЕЙСЫ</div>
         <div class="cases-grid">
             <div class="case-card" id="case1">
                 <div class="case-image">
-                    <!-- Сюда нужно загрузить изображение case-common.png в корень репозитория -->
-                    <img src="case-common.png" alt="Обычный кейс">
+                    <img src="case1.png" alt="Обычный кейс">
                 </div>
                 <div class="case-name">celser</div>
                 <div class="case-value">140 ★</div>
             </div>
         </div>
+        <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
     <!-- Страница профиля -->
@@ -731,6 +736,7 @@
             <div class="best-drop-title">ЛУЧШИЙ ДРОП</div>
             <div class="no-drops">ПОКА НЕТ ДРОПОВ</div>
         </div>
+        <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -754,7 +760,6 @@
             const profileBalance = document.getElementById('profile-balance');
             const profileReferrals = document.getElementById('profile-referrals');
             const inventoryCost = document.getElementById('inventory-cost');
-
             if (user) {
                 const firstName = user.first_name || 'ШЕЛЛИ';
                 const upperName = firstName.toUpperCase();
@@ -766,6 +771,7 @@
                 userAvatarEl.textContent = initial;
                 profileIdEl.textContent = 'ID: ${user.id}';
             }
+
             // Баланс (заглушка)
             let currentBalance = 0;
             function updateBalances(balance) {
@@ -912,4 +918,3 @@
     </script>
 </body>
 </html>
-
