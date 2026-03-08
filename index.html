@@ -881,7 +881,7 @@
                 profileNameEl.textContent = upperName;
                 profileAvatarEl.textContent = initial;
                 userAvatarEl.textContent = initial;
-                profileIdEl.textContent = ID: ${user.id};
+                profileIdEl.textContent = 'ID: ${user.id}';
             }
 
             // Баланс (заглушка)
@@ -902,7 +902,7 @@
                 if (maxScroll > 0) {
                     const percent = window.scrollY / maxScroll;
                     const rotation = percent * 360;
-                    if (wheel) wheel.style.transform = rotate(${rotation}deg);
+                    if (wheel) wheel.style.transform = 'rotate(${rotation}deg)';
                 }
             }
             window.addEventListener('scroll', updateWheelRotation);
@@ -1120,3 +1120,4 @@
     </script>
 </body>
 </html>
+
