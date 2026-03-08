@@ -22,7 +22,7 @@
             color: var(--tg-theme-text-color, #fff);
             min-height: 100vh;
             padding-top: 70px;
-            padding-bottom: 70px; /* для фиксированной навигации */
+            padding-bottom: 70px;
             position: relative;
         }
 
@@ -39,6 +39,34 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .left-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-button {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #fff;
+            transition: background 0.2s;
+        }
+
+        .close-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .close-button span {
+            font-size: 1.2rem;
+            line-height: 1;
         }
 
         .user-info {
@@ -114,7 +142,6 @@
             padding: 8px 12px;
             z-index: 1000;
         }
-
         .nav-item-fixed {
             flex: 1;
             text-align: center;
@@ -140,6 +167,7 @@
             text-align: center;
             position: relative;
         }
+
         /* Кнопка возврата на главную (универсальная) */
         .back-button {
             display: inline-flex;
@@ -252,11 +280,10 @@
             text-shadow: 0 0 10px rgba(255,215,0,0.5);
             margin-top: 5px;
         }
-
-        /* Сетка главных кнопок */
+        /* Сетка главных кнопок (2 колонки, последняя на всю ширину) */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 30px;
         }
@@ -272,6 +299,7 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .menu-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 24px rgba(0,0,0,0.5);
@@ -289,7 +317,12 @@
             color: #fff;
         }
 
-        /* Страница игр */
+        /* Последняя кнопка (Задания) на всю ширину */
+        .menu-item:last-child {
+            grid-column: span 2;
+        }
+
+        /* Страница игр (без ракеты) */
         .games-header {
             font-size: 2rem;
             font-weight: 700;
@@ -299,31 +332,20 @@
             margin-bottom: 20px;
         }
 
-        .game-button {
-            background: var(--tg-theme-button-color, #40a7e3);
-            border-radius: 50px;
+        .games-placeholder {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
             padding: 40px 20px;
             margin: 20px 0;
             text-align: center;
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
-            transition: transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
-        .game-button:hover {
-            transform: translateY(-4px);
-        }
-
-        .game-button .game-title {
-            font-size: 2.8rem;
-            font-weight: 700;
+        .games-placeholder p {
+            font-size: 1.2rem;
             color: #fff;
-            margin-bottom: 10px;
-        }
-
-        .game-button .game-subtitle {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.9);
         }
 
         /* Страница инвентаря */
@@ -372,7 +394,7 @@
             background: #444;
         }
 
-        /* ========== СТРАНИЦА КЕЙСОВ (СПИСОК КЕЙСОВ) ========== */
+        /* Страница списка кейсов */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -400,7 +422,6 @@
             transition: transform 0.3s;
             cursor: pointer;
         }
-
         .case-card:hover {
             transform: translateY(-6px);
         }
@@ -421,6 +442,7 @@
             display: block;
             object-fit: cover;
         }
+
         .case-name {
             font-size: 1.2rem;
             font-weight: 700;
@@ -445,7 +467,7 @@
             margin-bottom: 12px;
         }
 
-        /* ========== СТРАНИЦА ДЕТАЛЕЙ КЕЙСА ========== */
+        /* Страница деталей кейса */
         .case-detail-title {
             font-size: 2rem;
             font-weight: 700;
@@ -505,7 +527,7 @@
             padding: 20px;
             margin-bottom: 30px;
             max-height: 300px;
-            overflow-y: auto;  /* вертикальная прокрутка */
+            overflow-y: auto;
         }
 
         .drop-item {
@@ -544,7 +566,6 @@
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
-
         .profile-avatar {
             width: 56px;
             height: 56px;
@@ -567,6 +588,7 @@
             font-weight: 700;
             color: #fff;
         }
+
         .profile-id {
             font-size: 0.9rem;
             color: var(--tg-theme-hint-color, #aaa);
@@ -689,15 +711,20 @@
             .cost-value {
                 font-size: 2.2rem;
             }
-        }
+            }
     </style>
 </head>
 <body>
-    <!-- Фиксированная верхняя панель -->
+    <!-- Фиксированная верхняя панель с крестиком "Закрыть" -->
     <div class="top-bar-fixed">
-        <div class="user-info">
-            <div class="user-avatar" id="user-avatar">Ш</div>
-            <span class="user-name" id="user-name">ШЕЛЛИ</span>
+        <div class="left-section">
+            <div class="close-button" id="close-app">
+                <span>✕</span> Закрыть
+            </div>
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">Ш</div>
+                <span class="user-name" id="user-name">ШЕЛЛИ</span>
+            </div>
         </div>
         <div class="balance-block">
             <span class="balance-value" id="balance-display">0 ★</span>
@@ -710,6 +737,7 @@
         <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
         <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
     </div>
+
     <!-- Главная страница -->
     <div id="home-page" class="container" style="display: block;">
         <div class="live-section">
@@ -724,6 +752,7 @@
             </div>
         </div>
 
+        <!-- Пять кнопок: Кейсы, Апгрейд, Инвентарь, Игры, Задания (последняя на всю ширину) -->
         <div class="menu-grid">
             <div class="menu-item" id="casesBtn">
                 <span>🎁</span>
@@ -741,17 +770,20 @@
                 <span>🎮</span>
                 <p>ИГРЫ</p>
             </div>
+            <div class="menu-item" id="tasksBtn">
+                <span>📋</span>
+                <p>ЗАДАНИЯ</p>
+            </div>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница игр -->
+    <!-- Страница игр (без ракеты) -->
     <div id="games-page" class="container" style="display: none;">
         <div class="back-button" id="back-from-games"><span>←</span> на главную</div>
         <div class="games-header">ИГРЫ</div>
-        <div class="game-button" id="rocket-game">
-            <div class="game-title">ROCKET</div>
-            <div class="game-subtitle">fly to the mars</div>
+        <div class="games-placeholder">
+            <p>Скоро здесь появятся игры</p>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
@@ -775,7 +807,7 @@
             <div class="case-card" id="case1">
                 <div class="case-image">
                     <img src="case-common.png" alt="Обычный кейс">
-                </div>
+                    </div>
                 <div class="case-name">обычный кейс</div>
                 <div class="case-value">140 ★</div>
             </div>
@@ -797,7 +829,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница деталей кейса (универсальная) -->
+    <!-- Страница деталей кейса -->
     <div id="case-detail-page" class="container" style="display: none;">
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
         <div class="case-detail-title" id="detail-case-name">обычный кейс</div>
@@ -810,9 +842,7 @@
         </div>
         <div class="price-tag" id="detail-case-price">200 ★</div>
         <div class="possible-drop-title">ВОЗМОЖНЫЙ ДРОП</div>
-        <div class="drop-list" id="drop-list">
-            <!-- Сюда будут вставлены предметы через JavaScript -->
-        </div>
+        <div class="drop-list" id="drop-list"></div>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
@@ -873,7 +903,6 @@
             const profileBalance = document.getElementById('profile-balance');
             const profileReferrals = document.getElementById('profile-referrals');
             const inventoryCost = document.getElementById('inventory-cost');
-
             if (user) {
                 const firstName = user.first_name || 'ШЕЛЛИ';
                 const upperName = firstName.toUpperCase();
@@ -896,6 +925,7 @@
             }
             updateBalances(0);
             profileReferrals.textContent = '0';
+
             // Колесо
             const wheel = document.getElementById('wheel');
             function updateWheelRotation() {
@@ -965,7 +995,6 @@
                 document.querySelectorAll('.nav-item-fixed').forEach(item => item.classList.remove('active'));
                 document.getElementById(activeId)?.classList.add('active');
             }
-
             function showHome() {
                 homePage.style.display = 'block';
                 gamesPage.style.display = 'none';
@@ -984,7 +1013,7 @@
                 casesPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
-                setActiveNav('nav-home'); // Или можно сделать отдельный nav, но у нас только две кнопки, поэтому главная подсвечена
+                setActiveNav('nav-home');
                 window.scrollTo(0, 0);
             }
 
@@ -1020,7 +1049,7 @@
                 data.items.forEach(item => {
                     const div = document.createElement('div');
                     div.className = 'drop-item';
-                    div.innerHTML = '<span class="drop-name">${item.name}</span><span class="drop-value">${item.value} ★</span>';
+                    div.innerHTML = <span class="drop-name">${item.name}</span><span class="drop-value">${item.value} ★</span>;
                     dropList.appendChild(div);
                 });
 
@@ -1030,7 +1059,7 @@
                 casesPage.style.display = 'none';
                 caseDetailPage.style.display = 'block';
                 profilePage.style.display = 'none';
-                setActiveNav('nav-home'); // можно не менять
+                setActiveNav('nav-home');
                 window.scrollTo(0, 0);
             }
 
@@ -1049,6 +1078,12 @@
             addHandler('nav-home', 'click', showHome);
             addHandler('nav-profile', 'click', showProfile);
 
+            // Кнопка закрытия приложения
+            addHandler('close-app', 'click', () => {
+                if (tg) tg.close();
+                else window.close(); // fallback
+            });
+
             // Кнопки на главной
             addHandler('casesBtn', 'click', showCases);
             addHandler('upgradeBtn', 'click', () => {
@@ -1057,11 +1092,9 @@
             });
             addHandler('inventoryBtn', 'click', showInventory);
             addHandler('gamesBtn', 'click', showGames);
-
-            // Кнопка в играх
-            addHandler('rocket-game', 'click', () => {
-                if (tg) tg.showPopup({ title: 'Rocket', message: 'Запуск игры...', buttons: [{ type: 'ok' }] });
-                else alert('Игра');
+            addHandler('tasksBtn', 'click', () => {
+                if (tg) tg.showPopup({ title: 'Задания', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
+                else alert('Задания в разработке');
             });
 
             // Плюс (пополнение)
@@ -1069,6 +1102,7 @@
                 if (tg) tg.showPopup({ title: 'Пополнение', message: 'Функция пополнения скоро появится', buttons: [{ type: 'ok' }] });
                 else alert('Пополнение');
             });
+
             // Обновление инвентаря (имитация)
             addHandler('refresh-inventory', 'click', () => {
                 if (tg) tg.sendData(JSON.stringify({ action: 'refresh_inventory' }));
