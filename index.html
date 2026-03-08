@@ -142,12 +142,12 @@
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* скрыть скроллбар для Firefox */
-        }
-        .bottom-nav-fixed::-webkit-scrollbar {
-            display: none; /* скрыть скроллбар для Chrome/Safari */
+            scrollbar-width: none;
         }
 
+        .bottom-nav-fixed::-webkit-scrollbar {
+            display: none;
+        }
         .nav-items-container {
             display: inline-flex;
             gap: 4px;
@@ -158,8 +158,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 6px 12px;
-            font-size: 0.8rem;
+            padding: 6px 10px;          /* уменьшили отступы */
+            font-size: 0.75rem;          /* уменьшили шрифт */
             font-weight: 500;
             color: #fff;
             cursor: pointer;
@@ -183,7 +183,7 @@
             position: relative;
         }
 
-        /* Кнопка возврата (универсальная) */
+        /* Кнопка возврата */
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -213,7 +213,7 @@
             line-height: 1;
         }
 
-        /* Страница кейсов (главная) — колесо + сетка кейсов */
+        /* Страница кейсов (главная) */
         .live-section {
             margin-bottom: 30px;
             text-align: left;
@@ -453,7 +453,7 @@
             color: #ffd700;
         }
 
-        /* Страница игр (без ракеты) */
+        /* Страница игр с синей кнопкой */
         .games-header {
             font-size: 2rem;
             font-weight: 700;
@@ -463,20 +463,31 @@
             margin-bottom: 20px;
         }
 
-        .placeholder-page {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border-radius: 40px;
+        .game-button {
+            background: var(--tg-theme-button-color, #40a7e3);
+            border-radius: 50px;
             padding: 40px 20px;
             margin: 20px 0;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
+            transition: transform 0.2s;
         }
 
-        .placeholder-page p {
-            font-size: 1.2rem;
+        .game-button:hover {
+            transform: translateY(-4px);
+        }
+
+        .game-button .game-title {
+            font-size: 2.8rem;
+            font-weight: 700;
             color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .game-button .game-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
         }
 
         /* Страница инвентаря */
@@ -525,6 +536,23 @@
             background: #444;
         }
 
+        /* Страница апгрейда и заданий (заглушки) */
+        .placeholder-page {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .placeholder-page p {
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
         /* Страница профиля */
         .profile-header {
             display: flex;
@@ -538,7 +566,6 @@
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
-
         .profile-avatar {
             width: 56px;
             height: 56px;
@@ -572,6 +599,7 @@
             gap: 12px;
             margin-bottom: 30px;
         }
+
         .stat-item {
             flex: 1;
             background: rgba(0, 0, 0, 0.5);
@@ -683,7 +711,7 @@
             .cost-value {
                 font-size: 2.2rem;
             }
-        }
+            }
     </style>
 </head>
 <body>
@@ -704,7 +732,7 @@
         </div>
     </div>
 
-    <!-- Фиксированная нижняя навигация с шестью пунктами (горизонтальный скролл) -->
+    <!-- Фиксированная нижняя навигация с шестью пунктами (уменьшен шрифт) -->
     <div class="bottom-nav-fixed">
         <div class="nav-items-container">
             <div class="nav-item-fixed active" id="nav-cases">КЕЙСЫ</div>
@@ -716,7 +744,7 @@
         </div>
     </div>
 
-    <!-- Главная страница: КЕЙСЫ (колесо + список кейсов) -->
+    <!-- Главная страница: КЕЙСЫ -->
     <div id="cases-home-page" class="container" style="display: block;">
         <div class="live-section">
             <div class="live-title">LIVE</div>
@@ -757,12 +785,13 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница игр (без ракеты) -->
+    <!-- Страница игр с синей кнопкой ROCKET -->
     <div id="games-page" class="container" style="display: none;">
         <div class="back-button" id="back-from-games"><span>←</span> к кейсам</div>
         <div class="games-header">ИГРЫ</div>
-        <div class="placeholder-page">
-            <p>Скоро здесь появятся игры</p>
+        <div class="game-button" id="rocket-game">
+            <div class="game-title">ROCKET</div>
+            <div class="game-subtitle">fly to the mars</div>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
@@ -777,8 +806,7 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
-
-    <!-- Страница апгрейда (заглушка) -->
+    <!-- Страница апгрейда -->
     <div id="upgrade-page" class="container" style="display: none;">
         <div class="back-button" id="back-from-upgrade"><span>←</span> к кейсам</div>
         <div class="games-header">АПГРЕЙД</div>
@@ -788,7 +816,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница заданий (заглушка) -->
+    <!-- Страница заданий -->
     <div id="tasks-page" class="container" style="display: none;">
         <div class="back-button" id="back-from-tasks"><span>←</span> к кейсам</div>
         <div class="games-header">ЗАДАНИЯ</div>
@@ -797,6 +825,7 @@
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
+
     <!-- Страница деталей кейса -->
     <div id="case-detail-page" class="container" style="display: none;">
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
@@ -871,7 +900,6 @@
             const profileBalance = document.getElementById('profile-balance');
             const profileReferrals = document.getElementById('profile-referrals');
             const inventoryCost = document.getElementById('inventory-cost');
-
             if (user) {
                 const firstName = user.first_name || 'ШЕЛЛИ';
                 const upperName = firstName.toUpperCase();
@@ -959,7 +987,6 @@
             const caseDetailPage = document.getElementById('case-detail-page');
             const profilePage = document.getElementById('profile-page');
 
-            // Элементы навигации
             const navCases = document.getElementById('nav-cases');
             const navUpgrade = document.getElementById('nav-upgrade');
             const navInventory = document.getElementById('nav-inventory');
@@ -972,6 +999,7 @@
                 navItems.forEach(item => item.classList.remove('active'));
                 activeElement.classList.add('active');
             }
+
             function showCasesHome() {
                 casesHomePage.style.display = 'block';
                 gamesPage.style.display = 'none';
@@ -1048,7 +1076,6 @@
                 const data = caseData[caseId];
                 document.getElementById('detail-case-name').textContent = data.name;
                 document.getElementById('detail-case-price').textContent = data.price + ' ★';
-
                 const dropList = document.getElementById('drop-list');
                 dropList.innerHTML = '';
                 data.items.forEach(item => {
@@ -1065,7 +1092,6 @@
                 tasksPage.style.display = 'none';
                 caseDetailPage.style.display = 'block';
                 profilePage.style.display = 'none';
-                // Навигацию не меняем, активным остаётся тот же пункт? Можно оставить как есть
                 window.scrollTo(0, 0);
             }
 
@@ -1102,6 +1128,12 @@
                 else alert('Пригласить друга');
             });
 
+            // Кнопка в играх
+            addHandler('rocket-game', 'click', () => {
+                if (tg) tg.showPopup({ title: 'Rocket', message: 'Запуск игры...', buttons: [{ type: 'ok' }] });
+                else alert('Игра');
+            });
+
             // Обработчики кнопок возврата
             addHandler('back-from-games', 'click', showCasesHome);
             addHandler('back-from-inventory', 'click', showCasesHome);
@@ -1114,11 +1146,9 @@
             addHandler('case2', 'click', () => showCaseDetail('case2'));
             addHandler('case3', 'click', () => showCaseDetail('case3'));
 
-            // Показываем главную страницу (Кейсы)
+            // Показываем главную
             showCasesHome();
         })();
     </script>
 </body>
 </html>
-
-
