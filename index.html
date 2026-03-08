@@ -129,35 +129,50 @@
             transform: scale(1.1);
         }
 
-        /* Фиксированная нижняя навигация (два пункта) */
+        /* Фиксированная нижняя навигация с горизонтальной прокруткой */
         .bottom-nav-fixed {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            display: flex;
-            justify-content: space-around;
             background: #000000;
             border-top: 1px solid #333;
-            padding: 8px 12px;
+            padding: 8px 0;
             z-index: 1000;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* скрыть скроллбар для Firefox */
         }
+        .bottom-nav-fixed::-webkit-scrollbar {
+            display: none; /* скрыть скроллбар для Chrome/Safari */
+        }
+
+        .nav-items-container {
+            display: inline-flex;
+            gap: 4px;
+            padding: 0 8px;
+        }
+
         .nav-item-fixed {
-            flex: 1;
-            text-align: center;
-            padding: 6px 0;
-            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            font-size: 0.8rem;
             font-weight: 500;
             color: #fff;
             cursor: pointer;
             border-radius: 30px;
             transition: all 0.2s;
+            background: rgba(255,255,255,0.05);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .nav-item-fixed.active {
             color: var(--tg-theme-button-color, #40a7e3);
-            background: rgba(255,255,255,0.15);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            background: rgba(64, 167, 227, 0.2);
         }
 
         .container {
@@ -168,7 +183,7 @@
             position: relative;
         }
 
-        /* Кнопка возврата на главную (универсальная) */
+        /* Кнопка возврата (универсальная) */
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -198,7 +213,7 @@
             line-height: 1;
         }
 
-        /* Главная страница */
+        /* Страница кейсов (главная) — колесо + сетка кейсов */
         .live-section {
             margin-bottom: 30px;
             text-align: left;
@@ -259,7 +274,6 @@
         .sector:nth-child(6) { transform: rotate(225deg); }
         .sector:nth-child(7) { transform: rotate(270deg); }
         .sector:nth-child(8) { transform: rotate(315deg); }
-
         .wheel-center {
             position: absolute;
             top: 50%;
@@ -280,121 +294,7 @@
             text-shadow: 0 0 10px rgba(255,215,0,0.5);
             margin-top: 5px;
         }
-        /* Сетка главных кнопок (2 колонки, последняя на всю ширину) */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
 
-        .menu-item {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border-radius: 30px;
-            padding: 16px 8px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.5);
-        }
-
-        .menu-item span {
-            display: block;
-            font-size: 2rem;
-            margin-bottom: 6px;
-        }
-
-        .menu-item p {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        /* Последняя кнопка (Задания) на всю ширину */
-        .menu-item:last-child {
-            grid-column: span 2;
-        }
-
-        /* Страница игр (без ракеты) */
-        .games-header {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ffd700, #ffb347);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        .games-placeholder {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border-radius: 40px;
-            padding: 40px 20px;
-            margin: 20px 0;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-        }
-
-        .games-placeholder p {
-            font-size: 1.2rem;
-            color: #fff;
-        }
-
-        /* Страница инвентаря */
-        .cost-block {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border-radius: 40px;
-            padding: 24px 20px;
-            margin: 20px 0 30px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-        }
-
-        .cost-label {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--tg-theme-hint-color, #aaa);
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .cost-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffd700;
-            line-height: 1.2;
-        }
-
-        .refresh-btn-dark {
-            background: #333;
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            padding: 14px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: fit-content;
-            margin: 20px auto;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-            transition: background 0.2s;
-        }
-
-        .refresh-btn-dark:hover {
-            background: #444;
-        }
-
-        /* Страница списка кейсов */
         .cases-header {
             font-size: 2rem;
             font-weight: 700;
@@ -422,6 +322,7 @@
             transition: transform 0.3s;
             cursor: pointer;
         }
+
         .case-card:hover {
             transform: translateY(-6px);
         }
@@ -519,7 +420,6 @@
             text-align: left;
             margin-bottom: 15px;
         }
-
         .drop-list {
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
@@ -553,6 +453,78 @@
             color: #ffd700;
         }
 
+        /* Страница игр (без ракеты) */
+        .games-header {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .placeholder-page {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .placeholder-page p {
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        /* Страница инвентаря */
+        .cost-block {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 24px 20px;
+            margin: 20px 0 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--tg-theme-hint-color, #aaa);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .cost-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            line-height: 1.2;
+        }
+
+        .refresh-btn-dark {
+            background: #333;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: fit-content;
+            margin: 20px auto;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            transition: background 0.2s;
+        }
+
+        .refresh-btn-dark:hover {
+            background: #444;
+        }
+
         /* Страница профиля */
         .profile-header {
             display: flex;
@@ -566,6 +538,7 @@
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
+
         .profile-avatar {
             width: 56px;
             height: 56px;
@@ -599,7 +572,6 @@
             gap: 12px;
             margin-bottom: 30px;
         }
-
         .stat-item {
             flex: 1;
             background: rgba(0, 0, 0, 0.5);
@@ -711,11 +683,11 @@
             .cost-value {
                 font-size: 2.2rem;
             }
-            }
+        }
     </style>
 </head>
 <body>
-    <!-- Фиксированная верхняя панель с крестиком "Закрыть" -->
+    <!-- Фиксированная верхняя панель с крестиком -->
     <div class="top-bar-fixed">
         <div class="left-section">
             <div class="close-button" id="close-app">
@@ -732,14 +704,20 @@
         </div>
     </div>
 
-    <!-- Фиксированная нижняя навигация (ГЛАВНАЯ, ПРОФИЛЬ) -->
+    <!-- Фиксированная нижняя навигация с шестью пунктами (горизонтальный скролл) -->
     <div class="bottom-nav-fixed">
-        <div class="nav-item-fixed active" id="nav-home">ГЛАВНАЯ</div>
-        <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
+        <div class="nav-items-container">
+            <div class="nav-item-fixed active" id="nav-cases">КЕЙСЫ</div>
+            <div class="nav-item-fixed" id="nav-upgrade">АПГРЕЙД</div>
+            <div class="nav-item-fixed" id="nav-inventory">ИНВЕНТАРЬ</div>
+            <div class="nav-item-fixed" id="nav-games">ИГРЫ</div>
+            <div class="nav-item-fixed" id="nav-tasks">ЗАДАНИЯ</div>
+            <div class="nav-item-fixed" id="nav-profile">ПРОФИЛЬ</div>
+        </div>
     </div>
 
-    <!-- Главная страница -->
-    <div id="home-page" class="container" style="display: block;">
+    <!-- Главная страница: КЕЙСЫ (колесо + список кейсов) -->
+    <div id="cases-home-page" class="container" style="display: block;">
         <div class="live-section">
             <div class="live-title">LIVE</div>
             <div class="wheel-container">
@@ -752,62 +730,12 @@
             </div>
         </div>
 
-        <!-- Пять кнопок: Кейсы, Апгрейд, Инвентарь, Игры, Задания (последняя на всю ширину) -->
-        <div class="menu-grid">
-            <div class="menu-item" id="casesBtn">
-                <span>🎁</span>
-                <p>КЕЙСЫ</p>
-            </div>
-            <div class="menu-item" id="upgradeBtn">
-                <span>⬆️</span>
-                <p>АПГРЕЙД</p>
-            </div>
-            <div class="menu-item" id="inventoryBtn">
-                <span>📦</span>
-                <p>ИНВЕНТАРЬ</p>
-            </div>
-            <div class="menu-item" id="gamesBtn">
-                <span>🎮</span>
-                <p>ИГРЫ</p>
-            </div>
-            <div class="menu-item" id="tasksBtn">
-                <span>📋</span>
-                <p>ЗАДАНИЯ</p>
-            </div>
-        </div>
-        <div class="footer-copyright">© CELSER BOT</div>
-    </div>
-
-    <!-- Страница игр (без ракеты) -->
-    <div id="games-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-games"><span>←</span> на главную</div>
-        <div class="games-header">ИГРЫ</div>
-        <div class="games-placeholder">
-            <p>Скоро здесь появятся игры</p>
-        </div>
-        <div class="footer-copyright">© CELSER BOT</div>
-    </div>
-
-    <!-- Страница инвентаря -->
-    <div id="inventory-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-inventory"><span>←</span> на главную</div>
-        <div class="cost-block">
-            <div class="cost-label">СТОИМОСТЬ</div>
-            <div class="cost-value" id="inventory-cost">0 ★</div>
-        </div>
-        <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
-        <div class="footer-copyright">© CELSER BOT</div>
-    </div>
-
-    <!-- Страница списка кейсов -->
-    <div id="cases-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-cases"><span>←</span> на главную</div>
         <div class="cases-header">КЕЙСЫ</div>
         <div class="cases-grid">
             <div class="case-card" id="case1">
                 <div class="case-image">
                     <img src="case-common.png" alt="Обычный кейс">
-                    </div>
+                </div>
                 <div class="case-name">обычный кейс</div>
                 <div class="case-value">140 ★</div>
             </div>
@@ -829,6 +757,46 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
+    <!-- Страница игр (без ракеты) -->
+    <div id="games-page" class="container" style="display: none;">
+        <div class="back-button" id="back-from-games"><span>←</span> к кейсам</div>
+        <div class="games-header">ИГРЫ</div>
+        <div class="placeholder-page">
+            <p>Скоро здесь появятся игры</p>
+        </div>
+        <div class="footer-copyright">© CELSER BOT</div>
+    </div>
+
+    <!-- Страница инвентаря -->
+    <div id="inventory-page" class="container" style="display: none;">
+        <div class="back-button" id="back-from-inventory"><span>←</span> к кейсам</div>
+        <div class="cost-block">
+            <div class="cost-label">СТОИМОСТЬ</div>
+            <div class="cost-value" id="inventory-cost">0 ★</div>
+        </div>
+        <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
+        <div class="footer-copyright">© CELSER BOT</div>
+    </div>
+
+    <!-- Страница апгрейда (заглушка) -->
+    <div id="upgrade-page" class="container" style="display: none;">
+        <div class="back-button" id="back-from-upgrade"><span>←</span> к кейсам</div>
+        <div class="games-header">АПГРЕЙД</div>
+        <div class="placeholder-page">
+            <p>Раздел в разработке</p>
+        </div>
+        <div class="footer-copyright">© CELSER BOT</div>
+    </div>
+
+    <!-- Страница заданий (заглушка) -->
+    <div id="tasks-page" class="container" style="display: none;">
+        <div class="back-button" id="back-from-tasks"><span>←</span> к кейсам</div>
+        <div class="games-header">ЗАДАНИЯ</div>
+        <div class="placeholder-page">
+            <p>Раздел в разработке</p>
+        </div>
+        <div class="footer-copyright">© CELSER BOT</div>
+    </div>
     <!-- Страница деталей кейса -->
     <div id="case-detail-page" class="container" style="display: none;">
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
@@ -903,6 +871,7 @@
             const profileBalance = document.getElementById('profile-balance');
             const profileReferrals = document.getElementById('profile-referrals');
             const inventoryCost = document.getElementById('inventory-cost');
+
             if (user) {
                 const firstName = user.first_name || 'ШЕЛЛИ';
                 const upperName = firstName.toUpperCase();
@@ -912,7 +881,7 @@
                 profileNameEl.textContent = upperName;
                 profileAvatarEl.textContent = initial;
                 userAvatarEl.textContent = initial;
-                profileIdEl.textContent = 'ID: ${user.id}';
+                profileIdEl.textContent = ID: ${user.id};
             }
 
             // Баланс (заглушка)
@@ -933,7 +902,7 @@
                 if (maxScroll > 0) {
                     const percent = window.scrollY / maxScroll;
                     const rotation = percent * 360;
-                    if (wheel) wheel.style.transform = 'rotate(${rotation}deg)';
+                    if (wheel) wheel.style.transform = rotate(${rotation}deg);
                 }
             }
             window.addEventListener('scroll', updateWheelRotation);
@@ -982,60 +951,96 @@
                 if (el) el.addEventListener(event, fn);
             }
 
-            const homePage = document.getElementById('home-page');
+            const casesHomePage = document.getElementById('cases-home-page');
             const gamesPage = document.getElementById('games-page');
             const inventoryPage = document.getElementById('inventory-page');
-            const casesPage = document.getElementById('cases-page');
+            const upgradePage = document.getElementById('upgrade-page');
+            const tasksPage = document.getElementById('tasks-page');
             const caseDetailPage = document.getElementById('case-detail-page');
             const profilePage = document.getElementById('profile-page');
-            const navHome = document.getElementById('nav-home');
-            const navProfile = document.getElementById('nav-profile');
 
-            function setActiveNav(activeId) {
-                document.querySelectorAll('.nav-item-fixed').forEach(item => item.classList.remove('active'));
-                document.getElementById(activeId)?.classList.add('active');
+            // Элементы навигации
+            const navCases = document.getElementById('nav-cases');
+            const navUpgrade = document.getElementById('nav-upgrade');
+            const navInventory = document.getElementById('nav-inventory');
+            const navGames = document.getElementById('nav-games');
+            const navTasks = document.getElementById('nav-tasks');
+            const navProfile = document.getElementById('nav-profile');
+            const navItems = [navCases, navUpgrade, navInventory, navGames, navTasks, navProfile];
+
+            function setActiveNav(activeElement) {
+                navItems.forEach(item => item.classList.remove('active'));
+                activeElement.classList.add('active');
             }
-            function showHome() {
-                homePage.style.display = 'block';
+            function showCasesHome() {
+                casesHomePage.style.display = 'block';
                 gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'none';
-                casesPage.style.display = 'none';
+                upgradePage.style.display = 'none';
+                tasksPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
-                setActiveNav('nav-home');
+                setActiveNav(navCases);
                 window.scrollTo(0, 0);
             }
 
             function showGames() {
-                homePage.style.display = 'none';
+                casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'block';
                 inventoryPage.style.display = 'none';
-                casesPage.style.display = 'none';
+                upgradePage.style.display = 'none';
+                tasksPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
-                setActiveNav('nav-home');
+                setActiveNav(navGames);
                 window.scrollTo(0, 0);
             }
 
             function showInventory() {
-                homePage.style.display = 'none';
+                casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'block';
-                casesPage.style.display = 'none';
+                upgradePage.style.display = 'none';
+                tasksPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
-                setActiveNav('nav-home');
+                setActiveNav(navInventory);
                 window.scrollTo(0, 0);
             }
 
-            function showCases() {
-                homePage.style.display = 'none';
+            function showUpgrade() {
+                casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'none';
-                casesPage.style.display = 'block';
+                upgradePage.style.display = 'block';
+                tasksPage.style.display = 'none';
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
-                setActiveNav('nav-home');
+                setActiveNav(navUpgrade);
+                window.scrollTo(0, 0);
+            }
+
+            function showTasks() {
+                casesHomePage.style.display = 'none';
+                gamesPage.style.display = 'none';
+                inventoryPage.style.display = 'none';
+                upgradePage.style.display = 'none';
+                tasksPage.style.display = 'block';
+                caseDetailPage.style.display = 'none';
+                profilePage.style.display = 'none';
+                setActiveNav(navTasks);
+                window.scrollTo(0, 0);
+            }
+
+            function showProfile() {
+                casesHomePage.style.display = 'none';
+                gamesPage.style.display = 'none';
+                inventoryPage.style.display = 'none';
+                upgradePage.style.display = 'none';
+                tasksPage.style.display = 'none';
+                caseDetailPage.style.display = 'none';
+                profilePage.style.display = 'block';
+                setActiveNav(navProfile);
                 window.scrollTo(0, 0);
             }
 
@@ -1053,48 +1058,29 @@
                     dropList.appendChild(div);
                 });
 
-                homePage.style.display = 'none';
+                casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'none';
-                casesPage.style.display = 'none';
+                upgradePage.style.display = 'none';
+                tasksPage.style.display = 'none';
                 caseDetailPage.style.display = 'block';
                 profilePage.style.display = 'none';
-                setActiveNav('nav-home');
+                // Навигацию не меняем, активным остаётся тот же пункт? Можно оставить как есть
                 window.scrollTo(0, 0);
             }
 
-            function showProfile() {
-                homePage.style.display = 'none';
-                gamesPage.style.display = 'none';
-                inventoryPage.style.display = 'none';
-                casesPage.style.display = 'none';
-                caseDetailPage.style.display = 'none';
-                profilePage.style.display = 'block';
-                setActiveNav('nav-profile');
-                window.scrollTo(0, 0);
-            }
-
-            // Нижняя навигация
-            addHandler('nav-home', 'click', showHome);
+            // Назначение обработчиков для нижней навигации
+            addHandler('nav-cases', 'click', showCasesHome);
+            addHandler('nav-upgrade', 'click', showUpgrade);
+            addHandler('nav-inventory', 'click', showInventory);
+            addHandler('nav-games', 'click', showGames);
+            addHandler('nav-tasks', 'click', showTasks);
             addHandler('nav-profile', 'click', showProfile);
 
             // Кнопка закрытия приложения
             addHandler('close-app', 'click', () => {
                 if (tg) tg.close();
-                else window.close(); // fallback
-            });
-
-            // Кнопки на главной
-            addHandler('casesBtn', 'click', showCases);
-            addHandler('upgradeBtn', 'click', () => {
-                if (tg) tg.showPopup({ title: 'Апгрейд', message: 'Функция в разработке', buttons: [{ type: 'ok' }] });
-                else alert('Функция в разработке');
-            });
-            addHandler('inventoryBtn', 'click', showInventory);
-            addHandler('gamesBtn', 'click', showGames);
-            addHandler('tasksBtn', 'click', () => {
-                if (tg) tg.showPopup({ title: 'Задания', message: 'Раздел в разработке', buttons: [{ type: 'ok' }] });
-                else alert('Задания в разработке');
+                else window.close();
             });
 
             // Плюс (пополнение)
@@ -1117,18 +1103,19 @@
             });
 
             // Обработчики кнопок возврата
-            addHandler('back-from-games', 'click', showHome);
-            addHandler('back-from-inventory', 'click', showHome);
-            addHandler('back-from-cases', 'click', showHome);
-            addHandler('back-to-cases', 'click', showCases);
+            addHandler('back-from-games', 'click', showCasesHome);
+            addHandler('back-from-inventory', 'click', showCasesHome);
+            addHandler('back-from-upgrade', 'click', showCasesHome);
+            addHandler('back-from-tasks', 'click', showCasesHome);
+            addHandler('back-to-cases', 'click', showCasesHome);
 
             // Обработчики кликов по карточкам кейсов
             addHandler('case1', 'click', () => showCaseDetail('case1'));
             addHandler('case2', 'click', () => showCaseDetail('case2'));
             addHandler('case3', 'click', () => showCaseDetail('case3'));
 
-            // Показываем главную
-            showHome();
+            // Показываем главную страницу (Кейсы)
+            showCasesHome();
         })();
     </script>
 </body>
