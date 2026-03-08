@@ -158,8 +158,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 6px 10px;          /* уменьшили отступы */
-            font-size: 0.75rem;          /* уменьшили шрифт */
+            padding: 6px 8px;           /* ещё уменьшили отступы */
+            font-size: 0.7rem;           /* уменьшили шрифт */
             font-weight: 500;
             color: #fff;
             cursor: pointer;
@@ -183,7 +183,7 @@
             position: relative;
         }
 
-        /* Кнопка возврата */
+        /* Кнопка возврата (только для деталей кейса) */
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -193,7 +193,7 @@
             backdrop-filter: blur(5px);
             border-radius: 20px;
             padding: 3px 8px;
-            margin: 5px 0 15px -16px;
+            margin: 5px 0 15px 0;        /* убрали отрицательный margin, просто слева */
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
@@ -201,7 +201,6 @@
             font-size: 0.7rem;
             color: #fff;
             transition: background 0.2s;
-            padding-left: 16px;
         }
 
         .back-button:hover {
@@ -213,7 +212,7 @@
             line-height: 1;
         }
 
-        /* Страница кейсов (главная) */
+        /* Главная страница (Кейсы) */
         .live-section {
             margin-bottom: 30px;
             text-align: left;
@@ -536,7 +535,7 @@
             background: #444;
         }
 
-        /* Страница апгрейда и заданий (заглушки) */
+        /* Страницы апгрейда, заданий (заглушки) */
         .placeholder-page {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
@@ -732,7 +731,7 @@
         </div>
     </div>
 
-    <!-- Фиксированная нижняя навигация с шестью пунктами (уменьшен шрифт) -->
+    <!-- Фиксированная нижняя навигация с шестью пунктами (уменьшенный шрифт) -->
     <div class="bottom-nav-fixed">
         <div class="nav-items-container">
             <div class="nav-item-fixed active" id="nav-cases">КЕЙСЫ</div>
@@ -785,9 +784,8 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница игр с синей кнопкой ROCKET -->
+    <!-- Страница игр с синей кнопкой ROCKET (без стрелки назад) -->
     <div id="games-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-games"><span>←</span> к кейсам</div>
         <div class="games-header">ИГРЫ</div>
         <div class="game-button" id="rocket-game">
             <div class="game-title">ROCKET</div>
@@ -796,9 +794,8 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница инвентаря -->
+    <!-- Страница инвентаря (без стрелки назад) -->
     <div id="inventory-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-inventory"><span>←</span> к кейсам</div>
         <div class="cost-block">
             <div class="cost-label">СТОИМОСТЬ</div>
             <div class="cost-value" id="inventory-cost">0 ★</div>
@@ -806,9 +803,8 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
-    <!-- Страница апгрейда -->
+    <!-- Страница апгрейда (без стрелки назад) -->
     <div id="upgrade-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-upgrade"><span>←</span> к кейсам</div>
         <div class="games-header">АПГРЕЙД</div>
         <div class="placeholder-page">
             <p>Раздел в разработке</p>
@@ -816,9 +812,8 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница заданий -->
+    <!-- Страница заданий (без стрелки назад) -->
     <div id="tasks-page" class="container" style="display: none;">
-        <div class="back-button" id="back-from-tasks"><span>←</span> к кейсам</div>
         <div class="games-header">ЗАДАНИЯ</div>
         <div class="placeholder-page">
             <p>Раздел в разработке</p>
@@ -826,7 +821,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница деталей кейса -->
+    <!-- Страница деталей кейса (со стрелкой назад) -->
     <div id="case-detail-page" class="container" style="display: none;">
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
         <div class="case-detail-title" id="detail-case-name">обычный кейс</div>
@@ -843,7 +838,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница профиля -->
+    <!-- Страница профиля (без стрелки назад) -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
             <div class="profile-avatar" id="profile-avatar">Ш</div>
@@ -1134,11 +1129,7 @@
                 else alert('Игра');
             });
 
-            // Обработчики кнопок возврата
-            addHandler('back-from-games', 'click', showCasesHome);
-            addHandler('back-from-inventory', 'click', showCasesHome);
-            addHandler('back-from-upgrade', 'click', showCasesHome);
-            addHandler('back-from-tasks', 'click', showCasesHome);
+            // Обработчик кнопки возврата из деталей кейса
             addHandler('back-to-cases', 'click', showCasesHome);
 
             // Обработчики кликов по карточкам кейсов
