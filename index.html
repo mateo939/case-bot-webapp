@@ -158,8 +158,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 6px 8px;           /* ещё уменьшили отступы */
-            font-size: 0.7rem;           /* уменьшили шрифт */
+            padding: 6px 8px;
+            font-size: 0.7rem;
             font-weight: 500;
             color: #fff;
             cursor: pointer;
@@ -193,7 +193,7 @@
             backdrop-filter: blur(5px);
             border-radius: 20px;
             padding: 3px 8px;
-            margin: 5px 0 15px 0;        /* убрали отрицательный margin, просто слева */
+            margin: 5px 0 15px 0;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
@@ -273,6 +273,7 @@
         .sector:nth-child(6) { transform: rotate(225deg); }
         .sector:nth-child(7) { transform: rotate(270deg); }
         .sector:nth-child(8) { transform: rotate(315deg); }
+
         .wheel-center {
             position: absolute;
             top: 50%;
@@ -285,7 +286,6 @@
             z-index: 2;
             border: 2px solid #fff;
         }
-
         .spin-text {
             font-size: 1.2rem;
             font-weight: 600;
@@ -367,17 +367,75 @@
             margin-bottom: 12px;
         }
 
-        /* Страница деталей кейса */
-        .case-detail-title {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ffd700, #ffb347);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 20px 0 10px;
+        /* ========== НОВЫЙ ДИЗАЙН СТРАНИЦЫ КЕЙСА ========== */
+        .case-detail-container {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 20px 16px;
+            margin: 10px 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
-        .carousel {
+        .welcome-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .multiplier-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .multiplier-item {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffd700;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .open-count {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .open-count span {
+            color: #ffd700;
+            font-size: 2.5rem;
+        }
+
+        .open-label {
+            font-size: 0.9rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .gifts-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .gifts-scroll {
             display: flex;
             overflow-x: auto;
             gap: 12px;
@@ -387,67 +445,35 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        .carousel-item {
+        .gift-item {
             flex: 0 0 auto;
-            width: 60px;
-            height: 60px;
+            width: 70px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            border-radius: 30px;
-            border: 2px solid rgba(255, 215, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ffd700;
+            border-radius: 20px;
+            padding: 12px 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.3);
             scroll-snap-align: start;
         }
 
-        .price-tag {
+        .gift-icon {
             font-size: 2rem;
-            font-weight: 700;
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-            margin-bottom: 30px;
+            margin-bottom: 6px;
         }
 
-        .possible-drop-title {
-            font-size: 1.5rem;
-            font-weight: 600;
+        .gift-name {
+            font-size: 0.7rem;
             color: #fff;
-            text-align: left;
-            margin-bottom: 15px;
-        }
-        .drop-list {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            border-radius: 30px;
-            padding: 20px;
-            margin-bottom: 30px;
-            max-height: 300px;
-            overflow-y: auto;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70px;
         }
 
-        .drop-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .drop-item:last-child {
-            border-bottom: none;
-        }
-
-        .drop-name {
-            font-size: 1rem;
-            color: #fff;
-        }
-
-        .drop-value {
-            font-size: 1rem;
+        .gift-value {
+            font-size: 0.8rem;
             font-weight: 600;
             color: #ffd700;
         }
@@ -551,7 +577,6 @@
             font-size: 1.2rem;
             color: #fff;
         }
-
         /* Страница профиля */
         .profile-header {
             display: flex;
@@ -565,6 +590,7 @@
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
+
         .profile-avatar {
             width: 56px;
             height: 56px;
@@ -690,7 +716,6 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
-        /* Копирайт */
         .footer-copyright {
             text-align: center;
             font-size: 0.7rem;
@@ -698,7 +723,6 @@
             margin-top: 20px;
             padding-bottom: 10px;
         }
-
         @media (max-width: 400px) {
             .wheel {
                 width: 200px;
@@ -710,7 +734,7 @@
             .cost-value {
                 font-size: 2.2rem;
             }
-            }
+        }
     </style>
 </head>
 <body>
@@ -731,7 +755,7 @@
         </div>
     </div>
 
-    <!-- Фиксированная нижняя навигация с шестью пунктами (уменьшенный шрифт) -->
+    <!-- Фиксированная нижняя навигация -->
     <div class="bottom-nav-fixed">
         <div class="nav-items-container">
             <div class="nav-item-fixed active" id="nav-cases">КЕЙСЫ</div>
@@ -759,6 +783,13 @@
 
         <div class="cases-header">КЕЙСЫ</div>
         <div class="cases-grid">
+            <div class="case-card" id="case0">
+                <div class="case-image">
+                    <img src="case-common-free.png" alt="Бесплатный кейс">
+                </div>
+                <div class="case-name">бесплатный</div>
+                <div class="case-value">0 ★</div>
+            </div>
             <div class="case-card" id="case1">
                 <div class="case-image">
                     <img src="case-common.png" alt="Обычный кейс">
@@ -784,7 +815,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница игр с синей кнопкой ROCKET (без стрелки назад) -->
+    <!-- Страница игр с синей кнопкой ROCKET -->
     <div id="games-page" class="container" style="display: none;">
         <div class="games-header">ИГРЫ</div>
         <div class="game-button" id="rocket-game">
@@ -793,8 +824,7 @@
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
-
-    <!-- Страница инвентаря (без стрелки назад) -->
+    <!-- Страница инвентаря -->
     <div id="inventory-page" class="container" style="display: none;">
         <div class="cost-block">
             <div class="cost-label">СТОИМОСТЬ</div>
@@ -803,7 +833,8 @@
         <button class="refresh-btn-dark" id="refresh-inventory">Обновить</button>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
-    <!-- Страница апгрейда (без стрелки назад) -->
+
+    <!-- Страница апгрейда -->
     <div id="upgrade-page" class="container" style="display: none;">
         <div class="games-header">АПГРЕЙД</div>
         <div class="placeholder-page">
@@ -812,7 +843,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница заданий (без стрелки назад) -->
+    <!-- Страница заданий -->
     <div id="tasks-page" class="container" style="display: none;">
         <div class="games-header">ЗАДАНИЯ</div>
         <div class="placeholder-page">
@@ -821,24 +852,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница деталей кейса (со стрелкой назад) -->
-    <div id="case-detail-page" class="container" style="display: none;">
-        <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
-        <div class="case-detail-title" id="detail-case-name">обычный кейс</div>
-        <div class="carousel" id="carousel">
-            <div class="carousel-item">X1</div>
-            <div class="carousel-item">X2</div>
-            <div class="carousel-item">X3</div>
-            <div class="carousel-item">X4</div>
-            <div class="carousel-item">X5</div>
-        </div>
-        <div class="price-tag" id="detail-case-price">200 ★</div>
-        <div class="possible-drop-title">ВОЗМОЖНЫЙ ДРОП</div>
-        <div class="drop-list" id="drop-list"></div>
-        <div class="footer-copyright">© CELSER BOT</div>
-    </div>
-
-    <!-- Страница профиля (без стрелки назад) -->
+    <!-- Страница профиля -->
     <div id="profile-page" class="container" style="display: none;">
         <div class="profile-header">
             <div class="profile-avatar" id="profile-avatar">Ш</div>
@@ -874,6 +888,33 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
+    <!-- Страница деталей кейса (НОВЫЙ ДИЗАЙН) -->
+    <div id="case-detail-page" class="container" style="display: none;">
+        <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
+        
+        <div class="case-detail-container">
+            <div class="welcome-title" id="detail-welcome">WELCOME</div>
+            
+            <div class="multiplier-row" id="multiplier-row">
+                <div class="multiplier-item">3</div>
+                <div class="multiplier-item">4</div>
+                <div class="multiplier-item">5</div>
+            </div>
+            
+            <div class="open-count">
+                <span id="detail-open-count">50</span>
+            </div>
+            <div class="open-label">CDAHTNTE</div>
+            
+            <div class="gifts-title">ВОЗМОЖНЫЙ ДРОП</div>
+            <div class="gifts-scroll" id="gifts-scroll">
+                <!-- Здесь будут динамически добавляться предметы -->
+            </div>
+        </div>
+        
+        <div class="footer-copyright">© CELSER BOT</div>
+    </div>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         (function() {
@@ -884,7 +925,6 @@
             }
 
             const user = tg?.initDataUnsafe?.user;
-
             // Элементы
             const userNameEl = document.getElementById('user-name');
             const userAvatarEl = document.getElementById('user-avatar');
@@ -895,6 +935,7 @@
             const profileBalance = document.getElementById('profile-balance');
             const profileReferrals = document.getElementById('profile-referrals');
             const inventoryCost = document.getElementById('inventory-cost');
+
             if (user) {
                 const firstName = user.first_name || 'ШЕЛЛИ';
                 const upperName = firstName.toUpperCase();
@@ -933,9 +974,24 @@
 
             // Данные для кейсов
             const caseData = {
+                case0: {
+                    name: 'бесплатный',
+                    price: 0,
+                    welcome: 'WELCOME',
+                    openCount: 50,
+                    items: [
+                        { icon: '🎁', name: 'Подарок', value: '10' },
+                        { icon: '🎫', name: 'Билет', value: '20' },
+                        { icon: '⭐️', name: 'Звезда', value: '30' },
+                        { icon: '💎', name: 'Кристалл', value: '40' },
+                        { icon: '🎮', name: 'Игра', value: '50' }
+                    ]
+                },
                 case1: {
                     name: 'обычный кейс',
                     price: 200,
+                    welcome: 'CLASSIC',
+                    openCount: 30,
                     items: [
                         { name: 'WESTSIDE SIGN (...', value: 53615 },
                         { name: 'WESTSIDE SIGN', value: 12044 },
@@ -949,21 +1005,25 @@
                     ]
                 },
                 case2: {
-                    name: 'сигара',
+                    name: 'СИГАРА',
                     price: 200,
+                    welcome: 'CIGAR',
+                    openCount: 20,
                     items: [
-                        { name: 'CIGAR GOLD', value: 30000 },
-                        { name: 'CIGAR SILVER', value: 15000 },
-                        { name: 'CIGAR BRONZE', value: 5000 }
+                        { icon: '🚬', name: 'CIGAR GOLD', value: 30000 },
+                        { icon: '🚬', name: 'CIGAR SILVER', value: 15000 },
+                        { icon: '🚬', name: 'CIGAR BRONZE', value: 5000 }
                     ]
                 },
                 case3: {
                     name: 'клевер',
                     price: 200,
+                    welcome: 'CLOVER',
+                    openCount: 15,
                     items: [
-                        { name: 'FOUR LEAF', value: 7777 },
-                        { name: 'CLOVER', value: 3333 },
-                        { name: 'SHAMROCK', value: 1111 }
+                        { icon: '🍀', name: 'FOUR LEAF', value: 7777 },
+                        { icon: '🍀', name: 'CLOVER', value: 3333 },
+                        { icon: '🍀', name: 'SHAMROCK', value: 1111 }
                     ]
                 }
             };
@@ -1069,15 +1129,31 @@
 
             function showCaseDetail(caseId) {
                 const data = caseData[caseId];
-                document.getElementById('detail-case-name').textContent = data.name;
-                document.getElementById('detail-case-price').textContent = data.price + ' ★';
-                const dropList = document.getElementById('drop-list');
-                dropList.innerHTML = '';
+                
+                // Заполняем элементы страницы
+                document.getElementById('detail-welcome').textContent = data.welcome || 'WELCOME';
+                document.getElementById('detail-open-count').textContent = data.openCount || 50;
+                
+                // Заполняем список подарков
+                const giftsScroll = document.getElementById('gifts-scroll');
+                giftsScroll.innerHTML = '';
+                
                 data.items.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'drop-item';
-                    div.innerHTML = '<span class="drop-name">${item.name}</span><span class="drop-value">${item.value} ★</span>';
-                    dropList.appendChild(div);
+                    const giftDiv = document.createElement('div');
+                    giftDiv.className = 'gift-item';
+                    
+                    // Используем иконку из данных или стандартную 🎁
+                    const icon = item.icon || '🎁';
+                    const name = item.name;
+                    const value = item.value + (item.value.toString().includes('★') ? '' : ' ★');
+                    
+                    giftDiv.innerHTML = 
+                        <div class="gift-icon">${icon}</div>
+                        <div class="gift-name">${name}</div>
+                        <div class="gift-value">${value}</div>
+                    ;
+                    
+                    giftsScroll.appendChild(giftDiv);
                 });
 
                 casesHomePage.style.display = 'none';
@@ -1103,8 +1179,7 @@
                 if (tg) tg.close();
                 else window.close();
             });
-
-            // Плюс (пополнение)
+        // Плюс (пополнение)
             addHandler('add-balance', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пополнение', message: 'Функция пополнения скоро появится', buttons: [{ type: 'ok' }] });
                 else alert('Пополнение');
@@ -1133,6 +1208,7 @@
             addHandler('back-to-cases', 'click', showCasesHome);
 
             // Обработчики кликов по карточкам кейсов
+            addHandler('case0', 'click', () => showCaseDetail('case0'));
             addHandler('case1', 'click', () => showCaseDetail('case1'));
             addHandler('case2', 'click', () => showCaseDetail('case2'));
             addHandler('case3', 'click', () => showCaseDetail('case3'));
