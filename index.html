@@ -435,26 +435,29 @@
             text-align: left;
             margin-bottom: 15px;
         }
-        .gifts-scroll {
-            display: flex;
-            overflow-x: auto;
+        /* Сетка подарков (3 колонки) */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             padding: 10px 0;
             margin-bottom: 20px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
         }
 
         .gift-item {
-            flex: 0 0 auto;
-            width: 70px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             border-radius: 20px;
             padding: 12px 8px;
             text-align: center;
             border: 1px solid rgba(255, 215, 0, 0.3);
-            scroll-snap-align: start;
+        }
+
+        .gift-image {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 6px;
+            object-fit: contain;
         }
 
         .gift-icon {
@@ -469,7 +472,6 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 70px;
         }
 
         .gift-value {
@@ -908,7 +910,7 @@
             <div class="open-label">CDAHTNTE</div>
             
             <div class="gifts-title">ВОЗМОЖНЫЙ ДРОП</div>
-            <div class="gifts-scroll" id="gifts-scroll">
+            <div class="gifts-grid" id="gifts-grid">
                 <!-- Здесь будут динамически добавляться предметы -->
             </div>
         </div>
@@ -926,8 +928,9 @@
             }
 
             const user = tg?.initDataUnsafe?.user;
+
             // Элементы
-            const userNameEl = document.getElementById('user-name');
+         const userNameEl = document.getElementById('user-name');
             const userAvatarEl = document.getElementById('user-avatar');
             const profileNameEl = document.getElementById('profile-name');
             const profileAvatarEl = document.getElementById('profile-avatar');
@@ -981,11 +984,13 @@
                     welcome: 'WELCOME',
                     openCount: 50,
                     items: [
-                        { icon: '🎁', name: 'Подарок', value: '10' },
-                        { icon: '🎫', name: 'Билет', value: '20' },
-                        { icon: '⭐️', name: 'Звезда', value: '30' },
-                        { icon: '💎', name: 'Кристалл', value: '40' },
-                        { icon: '🎮', name: 'Игра', value: '50' }
+                        { img: 'diamond.png', name: 'diamond', value: 100 },
+                        { img: 'cup.png', name: 'cup', value: 100 },
+                        { img: 'rocket.png', name: 'rocket', value: 50 },
+                        { img: 'rose.png', name: 'rose', value: 25 },
+                        { img: 'stars10.png', name: 'stars10', value: 10 },
+                        { img: 'stars5.png', name: 'stars5', value: 5 },
+                        { img: 'stars.png', name: 'stars', value: 1 }
                     ]
                 },
                 case1: {
@@ -1003,7 +1008,7 @@
                         { name: 'SNOOP DOGG (KI...', value: 1655 },
                         { name: 'SNOOP CIGAR', value: 1162 },
                         { name: 'SWAG BAG', value: 616 }
-                    ]
+                        ]
                 },
                 case2: {
                     name: 'сигара',
@@ -1091,7 +1096,6 @@
                 setActiveNav(navInventory);
                 window.scrollTo(0, 0);
             }
-
             function showUpgrade() {
                 casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'none';
@@ -1135,37 +1139,43 @@
                 document.getElementById('detail-welcome').textContent = data.welcome || 'WELCOME';
                 document.getElementById('detail-open-count').textContent = data.openCount || 50;
                 
-                // Заполняем список подарков БЕЗ использования innerHTML
-                const giftsScroll = document.getElementById('gifts-scroll');
-                giftsScroll.innerHTML = ''; // очищаем
+                // Заполняем список подарков
+                const giftsGrid = document.getElementById('gifts-grid');
+                giftsGrid.innerHTML = ''; // очищаем
                 
                 data.items.forEach(item => {
                     const giftDiv = document.createElement('div');
                     giftDiv.className = 'gift-item';
                     
-                    // Иконка
-                    const iconDiv = document.createElement('div');
-                    iconDiv.className = 'gift-icon';
-                    iconDiv.textContent = item.icon || '🎁';
+                    if (item.img) {
+                        // Если есть изображение
+                        const img = document.createElement('img');
+                        img.className = 'gift-image';
+                        img.src = item.img;
+                        img.alt = item.name;
+                        giftDiv.appendChild(img);
+                    } else {
+                        // Иначе используем иконку как текст
+                        const iconDiv = document.createElement('div');
+                        iconDiv.className = 'gift-icon';
+                        iconDiv.textContent = item.icon || '🎁';
+                        giftDiv.appendChild(iconDiv);
+                    }
                     
-                    // Название
                     const nameDiv = document.createElement('div');
                     nameDiv.className = 'gift-name';
                     nameDiv.textContent = item.name;
                     
-                    // Цена
                     const valueDiv = document.createElement('div');
                     valueDiv.className = 'gift-value';
-                    // Преобразуем значение в строку и добавляем звёздочку, если её нет
                     let valStr = item.value.toString();
                     if (!valStr.includes('★')) valStr += ' ★';
                     valueDiv.textContent = valStr;
                     
-                    giftDiv.appendChild(iconDiv);
                     giftDiv.appendChild(nameDiv);
                     giftDiv.appendChild(valueDiv);
                     
-                    giftsScroll.appendChild(giftDiv);
+                    giftsGrid.appendChild(giftDiv);
                 });
 
                 casesHomePage.style.display = 'none';
