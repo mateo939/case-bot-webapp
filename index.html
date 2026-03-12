@@ -1135,24 +1135,35 @@
                 document.getElementById('detail-welcome').textContent = data.welcome || 'WELCOME';
                 document.getElementById('detail-open-count').textContent = data.openCount || 50;
                 
-                // Заполняем список подарков
+                // Заполняем список подарков БЕЗ использования innerHTML
                 const giftsScroll = document.getElementById('gifts-scroll');
-                giftsScroll.innerHTML = '';
+                giftsScroll.innerHTML = ''; // очищаем
                 
                 data.items.forEach(item => {
                     const giftDiv = document.createElement('div');
                     giftDiv.className = 'gift-item';
                     
-                    // Используем иконку из данных или стандартную 🎁
-                    const icon = item.icon || '🎁';
-                    const name = item.name;
-                    const value = item.value + (item.value.toString().includes('★') ? '' : ' ★');
+                    // Иконка
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'gift-icon';
+                    iconDiv.textContent = item.icon || '🎁';
                     
-                    giftDiv.innerHTML = 
-                        <div class="gift-icon">${icon}</div>
-                        <div class="gift-name">${name}</div>
-                        <div class="gift-value">${value}</div>
-                    ;
+                    // Название
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'gift-name';
+                    nameDiv.textContent = item.name;
+                    
+                    // Цена
+                    const valueDiv = document.createElement('div');
+                    valueDiv.className = 'gift-value';
+                    // Преобразуем значение в строку и добавляем звёздочку, если её нет
+                    let valStr = item.value.toString();
+                    if (!valStr.includes('★')) valStr += ' ★';
+                    valueDiv.textContent = valStr;
+                    
+                    giftDiv.appendChild(iconDiv);
+                    giftDiv.appendChild(nameDiv);
+                    giftDiv.appendChild(valueDiv);
                     
                     giftsScroll.appendChild(giftDiv);
                 });
@@ -1166,7 +1177,6 @@
                 profilePage.style.display = 'none';
                 window.scrollTo(0, 0);
             }
-
             // Назначение обработчиков для нижней навигации
             addHandler('nav-cases', 'click', showCasesHome);
             addHandler('nav-upgrade', 'click', showUpgrade);
@@ -1180,7 +1190,8 @@
                 if (tg) tg.close();
                 else window.close();
             });
-        // Плюс (пополнение)
+
+            // Плюс (пополнение)
             addHandler('add-balance', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пополнение', message: 'Функция пополнения скоро появится', buttons: [{ type: 'ok' }] });
                 else alert('Пополнение');
@@ -1220,5 +1231,3 @@
     </script>
 </body>
 </html>
-
-
