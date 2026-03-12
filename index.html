@@ -891,7 +891,7 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница деталей кейса (НОВЫЙ ДИЗАЙН) -->
+    <!-- Страница деталей кейса -->
     <div id="case-detail-page" class="container" style="display: none;">
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
         
@@ -984,6 +984,7 @@
                     welcome: 'WELCOME',
                     openCount: 50,
                     items: [
+                        { img: 'instant-ramens.png', name: 'instant ramens', value: 50 }, // новая моделька сверху
                         { img: 'diamond.png', name: 'diamond', value: 100 },
                         { img: 'cup.png', name: 'cup', value: 100 },
                         { img: 'rocket.png', name: 'rocket', value: 50 },
@@ -1008,7 +1009,7 @@
                         { name: 'SNOOP DOGG (KI...', value: 1655 },
                         { name: 'SNOOP CIGAR', value: 1162 },
                         { name: 'SWAG BAG', value: 616 }
-                        ]
+                    ]
                 },
                 case2: {
                     name: 'сигара',
@@ -1016,9 +1017,14 @@
                     welcome: 'CIGAR',
                     openCount: 20,
                     items: [
-                        { icon: '🚬', name: 'CIGAR GOLD', value: 30000 },
-                        { icon: '🚬', name: 'CIGAR SILVER', value: 15000 },
-                        { icon: '🚬', name: 'CIGAR BRONZE', value: 5000 }
+                        { img: 'westside-sign.png', name: 'westside sign', value: 11698 },
+                        { img: 'low-raider.png', name: 'low raider', value: 6530 },
+                        { img: 'low-raider-silver-angel.png', name: 'low raider silver angel', value: 4620 },
+                        { img: 'vintage-sigar-red-devil.png', name: 'vintage sigar red devil', value: 2770 },
+                        { img: 'swag-bag.png', name: 'swag bag', value: 950 },
+                        { img: 'snoop-dogg.png', name: 'snoop dogg', value: 390 },
+                        { img: 'b-day-onyx.png', name: 'b-day onyx', value: 320 },
+                        { img: 'ring.png', name: 'ring', value: 100 }
                     ]
                 },
                 case3: {
@@ -1084,7 +1090,6 @@
                 setActiveNav(navGames);
                 window.scrollTo(0, 0);
             }
-
             function showInventory() {
                 casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'none';
@@ -1096,6 +1101,7 @@
                 setActiveNav(navInventory);
                 window.scrollTo(0, 0);
             }
+
             function showUpgrade() {
                 casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'none';
@@ -1187,6 +1193,7 @@
                 profilePage.style.display = 'none';
                 window.scrollTo(0, 0);
             }
+
             // Назначение обработчиков для нижней навигации
             addHandler('nav-cases', 'click', showCasesHome);
             addHandler('nav-upgrade', 'click', showUpgrade);
