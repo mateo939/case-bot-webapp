@@ -367,7 +367,7 @@
             margin-bottom: 12px;
         }
 
-        /* СТРАНИЦА ДЕТАЛЕЙ КЕЙСА (карусель) */
+        /* НОВЫЙ ДИЗАЙН СТРАНИЦЫ КЕЙСА */
         .case-detail-container {
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
@@ -378,63 +378,6 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
-        .welcome-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #ffd700;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .multiplier-row {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .multiplier-item {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #ffd700;
-            border: 2px solid rgba(255, 215, 0, 0.5);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .open-count {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-
-        .open-count span {
-            color: #ffd700;
-            font-size: 2.5rem;
-        }
-
-        .open-label {
-            font-size: 0.9rem;
-            color: var(--tg-theme-hint-color, #aaa);
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-        }
-
-        .gifts-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #fff;
-            text-align: left;
-            margin-bottom: 15px;
-        }
         .carousel {
             overflow: hidden;
             position: relative;
@@ -492,17 +435,51 @@
             color: #ffd700;
         }
 
+        .multiplier-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .multiplier-item {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffd700;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .multiplier-item.active {
+            border-color: #ffd700;
+            transform: scale(1.1);
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .multiplier-item:hover {
+            transform: scale(1.05);
+        }
+
         .open-button {
             background: var(--tg-theme-button-color, #40a7e3);
             color: var(--tg-theme-button-text-color, #fff);
             border: none;
             border-radius: 50px;
-            padding: 14px 30px;
-            font-size: 1.2rem;
+            padding: 16px 30px;
+            font-size: 1.4rem;
             font-weight: 600;
             cursor: pointer;
-            width: fit-content;
-            margin: 20px auto;
+            width: 100%;
+            max-width: 280px;
+            margin: 10px auto 20px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
             transition: transform 0.2s;
         }
@@ -511,7 +488,27 @@
             transform: translateY(-4px);
         }
 
-        /* СТРАНИЦА ИГР (обновленная) */
+        .open-button:active {
+            transform: translateY(0);
+        }
+
+        .gifts-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            text-align: left;
+            margin: 20px 0 15px;
+        }
+
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        /* Страница игр с двумя кнопками */
         .games-header {
             font-size: 2rem;
             font-weight: 700;
@@ -548,7 +545,7 @@
             color: rgba(255,255,255,0.9);
         }
 
-        /* СТРАНИЦА MINES */
+        /* Страница MINES */
         .mines-container {
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
@@ -557,62 +554,6 @@
             margin: 10px 0;
             border: 1px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        }
-
-        .mines-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .mines-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #ffd700;
-        }
-
-        .mines-bet-panel {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 40px;
-            padding: 12px 16px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .bet-label {
-            font-size: 0.8rem;
-            color: var(--tg-theme-hint-color, #aaa);
-        }
-
-        .bet-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #ffd700;
-        }
-
-        .bet-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .bet-controls button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--tg-theme-button-color, #40a7e3);
-            color: #fff;
-            border: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-
-        .bet-controls button:active {
-            transform: scale(0.95);
         }
 
         .mines-grid {
@@ -640,7 +581,6 @@
         .mine-cell:active {
             transform: scale(0.95);
         }
-
         .mine-cell.revealed-star {
             background: rgba(255, 215, 0, 0.3);
             color: #ffd700;
@@ -656,12 +596,82 @@
             opacity: 0.5;
         }
 
+        /* Панель управления MINES */
+        .mines-control-panel {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 20px 16px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: #fff;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .control-label {
+            font-size: 0.6rem;
+            color: var(--tg-theme-hint-color, #aaa);
+            text-transform: uppercase;
+        }
+
+        .control-value {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .value-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .value-label {
+            font-size: 0.6rem;
+            color: var(--tg-theme-hint-color, #aaa);
+        }
+
         .mines-action-button {
             background: var(--tg-theme-button-color, #40a7e3);
             color: var(--tg-theme-button-text-color, #fff);
             border: none;
             border-radius: 50px;
-            padding: 12px 20px;
+            padding: 14px 20px;
             font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
@@ -995,27 +1005,46 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница MINES -->
+    <!-- Страница MINES (обновлённая) -->
     <div id="mines-page" class="container" style="display: none;">
         <div class="back-button" id="back-from-mines"><span>←</span> к играм</div>
         <div class="mines-container">
-            <div class="mines-header">
-                <div class="mines-title">MINES</div>
-                <div class="bet-controls">
-                    <button id="mines-bet-decrease">−</button>
-                    <span id="mines-bet-display">10</span>
-                    <button id="mines-bet-increase">+</button>
+            <div class="mines-grid" id="mines-grid"></div>
+            <div class="mines-control-panel">
+                <button class="mines-action-button" id="mines-action-btn">СДЕЛАТЬ СТАВКУ</button>
+                
+                <!-- Регулятор ставки -->
+                <div class="control-row">
+                    <div class="control-item">
+                        <button class="control-btn" id="bet-decrease">−</button>
+                        <span class="control-label">МИН:10</span>
+                    </div>
+                    <div class="control-value">
+                        <span class="value-number" id="bet-value">10</span>
+                        <span class="value-label">СТАВКА</span>
+                    </div>
+                    <div class="control-item">
+                        <button class="control-btn" id="bet-increase">+</button>
+                        <span class="control-label">МАКС:5000</span>
+                    </div>
+                </div>
+
+                <!-- Регулятор количества мин -->
+                <div class="control-row">
+                    <div class="control-item">
+                        <button class="control-btn" id="mines-decrease">−</button>
+                        <span class="control-label">МИН:1</span>
+                    </div>
+                    <div class="control-value">
+                        <span class="value-number" id="mines-count">1</span>
+                        <span class="value-label">ОТ 1 ДО 24</span>
+                    </div>
+                    <div class="control-item">
+                        <button class="control-btn" id="mines-increase">+</button>
+                        <span class="control-label">МАКС:24</span>
+                    </div>
                 </div>
             </div>
-
-            <div class="mines-bet-panel" id="mines-bet-panel">
-                <span class="bet-label">ТЕКУЩИЙ ВЫИГРЫШ</span>
-                <span class="bet-value" id="mines-current-win">0 ★</span>
-            </div>
-
-            <div class="mines-grid" id="mines-grid"></div>
-
-            <button class="mines-action-button" id="mines-action-btn">СДЕЛАТЬ СТАВКУ</button>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
@@ -1060,6 +1089,7 @@
                 <div class="profile-id" id="profile-id">ID: 1326919289</div>
             </div>
         </div>
+
         <div class="stats-row">
             <div class="stat-item">
                 <div class="stat-value" id="profile-balance">0</div>
@@ -1086,34 +1116,26 @@
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
 
-    <!-- Страница деталей кейса с каруселью и кнопкой "Открыть" -->
+    <!-- Страница деталей кейса с каруселью, выбором X и кнопкой "ОТКРЫТЬ" -->
     <div id="case-detail-page" class="container" style="display: none;">
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
         
-        <div class="case-detail-container">
-            <div class="welcome-title" id="detail-welcome">WELCOME</div>
-            
-            <div class="multiplier-row" id="multiplier-row">
-                <div class="multiplier-item">3</div>
-                <div class="multiplier-item">4</div>
-                <div class="multiplier-item">5</div>
-            </div>
-            
-            <div class="open-count">
-                <span id="detail-open-count">50</span>
-            </div>
-            <div class="open-label">CDAHTNTE</div>
-            
-            <div class="gifts-title">ВОЗМОЖНЫЙ ДРОП</div>
-            
-            <!-- Карусель с подарками -->
-            <div class="carousel">
-                <div class="carousel-track" id="carousel-track"></div>
-            </div>
-
-            <!-- Кнопка открытия -->
-            <button class="open-button" id="open-case-btn">🔥 ОТКРЫТЬ</button>
+        <div class="carousel">
+            <div class="carousel-track" id="carousel-track"></div>
         </div>
+
+        <div class="multiplier-row" id="multiplier-row">
+            <div class="multiplier-item active" data-x="1">X1</div>
+            <div class="multiplier-item" data-x="2">X2</div>
+            <div class="multiplier-item" data-x="3">X3</div>
+            <div class="multiplier-item" data-x="4">X4</div>
+            <div class="multiplier-item" data-x="5">X5</div>
+        </div>
+
+        <button class="open-button" id="open-case-btn">🔥 ОТКРЫТЬ</button>
+
+        <div class="gifts-title">ВОЗМОЖНЫЙ ДРОП</div>
+        <div class="gifts-grid" id="gifts-grid"></div>
         
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
@@ -1176,7 +1198,7 @@
             window.addEventListener('scroll', updateWheelRotation);
             setTimeout(updateWheelRotation, 100);
 
-            // Данные для кейсов с добавленными шансами (не отображаются)
+            // Данные для кейсов
             const caseData = {
                 case0: {
                     name: 'бесплатный',
@@ -1225,7 +1247,7 @@
                         { img: 'snoop-dogg.png', name: 'snoop dogg', value: 390, chance: 18 },
                         { img: 'b-day-onyx.png', name: 'b-day onyx', value: 320, chance: 20 },
                         { img: 'ring.png', name: 'ring', value: 100, chance: 25 }
-                        ]
+                    ]
                 },
                 case3: {
                     name: 'клевер',
@@ -1240,147 +1262,9 @@
                 }
             };
 
-            // Состояние игры MINES
-            const minesState = {
-                bet: 10,
-                gameActive: false,
-                gameOver: false,
-                minesCount: 3, // можно регулировать
-                bombPositions: new Set(),
-                revealedCount: 0,
-                winMultiplier: 0,
-                currentWin: 0,
-                cells: [],
-                actionBtn: document.getElementById('mines-action-btn'),
-                betDisplay: document.getElementById('mines-bet-display'),
-                currentWinEl: document.getElementById('mines-current-win'),
-                minesGrid: document.getElementById('mines-grid'),
-                betDecreaseBtn: document.getElementById('mines-bet-decrease'),
-                betIncreaseBtn: document.getElementById('mines-bet-increase')
-            };
-
-            // Функция обновления отображения ставки
-            function updateMinesBetDisplay() {
-                minesState.betDisplay.textContent = minesState.bet;
-            }
-
-            // Функция генерации бомб
-            function generateBombs() {
-                minesState.bombPositions.clear();
-                const totalCells = 25;
-                const bombs = minesState.minesCount;
-                while (minesState.bombPositions.size < bombs) {
-                    const pos = Math.floor(Math.random() * totalCells);
-                    minesState.bombPositions.add(pos);
-                }
-            }
-
-            // Функция создания сетки
-            function createMinesGrid() {
-                minesState.minesGrid.innerHTML = '';
-                for (let i = 0; i < 25; i++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'mine-cell';
-                    cell.dataset.index = i;
-                    cell.addEventListener('click', onMineCellClick);
-                    minesState.minesGrid.appendChild(cell);
-                    minesState.cells.push(cell);
-                }
-            }
-
-            // Клик по ячейке
-            function onMineCellClick(e) {
-                if (!minesState.gameActive || minesState.gameOver) return;
-                const index = parseInt(e.currentTarget.dataset.index);
-                const cell = e.currentTarget;
-
-                if (cell.classList.contains('revealed-star') || cell.classList.contains('revealed-bomb')) return;
-
-                if (minesState.bombPositions.has(index)) {
-                    // Бомба
-                    cell.classList.add('revealed-bomb');
-                    cell.textContent = '💣';
-                    minesState.gameActive = false;
-                    minesState.gameOver = true;
-                    minesState.actionBtn.textContent = 'СДЕЛАТЬ СТАВКУ';
-                    minesState.actionBtn.disabled = false;
-                    // Показать все бомбы
-                    for (let i = 0; i < minesState.cells.length; i++) {
-                        if (minesState.bombPositions.has(i)) {
-                            minesState.cells[i].classList.add('revealed-bomb');
-                            minesState.cells[i].textContent = '💣';
-                        }
-                    }
-                } else {
-                    // Звезда
-                    cell.classList.add('revealed-star');
-                    cell.textContent = '⭐️';
-                    minesState.revealedCount++;
-                    // Рассчитываем множитель (например, 1 + открытые * 0.2)
-                    minesState.winMultiplier = 1 + minesState.revealedCount * 0.2;
-                    minesState.currentWin = Math.floor(minesState.bet * minesState.winMultiplier);
-                    minesState.currentWinEl.textContent = minesState.currentWin + ' ★';
-                    minesState.actionBtn.textContent = 'ЗАБРАТЬ';
-                }
-            }
-
-            // Сброс игры
-            function resetMinesGame() {
-                minesState.gameActive = false;
-                minesState.gameOver = false;
-                minesState.bombPositions.clear();
-                minesState.revealedCount = 0;
-                minesState.winMultiplier = 0;
-                minesState.currentWin = 0;
-                minesState.currentWinEl.textContent = '0 ★';
-                minesState.cells.forEach(cell => {
-                    cell.className = 'mine-cell';
-                    cell.textContent = '';
-                });
-                minesState.actionBtn.textContent = 'СДЕЛАТЬ СТАВКУ';
-                minesState.actionBtn.disabled = false;
-            }
-
-            // Начать игру
-            function startMinesGame() {
-                if (currentBalance < minesState.bet) {
-                    alert('Недостаточно звёзд!');
-                    return;
-                }
-                // Списываем ставку
-                updateBalances(currentBalance - minesState.bet);
-                generateBombs();
-                minesState.gameActive = true;
-                minesState.gameOver = false;
-                minesState.revealedCount = 0;
-                minesState.winMultiplier = 0;
-                minesState.currentWin = 0;
-                minesState.currentWinEl.textContent = '0 ★';
-                minesState.cells.forEach(cell => {
-                    cell.className = 'mine-cell';
-                    cell.textContent = '';
-                });
-                minesState.actionBtn.textContent = 'ИГРА ИДЁТ';
-                minesState.actionBtn.disabled = true; // пока не нажали звезду, кнопка неактивна
-            }
-
-            // Забрать выигрыш
-            function cashoutMines() {
-                if (minesState.currentWin > 0) {
-                    updateBalances(currentBalance + minesState.currentWin);
-                }
-                resetMinesGame();
-            }
-
-            // Обработчик главной кнопки в MINES
-            function onMinesAction() {
-                const btn = minesState.actionBtn;
-                if (btn.textContent === 'СДЕЛАТЬ СТАВКУ') {
-                    startMinesGame();
-                } else if (btn.textContent === 'ЗАБРАТЬ') {
-                    cashoutMines();
-                }
-            }
+            // Переменная для текущего кейса и множителя
+            let currentCaseId = null;
+            let selectedMultiplier = 1;
 
             // Навигация
             function addHandler(id, event, fn) {
@@ -1487,11 +1371,10 @@
                 setActiveNav(navProfile);
                 window.scrollTo(0, 0);
             }
+
             function showCaseDetail(caseId) {
+                currentCaseId = caseId;
                 const data = caseData[caseId];
-                
-                document.getElementById('detail-welcome').textContent = data.welcome || 'WELCOME';
-                document.getElementById('detail-open-count').textContent = data.openCount || 50;
                 
                 const carouselTrack = document.getElementById('carousel-track');
                 carouselTrack.innerHTML = '';
@@ -1531,6 +1414,48 @@
                     });
                 }
 
+                const giftsGrid = document.getElementById('gifts-grid');
+                giftsGrid.innerHTML = '';
+                
+                data.items.forEach(item => {
+                    const giftDiv = document.createElement('div');
+                    giftDiv.className = 'gift-item';
+                    
+                    if (item.img) {
+                        const img = document.createElement('img');
+                        img.className = 'gift-image';
+                        img.src = item.img;
+                        img.alt = item.name;
+                        giftDiv.appendChild(img);
+                    } else {
+                        const iconDiv = document.createElement('div');
+                        iconDiv.className = 'gift-icon';
+                        iconDiv.textContent = item.icon || '🎁';
+                        giftDiv.appendChild(iconDiv);
+                    }
+                    
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'gift-name';
+                    nameDiv.textContent = item.name;
+                    
+                    const valueDiv = document.createElement('div');
+                    valueDiv.className = 'gift-value';
+                    let valStr = item.value.toString();
+                    if (!valStr.includes('★')) valStr += ' ★';
+                    valueDiv.textContent = valStr;
+                    
+                    giftDiv.appendChild(nameDiv);
+                    giftDiv.appendChild(valueDiv);
+                    
+                    giftsGrid.appendChild(giftDiv);
+                });
+
+                selectedMultiplier = 1;
+                document.querySelectorAll('.multiplier-item').forEach(el => {
+                    if (el.dataset.x == 1) el.classList.add('active');
+                    else el.classList.remove('active');
+                });
+
                 casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'none';
                 inventoryPage.style.display = 'none';
@@ -1551,7 +1476,7 @@
                 caseDetailPage.style.display = 'none';
                 profilePage.style.display = 'none';
                 minesPage.style.display = 'block';
-                setActiveNav(navGames); // или можно не подсвечивать
+                setActiveNav(navGames);
                 window.scrollTo(0, 0);
             }
 
@@ -1562,12 +1487,12 @@
             addHandler('nav-games', 'click', showGames);
             addHandler('nav-tasks', 'click', showTasks);
             addHandler('nav-profile', 'click', showProfile);
-
             // Кнопка закрытия приложения
             addHandler('close-app', 'click', () => {
                 if (tg) tg.close();
                 else window.close();
             });
+
             // Плюс (пополнение)
             addHandler('add-balance', 'click', () => {
                 if (tg) tg.showPopup({ title: 'Пополнение', message: 'Функция пополнения скоро появится', buttons: [{ type: 'ok' }] });
@@ -1610,20 +1535,197 @@
             addHandler('case2', 'click', () => showCaseDetail('case2'));
             addHandler('case3', 'click', () => showCaseDetail('case3'));
 
+            // === НОВАЯ ЛОГИКА MINES ===
+            const minesState = {
+                gameActive: false,
+                gameOver: false,
+                bombPositions: new Set(),
+                revealedCount: 0,
+                currentWin: 0,
+                bet: 10,
+                minesCount: 1,
+                cells: [],
+                actionBtn: document.getElementById('mines-action-btn'),
+                betDisplay: document.getElementById('bet-value'),
+                minesDisplay: document.getElementById('mines-count'),
+                minesGrid: document.getElementById('mines-grid'),
+                betDecreaseBtn: document.getElementById('bet-decrease'),
+                betIncreaseBtn: document.getElementById('bet-increase'),
+                minesDecreaseBtn: document.getElementById('mines-decrease'),
+                minesIncreaseBtn: document.getElementById('mines-increase')
+            };
+
+            function updateBetDisplay() {
+                minesState.betDisplay.textContent = minesState.bet;
+            }
+
+            function updateMinesDisplay() {
+                minesState.minesDisplay.textContent = minesState.minesCount;
+            }
+
+            function generateBombs() {
+                minesState.bombPositions.clear();
+                const totalCells = 25;
+                const bombs = minesState.minesCount;
+                while (minesState.bombPositions.size < bombs) {
+                    const pos = Math.floor(Math.random() * totalCells);
+                    minesState.bombPositions.add(pos);
+                }
+            }
+            function createMinesGrid() {
+                minesState.minesGrid.innerHTML = '';
+                minesState.cells = [];
+                for (let i = 0; i < 25; i++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'mine-cell';
+                    cell.dataset.index = i;
+                    cell.addEventListener('click', onMineCellClick);
+                    minesState.minesGrid.appendChild(cell);
+                    minesState.cells.push(cell);
+                }
+            }
+
+            function onMineCellClick(e) {
+                if (!minesState.gameActive || minesState.gameOver) return;
+                const index = parseInt(e.currentTarget.dataset.index);
+                const cell = e.currentTarget;
+
+                if (cell.classList.contains('revealed-star') || cell.classList.contains('revealed-bomb')) return;
+
+                if (minesState.bombPositions.has(index)) {
+                    cell.classList.add('revealed-bomb');
+                    cell.textContent = '💣';
+                    minesState.gameActive = false;
+                    minesState.gameOver = true;
+                    minesState.actionBtn.textContent = 'СДЕЛАТЬ СТАВКУ';
+                    minesState.actionBtn.disabled = false;
+                    for (let i = 0; i < minesState.cells.length; i++) {
+                        if (minesState.bombPositions.has(i)) {
+                            minesState.cells[i].classList.add('revealed-bomb');
+                            minesState.cells[i].textContent = '💣';
+                        }
+                    }
+                    enableControls(true);
+                } else {
+                    cell.classList.add('revealed-star');
+                    cell.textContent = '⭐️';
+                    minesState.revealedCount++;
+                    const multiplier = 1 + minesState.revealedCount * 0.2;
+                    minesState.currentWin = Math.floor(minesState.bet * multiplier);
+                    minesState.actionBtn.textContent = ЗАБРАТЬ ${minesState.currentWin} ★;
+                }
+            }
+
+            function resetMinesGame() {
+                minesState.gameActive = false;
+                minesState.gameOver = false;
+                minesState.bombPositions.clear();
+                minesState.revealedCount = 0;
+                minesState.currentWin = 0;
+                minesState.cells.forEach(cell => {
+                    cell.className = 'mine-cell';
+                    cell.textContent = '';
+                });
+                minesState.actionBtn.textContent = 'СДЕЛАТЬ СТАВКУ';
+                minesState.actionBtn.disabled = false;
+                enableControls(true);
+            }
+
+            function enableControls(enabled) {
+                minesState.betDecreaseBtn.disabled = !enabled;
+                minesState.betIncreaseBtn.disabled = !enabled;
+                minesState.minesDecreaseBtn.disabled = !enabled;
+                minesState.minesIncreaseBtn.disabled = !enabled;
+            }
+
+            function startMinesGame() {
+                if (currentBalance < minesState.bet) {
+                    alert('Недостаточно звёзд!');
+                    return;
+                }
+                updateBalances(currentBalance - minesState.bet);
+                generateBombs();
+                minesState.gameActive = true;
+                minesState.gameOver = false;
+                minesState.revealedCount = 0;
+                minesState.currentWin = 0;
+                minesState.cells.forEach(cell => {
+                    cell.className = 'mine-cell';
+                    cell.textContent = '';
+                });
+                minesState.actionBtn.textContent = 'ИГРА ИДЁТ';
+                minesState.actionBtn.disabled = true;
+                enableControls(false);
+            }
+
+            function cashoutMines() {
+                if (minesState.currentWin > 0) {
+                    updateBalances(currentBalance + minesState.currentWin);
+                }
+                resetMinesGame();
+            }
+            function onMinesAction() {
+                const btn = minesState.actionBtn;
+                if (btn.textContent === 'СДЕЛАТЬ СТАВКУ') {
+                    startMinesGame();
+                } else if (btn.textContent.startsWith('ЗАБРАТЬ')) {
+                    cashoutMines();
+                }
+            }
+
             // Инициализация MINES
             createMinesGrid();
             addHandler('mines-action-btn', 'click', onMinesAction);
+
             minesState.betDecreaseBtn.addEventListener('click', () => {
-                if (minesState.bet > 1) {
+                if (minesState.bet > 10) {
                     minesState.bet--;
-                    updateMinesBetDisplay();
+                    updateBetDisplay();
                 }
             });
             minesState.betIncreaseBtn.addEventListener('click', () => {
-                minesState.bet++;
-                updateMinesBetDisplay();
+                if (minesState.bet < 5000) {
+                    minesState.bet++;
+                    updateBetDisplay();
+                }
             });
-            updateMinesBetDisplay();
+            minesState.minesDecreaseBtn.addEventListener('click', () => {
+                if (minesState.minesCount > 1) {
+                    minesState.minesCount--;
+                    updateMinesDisplay();
+                }
+            });
+            minesState.minesIncreaseBtn.addEventListener('click', () => {
+                if (minesState.minesCount < 24) {
+                    minesState.minesCount++;
+                    updateMinesDisplay();
+                }
+            });
+
+            updateBetDisplay();
+            updateMinesDisplay();
+
+            // Обработчики для выбора множителя X
+            document.querySelectorAll('.multiplier-item').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    document.querySelectorAll('.multiplier-item').forEach(item => item.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                    selectedMultiplier = parseInt(e.currentTarget.dataset.x);
+                });
+            });
+
+            // Обработчик открытия кейса
+            addHandler('open-case-btn', 'click', () => {
+                if (!currentCaseId) return;
+                const data = caseData[currentCaseId];
+                const totalPrice = data.price * selectedMultiplier;
+                if (currentBalance < totalPrice) {
+                    alert('Недостаточно звёзд!');
+                    return;
+                }
+                alert(Открытие кейса ${data.name} x${selectedMultiplier} за ${totalPrice} ★);
+                updateBalances(currentBalance - totalPrice);
+            });
 
             // Показываем главную
             showCasesHome();
