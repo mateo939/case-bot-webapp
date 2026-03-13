@@ -1823,7 +1823,7 @@
                 let results = [];
                 for (let i = 0; i < selectedMultiplier; i++) {
                     const item = getRandomItem(data.items);
-                    results.push(${item.name} (${item.value} ★));
+                    results.push('${item.name} (${item.value} ★)');
                 }
                 alert(Вы получили:\n${results.join('\n')});
             });
@@ -1834,4 +1834,5 @@
     </script>
 </body>
 </html>
+
 
