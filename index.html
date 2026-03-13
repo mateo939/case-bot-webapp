@@ -624,7 +624,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--tg-theme-button-color, #40a7e3);
+            background: #555; /* серый */
             color: #fff;
             border: none;
             font-size: 1.5rem;
@@ -689,6 +689,77 @@
             pointer-events: none;
         }
 
+        /* Диалог ставки */
+        .bet-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .bet-dialog-content {
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 40px;
+            padding: 24px;
+            max-width: 300px;
+            width: 90%;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .bet-dialog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+
+        .bet-dialog-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .bet-dialog-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            min-width: 60px;
+        }
+
+        .bet-dialog-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .dialog-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .dialog-btn.cancel {
+            background: #333;
+            color: #fff;
+        }
+
+        .dialog-btn.confirm {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: #fff;
+        }
+
         /* Страница инвентаря */
         .cost-block {
             background: rgba(0, 0, 0, 0.5);
@@ -734,6 +805,7 @@
         .refresh-btn-dark:hover {
             background: #444;
         }
+
         /* Страницы апгрейда, заданий (заглушки) */
         .placeholder-page {
             background: rgba(0, 0, 0, 0.5);
@@ -822,7 +894,6 @@
             color: #fff;
             margin-top: 6px;
         }
-
         .invite-blue-block {
             background: var(--tg-theme-button-color, #40a7e3);
             border-radius: 50px;
@@ -877,6 +948,7 @@
             color: #fff;
             margin-bottom: 12px;
         }
+
         .no-drops {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
@@ -1013,23 +1085,7 @@
             <div class="mines-control-panel">
                 <button class="mines-action-button" id="mines-action-btn">СДЕЛАТЬ СТАВКУ</button>
                 
-                <!-- Регулятор ставки -->
-                <div class="control-row">
-                    <div class="control-item">
-                        <button class="control-btn" id="bet-decrease">−</button>
-                        <span class="control-label">МИН:10</span>
-                    </div>
-                    <div class="control-value">
-                        <span class="value-number" id="bet-value">10</span>
-                        <span class="value-label">СТАВКА</span>
-                    </div>
-                    <div class="control-item">
-                        <button class="control-btn" id="bet-increase">+</button>
-                        <span class="control-label">МАКС:5000</span>
-                    </div>
-                </div>
-
-                <!-- Регулятор количества мин -->
+                <!-- Регулятор количества мин (серые кнопки) -->
                 <div class="control-row">
                     <div class="control-item">
                         <button class="control-btn" id="mines-decrease">−</button>
@@ -1037,7 +1093,7 @@
                     </div>
                     <div class="control-value">
                         <span class="value-number" id="mines-count">1</span>
-                        <span class="value-label">ОТ 1 ДО 24</span>
+                        <span class="value-label">МИНЫ</span>
                     </div>
                     <div class="control-item">
                         <button class="control-btn" id="mines-increase">+</button>
@@ -1047,6 +1103,21 @@
             </div>
         </div>
         <div class="footer-copyright">© CELSER BOT</div>
+    </div>
+    <!-- Диалог ставки -->
+    <div id="bet-dialog" class="bet-dialog" style="display: none;">
+        <div class="bet-dialog-content">
+            <div class="bet-dialog-title">СДЕЛАТЬ СТАВКУ</div>
+            <div class="bet-dialog-controls">
+                <button class="control-btn" id="dialog-bet-decrease">−</button>
+                <span class="bet-dialog-value" id="dialog-bet-value">10</span>
+                <button class="control-btn" id="dialog-bet-increase">+</button>
+            </div>
+            <div class="bet-dialog-buttons">
+                <button class="dialog-btn cancel" id="dialog-cancel">ОТМЕНА</button>
+                <button class="dialog-btn confirm" id="dialog-confirm">СДЕЛАТЬ СТАВКУ</button>
+            </div>
+        </div>
     </div>
 
     <!-- Страница инвентаря -->
@@ -1120,22 +1191,23 @@
     <div id="case-detail-page" class="container" style="display: none;">
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
         
-        <div class="carousel">
-            <div class="carousel-track" id="carousel-track"></div>
+        <div class="case-detail-container">
+            <div class="carousel">
+                <div class="carousel-track" id="carousel-track"></div>
+            </div>
+            <div class="multiplier-row" id="multiplier-row">
+                <div class="multiplier-item active" data-x="1">X1</div>
+                <div class="multiplier-item" data-x="2">X2</div>
+                <div class="multiplier-item" data-x="3">X3</div>
+                <div class="multiplier-item" data-x="4">X4</div>
+                <div class="multiplier-item" data-x="5">X5</div>
+            </div>
+
+            <button class="open-button" id="open-case-btn">ОТКРЫТЬ</button>
+
+            <div class="gifts-title">ВОЗМОЖНЫЙ ДРОП</div>
+            <div class="gifts-grid" id="gifts-grid"></div>
         </div>
-
-        <div class="multiplier-row" id="multiplier-row">
-            <div class="multiplier-item active" data-x="1">X1</div>
-            <div class="multiplier-item" data-x="2">X2</div>
-            <div class="multiplier-item" data-x="3">X3</div>
-            <div class="multiplier-item" data-x="4">X4</div>
-            <div class="multiplier-item" data-x="5">X5</div>
-        </div>
-
-        <button class="open-button" id="open-case-btn">🔥 ОТКРЫТЬ</button>
-
-        <div class="gifts-title">ВОЗМОЖНЫЙ ДРОП</div>
-        <div class="gifts-grid" id="gifts-grid"></div>
         
         <div class="footer-copyright">© CELSER BOT</div>
     </div>
@@ -1198,7 +1270,7 @@
             window.addEventListener('scroll', updateWheelRotation);
             setTimeout(updateWheelRotation, 100);
 
-            // Данные для кейсов
+            // Данные для кейсов с шансами
             const caseData = {
                 case0: {
                     name: 'бесплатный',
@@ -1261,6 +1333,17 @@
                     ]
                 }
             };
+
+            // Функция выбора случайного предмета с учётом шансов
+            function getRandomItem(items) {
+                const totalChance = items.reduce((sum, item) => sum + item.chance, 0);
+                let rand = Math.random() * totalChance;
+                for (let item of items) {
+                    if (rand < item.chance) return item;
+                    rand -= item.chance;
+                }
+                return items[0]; // fallback
+            }
 
             // Переменная для текущего кейса и множителя
             let currentCaseId = null;
@@ -1358,7 +1441,6 @@
                 setActiveNav(navTasks);
                 window.scrollTo(0, 0);
             }
-
             function showProfile() {
                 casesHomePage.style.display = 'none';
                 gamesPage.style.display = 'none';
@@ -1376,9 +1458,9 @@
                 currentCaseId = caseId;
                 const data = caseData[caseId];
                 
+                // Карусель
                 const carouselTrack = document.getElementById('carousel-track');
                 carouselTrack.innerHTML = '';
-                
                 for (let copy = 0; copy < 2; copy++) {
                     data.items.forEach(item => {
                         const giftDiv = document.createElement('div');
@@ -1414,9 +1496,9 @@
                     });
                 }
 
+                // Статичная сетка
                 const giftsGrid = document.getElementById('gifts-grid');
                 giftsGrid.innerHTML = '';
-                
                 data.items.forEach(item => {
                     const giftDiv = document.createElement('div');
                     giftDiv.className = 'gift-item';
@@ -1450,6 +1532,7 @@
                     giftsGrid.appendChild(giftDiv);
                 });
 
+                // Сброс множителя
                 selectedMultiplier = 1;
                 document.querySelectorAll('.multiplier-item').forEach(el => {
                     if (el.dataset.x == 1) el.classList.add('active');
@@ -1487,6 +1570,7 @@
             addHandler('nav-games', 'click', showGames);
             addHandler('nav-tasks', 'click', showTasks);
             addHandler('nav-profile', 'click', showProfile);
+
             // Кнопка закрытия приложения
             addHandler('close-app', 'click', () => {
                 if (tg) tg.close();
@@ -1528,7 +1612,6 @@
             addHandler('back-from-tasks', 'click', showCasesHome);
             addHandler('back-from-mines', 'click', showGames);
             addHandler('back-to-cases', 'click', showCasesHome);
-
             // Обработчики кликов по карточкам кейсов
             addHandler('case0', 'click', () => showCaseDetail('case0'));
             addHandler('case1', 'click', () => showCaseDetail('case1'));
@@ -1546,18 +1629,19 @@
                 minesCount: 1,
                 cells: [],
                 actionBtn: document.getElementById('mines-action-btn'),
-                betDisplay: document.getElementById('bet-value'),
                 minesDisplay: document.getElementById('mines-count'),
                 minesGrid: document.getElementById('mines-grid'),
-                betDecreaseBtn: document.getElementById('bet-decrease'),
-                betIncreaseBtn: document.getElementById('bet-increase'),
                 minesDecreaseBtn: document.getElementById('mines-decrease'),
                 minesIncreaseBtn: document.getElementById('mines-increase')
             };
 
-            function updateBetDisplay() {
-                minesState.betDisplay.textContent = minesState.bet;
-            }
+            // Элементы диалога
+            const betDialog = document.getElementById('bet-dialog');
+            const dialogBetValue = document.getElementById('dialog-bet-value');
+            const dialogBetDecrease = document.getElementById('dialog-bet-decrease');
+            const dialogBetIncrease = document.getElementById('dialog-bet-increase');
+            const dialogCancel = document.getElementById('dialog-cancel');
+            const dialogConfirm = document.getElementById('dialog-confirm');
 
             function updateMinesDisplay() {
                 minesState.minesDisplay.textContent = minesState.minesCount;
@@ -1572,6 +1656,7 @@
                     minesState.bombPositions.add(pos);
                 }
             }
+
             function createMinesGrid() {
                 minesState.minesGrid.innerHTML = '';
                 minesState.cells = [];
@@ -1599,6 +1684,7 @@
                     minesState.gameOver = true;
                     minesState.actionBtn.textContent = 'СДЕЛАТЬ СТАВКУ';
                     minesState.actionBtn.disabled = false;
+                    // Показать все бомбы
                     for (let i = 0; i < minesState.cells.length; i++) {
                         if (minesState.bombPositions.has(i)) {
                             minesState.cells[i].classList.add('revealed-bomb');
@@ -1606,13 +1692,14 @@
                         }
                     }
                     enableControls(true);
-                } else {
+                    } else {
                     cell.classList.add('revealed-star');
                     cell.textContent = '⭐️';
                     minesState.revealedCount++;
                     const multiplier = 1 + minesState.revealedCount * 0.2;
                     minesState.currentWin = Math.floor(minesState.bet * multiplier);
-                    minesState.actionBtn.textContent = 'ЗАБРАТЬ ${minesState.currentWin} ★';
+                    minesState.actionBtn.textContent = ЗАБРАТЬ ${minesState.currentWin} ★;
+                    minesState.actionBtn.disabled = false; // активируем кнопку после каждой звезды
                 }
             }
 
@@ -1632,8 +1719,6 @@
             }
 
             function enableControls(enabled) {
-                minesState.betDecreaseBtn.disabled = !enabled;
-                minesState.betIncreaseBtn.disabled = !enabled;
                 minesState.minesDecreaseBtn.disabled = !enabled;
                 minesState.minesIncreaseBtn.disabled = !enabled;
             }
@@ -1654,7 +1739,7 @@
                     cell.textContent = '';
                 });
                 minesState.actionBtn.textContent = 'ИГРА ИДЁТ';
-                minesState.actionBtn.disabled = true;
+                minesState.actionBtn.disabled = true; // пока не откроют звезду
                 enableControls(false);
             }
 
@@ -1664,10 +1749,13 @@
                 }
                 resetMinesGame();
             }
+
             function onMinesAction() {
                 const btn = minesState.actionBtn;
                 if (btn.textContent === 'СДЕЛАТЬ СТАВКУ') {
-                    startMinesGame();
+                    // Показать диалог ставки
+                    dialogBetValue.textContent = minesState.bet;
+                    betDialog.style.display = 'flex';
                 } else if (btn.textContent.startsWith('ЗАБРАТЬ')) {
                     cashoutMines();
                 }
@@ -1677,18 +1765,6 @@
             createMinesGrid();
             addHandler('mines-action-btn', 'click', onMinesAction);
 
-            minesState.betDecreaseBtn.addEventListener('click', () => {
-                if (minesState.bet > 10) {
-                    minesState.bet--;
-                    updateBetDisplay();
-                }
-            });
-            minesState.betIncreaseBtn.addEventListener('click', () => {
-                if (minesState.bet < 5000) {
-                    minesState.bet++;
-                    updateBetDisplay();
-                }
-            });
             minesState.minesDecreaseBtn.addEventListener('click', () => {
                 if (minesState.minesCount > 1) {
                     minesState.minesCount--;
@@ -1702,8 +1778,28 @@
                 }
             });
 
-            updateBetDisplay();
             updateMinesDisplay();
+
+            // Обработчики диалога ставки
+            dialogBetDecrease.addEventListener('click', () => {
+                if (minesState.bet > 10) {
+                    minesState.bet--;
+                    dialogBetValue.textContent = minesState.bet;
+                }
+                });
+            dialogBetIncrease.addEventListener('click', () => {
+                if (minesState.bet < 5000) {
+                    minesState.bet++;
+                    dialogBetValue.textContent = minesState.bet;
+                }
+            });
+            dialogCancel.addEventListener('click', () => {
+                betDialog.style.display = 'none';
+            });
+            dialogConfirm.addEventListener('click', () => {
+                betDialog.style.display = 'none';
+                startMinesGame();
+            });
 
             // Обработчики для выбора множителя X
             document.querySelectorAll('.multiplier-item').forEach(el => {
@@ -1723,8 +1819,13 @@
                     alert('Недостаточно звёзд!');
                     return;
                 }
-                alert('Открытие кейса ${data.name} x${selectedMultiplier} за ${totalPrice} ★');
                 updateBalances(currentBalance - totalPrice);
+                let results = [];
+                for (let i = 0; i < selectedMultiplier; i++) {
+                    const item = getRandomItem(data.items);
+                    results.push(${item.name} (${item.value} ★));
+                }
+                alert(Вы получили:\n${results.join('\n')});
             });
 
             // Показываем главную
@@ -1733,5 +1834,3 @@
     </script>
 </body>
 </html>
-
-
