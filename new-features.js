@@ -1,4 +1,4 @@
-// Минимальный скрипт для анимации открытия кейсов
+// Скрипт для анимации открытия кейсов
 console.log('Скрипт анимации загружен');
 
 // Функция добавления анимационной области
@@ -52,9 +52,10 @@ window.addEventListener('load', function() {
         
         console.log('Кнопка найдена, устанавливаем обработчик');
         
-        // Сохраняем старую функцию
+        // Сохраняем старую функцию (на всякий случай)
         var oldClick = openBtn.onclick;
         
+        // Устанавливаем новый обработчик
         openBtn.onclick = function(e) {
             e.preventDefault();
             
@@ -83,7 +84,10 @@ window.addEventListener('load', function() {
             var spinner = document.getElementById('case-spinner');
             var resultDiv = document.getElementById('case-result');
             
-            if (!animDiv  !spinner  !resultDiv) return;
+            if (!animDiv  !spinner  !resultDiv) {
+                alert('Ошибка анимации');
+                return;
+            }
             
             animDiv.style.display = 'block';
             spinner.innerHTML = '';
@@ -103,14 +107,19 @@ window.addEventListener('load', function() {
                         img.style.height = '80px';
                         div.appendChild(img);
                     } else {
-                        div.textContent = item.icon || '🎁';
-                        div.style.fontSize = '3rem';
+                        var iconDiv = document.createElement('div');
+                        iconDiv.textContent = item.icon || '🎁';
+                        iconDiv.style.fontSize = '3rem';
+                        div.appendChild(iconDiv);
                     }
-                  }
+                    
+                    spinner.appendChild(div);
+                }
             }
             
-            // Простая анимация
+            // Простая анимация прокрутки
             var count = 0;
+            
             function animate() {
                 spinner.scrollLeft += 20;
                 count++;
@@ -141,6 +150,7 @@ window.addEventListener('load', function() {
                     }
                     
                     var textDiv = document.createElement('div');
+                    
                     var nameSpan = document.createElement('div');
                     nameSpan.className = 'result-text';
                     nameSpan.textContent = selected.name || 'Подарок';
@@ -162,5 +172,3 @@ window.addEventListener('load', function() {
         console.log('Обработчик установлен');
     }, 1000);
 });
-                    
-                    spinner.appendChild(div);
