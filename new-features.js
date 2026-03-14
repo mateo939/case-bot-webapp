@@ -121,10 +121,10 @@ window.addEventListener('load', function() {
             var count = 0;
             
             function animate() {
-                spinner.scrollLeft += 20;
+                spinner.scrollLeft += 40;
                 count++;
                 
-                if (count < 80) {
+                if (count < 60) {
                     requestAnimationFrame(animate);
                 } else {
                     // Выбираем случайный предмет
