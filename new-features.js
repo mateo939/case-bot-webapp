@@ -1,7 +1,6 @@
-// Скрипт для анимации открытия кейсов
+// Скрипт для анимации открытия кейсов (упрощённый)
 console.log('Скрипт анимации загружен');
 
-// Функция добавления анимационной области
 function addAnimationArea() {
     var casePage = document.getElementById('case-detail-page');
     if (!casePage) {
@@ -11,7 +10,6 @@ function addAnimationArea() {
     
     if (document.getElementById('case-animation')) return;
     
-    // Создаём элементы
     var animDiv = document.createElement('div');
     animDiv.id = 'case-animation';
     animDiv.className = 'case-animation-area';
@@ -28,21 +26,16 @@ function addAnimationArea() {
     animDiv.appendChild(spinner);
     animDiv.appendChild(result);
     
-    // Вставляем после карусели
     var carousel = casePage.querySelector('.carousel');
     if (carousel) {
         carousel.parentNode.insertBefore(animDiv, carousel.nextSibling);
         console.log('Анимация добавлена');
-    } else {
-        console.log('Карусель не найдена');
     }
 }
 
-// Запускаем после загрузки страницы
 window.addEventListener('load', function() {
     addAnimationArea();
     
-    // Ждём и переопределяем кнопку
     setTimeout(function() {
         var openBtn = document.getElementById('open-case-btn');
         if (!openBtn) {
@@ -50,44 +43,38 @@ window.addEventListener('load', function() {
             return;
         }
         
-        console.log('Кнопка найдена, устанавливаем обработчик');
+        console.log('Кнопка найдена');
         
-        // Сохраняем старую функцию (на всякий случай)
-        var oldClick = openBtn.onclick;
-        
-        // Устанавливаем новый обработчик
         openBtn.onclick = function(e) {
             e.preventDefault();
             
-            // Проверяем, есть ли данные
-            if (!window.currentCaseId || !window.caseData || !window.caseData[window.currentCaseId]) {
-                alert('Кейс не выбран');
+            // Получаем данные из глобальных переменных (должны быть в старом коде)
+            if (!window.currentCaseId) {
+                alert('Кейс не выбран (ошибка)');
                 return;
             }
             
             var data = window.caseData[window.currentCaseId];
-            var price = data.price * (window.selectedMultiplier || 1);
+            if (!data) {
+                alert('Данные кейса не найдены');
+                return;
+            }
             
-            // Проверка баланса
+            var price = data.price * (window.selectedMultiplier || 1);
             if (window.currentBalance < price) {
                 alert('Недостаточно звёзд!');
                 return;
             }
             
-            // Списываем звёзды
             if (window.updateBalances) {
                 window.updateBalances(window.currentBalance - price);
             }
             
-            // Показываем анимацию
             var animDiv = document.getElementById('case-animation');
             var spinner = document.getElementById('case-spinner');
             var resultDiv = document.getElementById('case-result');
             
-            if (!animDiv || !spinner || !resultDiv) {
-                alert('Ошибка анимации');
-                return;
-            }
+            if (!animDiv  !spinner  !resultDiv) return;
             
             animDiv.style.display = 'block';
             spinner.innerHTML = '';
@@ -117,22 +104,18 @@ window.addEventListener('load', function() {
                 }
             }
             
-            // Простая анимация прокрутки
+            // Анимация
             var count = 0;
-            
             function animate() {
-                spinner.scrollLeft += 40;
+                spinner.scrollLeft += 30;
                 count++;
-                
-                if (count < 60) {
+                if (count < 70) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Выбираем случайный предмет
                     var items = data.items;
                     var randomIndex = Math.floor(Math.random() * items.length);
                     var selected = items[randomIndex];
                     
-                    // Показываем результат
                     var resultItem = document.createElement('div');
                     resultItem.className = 'result-item';
                     
@@ -150,7 +133,6 @@ window.addEventListener('load', function() {
                     }
                     
                     var textDiv = document.createElement('div');
-                    
                     var nameSpan = document.createElement('div');
                     nameSpan.className = 'result-text';
                     nameSpan.textContent = selected.name || 'Подарок';
@@ -165,7 +147,6 @@ window.addEventListener('load', function() {
                     resultDiv.appendChild(resultItem);
                 }
             }
-            
             requestAnimationFrame(animate);
         };
         
