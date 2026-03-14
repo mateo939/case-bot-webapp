@@ -1,6 +1,6 @@
 // ===== НОВЫЙ КОД ДЛЯ АНИМАЦИИ ОТКРЫТИЯ КЕЙСОВ =====
 (function() {
-    // Дождёмся загрузки страницы
+    // Ждём загрузки страницы
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initCaseAnimation);
     } else {
@@ -8,9 +8,12 @@
     }
 
     function initCaseAnimation() {
-        // Находим страницу деталей кейса
+        // Используем правильный ID страницы деталей кейса
         const caseDetailPage = document.getElementById('case-detail-page');
-        if (!caseDetailPage) return;
+        if (!caseDetailPage) {
+            console.log('Страница деталей кейса не найдена');
+            return;
+        }
 
         // Создаём контейнер для анимации, если его ещё нет
         if (!document.getElementById('case-animation')) {
@@ -20,50 +23,66 @@
                     <div class="case-result" id="case-result"></div>
                 </div>
             ;
-            // Вставляем после карусели
+            
+            // Вставляем после карусели (ищем правильный класс)
             const carousel = caseDetailPage.querySelector('.carousel');
             if (carousel) {
                 carousel.insertAdjacentHTML('afterend', animationHTML);
+                console.log('Анимационная область добавлена');
+            } else {
+                console.log('Карусель не найдена');
             }
         }
 
         // Переопределяем обработчик кнопки "ОТКРЫТЬ"
         const openBtn = document.getElementById('open-case-btn');
         if (openBtn) {
-            // Сохраняем оригинальный обработчик, если нужно
-            openBtn.removeEventListener('click', window.oldOpenHandler);
-            openBtn.addEventListener('click', handleOpenCase);
+            // Удаляем старые обработчики и добавляем новый
+            openBtn.replaceWith(openBtn.cloneNode(true));
+            const newBtn = document.getElementById('open-case-btn');
+            newBtn.addEventListener('click', handleOpenCase);
+            console.log('Новый обработчик кнопки установлен');
         }
     }
 
     function handleOpenCase() {
-        const caseId = window.currentCaseId; // из старого кода
-        if (!caseId) return;
-
-        const data = window.caseData[caseId]; // из старого кода
+        // Используем глобальные переменные из старого кода
+        if (typeof window.currentCaseId === 'undefined') {
+            alert('Ошибка: кейс не выбран');
+            return;
+        }
+        
+        const caseId = window.currentCaseId;
+        const data = window.caseData[caseId];
         if (!data) return;
 
-        // Проверка баланса (используем старую функцию updateBalances)
-        const totalPrice = data.price * window.selectedMultiplier;
+        const totalPrice = data.price * (window.selectedMultiplier || 1);
         if (window.currentBalance < totalPrice) {
             alert('Недостаточно звёзд!');
             return;
         }
 
         // Списываем звёзды
-        window.updateBalances(window.currentBalance - totalPrice);
+        if (typeof window.updateBalances === 'function') {
+            window.updateBalances(window.currentBalance - totalPrice);
+        }
 
         // Показываем анимационную область
         const animDiv = document.getElementById('case-animation');
         const spinner = document.getElementById('case-spinner');
         const resultDiv = document.getElementById('case-result');
         
+        if (!animDiv  !spinner  !resultDiv) {
+            alert('Ошибка инициализации анимации');
+            return;
+        }
+        
         animDiv.style.display = 'block';
-        resultDiv.innerHTML = ''; // очищаем результат
+        resultDiv.innerHTML = '';
 
-        // Создаём много копий подарков для длинной прокрутки
+        // Заполняем спиннер копиями подарков
         spinner.innerHTML = '';
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 20; i++) {
             data.items.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'spinner-item';
@@ -74,40 +93,48 @@
                     img.alt = item.name;
                     div.appendChild(img);
                 } else {
-                    div.innerHTML = <div class="gift-icon">${item.icon || '🎁'}</div>;
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'gift-icon';
+                    iconDiv.style.fontSize = '3rem';
+                    iconDiv.textContent = item.icon || '🎁';
+                    div.appendChild(iconDiv);
                 }
                 
-                div.innerHTML += <div class="gift-name">${item.name}</div>;
-                div.innerHTML += <div class="gift-value">${item.value} ★</div>;
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'gift-name';
+                nameDiv.textContent = item.name;
                 
+                const valueDiv = document.createElement('div');
+                valueDiv.className = 'gift-value';
+                valueDiv.textContent = item.value + ' ★';
+                
+                div.appendChild(nameDiv);
+                div.appendChild(valueDiv);
                 spinner.appendChild(div);
             });
         }
 
-        // Запускаем анимацию прокрутки
+        // Анимация прокрутки
         let startTime = Date.now();
-        const duration = 2000; // 2 секунды
+        const duration = 2000;
         let animationFrame;
 
         function scroll() {
             const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
+            spinner.scrollLeft += 20;
             
-            // Скроллим очень быстро
-            spinner.scrollLeft += 15;
-            
-            if (progress < 1) {
+            if (elapsed < duration) {
                 animationFrame = requestAnimationFrame(scroll);
             } else {
-                // Останавливаемся на случайном предмете
                 cancelAnimationFrame(animationFrame);
                 showRandomResult(data.items);
             }
         }
 
         animationFrame = requestAnimationFrame(scroll);
-      function showRandomResult(items) {
-            // Выбираем случайный предмет с учётом шансов
+
+        function showRandomResult(items) {
+            // Выбор с учётом шансов
             const totalChance = items.reduce((sum, i) => sum + (i.chance || 1), 0);
             let rand = Math.random() * totalChance;
             let selected = items[0];
@@ -120,10 +147,9 @@
                 rand -= (item.chance || 1);
             }
 
-            // Отображаем результат
             resultDiv.innerHTML = 
                 <div class="result-item">
-                    ${selected.img ? <img src="${selected.img}" alt="${selected.name}"> : <div class="gift-icon" style="font-size:3rem;">${selected.icon || '🎁'}</div>}
+                    ${selected.img ? <img src="${selected.img}" alt="${selected.name}"> : <div class="gift-icon" style="font-size:4rem;">${selected.icon || '🎁'}</div>}
                     <div>
                         <div class="result-text">${selected.name}</div>
                         <div class="result-value">${selected.value} ★</div>
