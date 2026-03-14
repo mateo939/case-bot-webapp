@@ -84,7 +84,7 @@ window.addEventListener('load', function() {
             var spinner = document.getElementById('case-spinner');
             var resultDiv = document.getElementById('case-result');
             
-            if (!animDiv  !spinner  !resultDiv) {
+            if (!animDiv || !spinner || !resultDiv) {
                 alert('Ошибка анимации');
                 return;
             }
