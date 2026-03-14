@@ -1,159 +1,155 @@
-// ===== НОВЫЙ КОД ДЛЯ АНИМАЦИИ ОТКРЫТИЯ КЕЙСОВ =====
+// ===== ПРОСТАЯ АНИМАЦИЯ ОТКРЫТИЯ КЕЙСОВ =====
 (function() {
+    console.log('Скрипт анимации загружен');
+
+    // Функция для добавления анимационной области
+    function addAnimationArea() {
+        const casePage = document.getElementById('case-detail-page');
+        if (!casePage) return;
+        
+        // Проверяем, есть ли уже анимация
+        if (document.getElementById('case-animation')) return;
+        
+        // Создаём элементы через DOM API, а не через innerHTML
+        const animDiv = document.createElement('div');
+        animDiv.id = 'case-animation';
+        animDiv.className = 'case-animation-area';
+        animDiv.style.display = 'none';
+        
+        const spinner = document.createElement('div');
+        spinner.id = 'case-spinner';
+        spinner.className = 'case-spinner';
+        
+        const result = document.createElement('div');
+        result.id = 'case-result';
+        result.className = 'case-result';
+        
+        animDiv.appendChild(spinner);
+        animDiv.appendChild(result);
+        
+        // Вставляем после карусели
+        const carousel = casePage.querySelector('.carousel');
+        if (carousel) {
+            carousel.parentNode.insertBefore(animDiv, carousel.nextSibling);
+            console.log('Анимационная область добавлена');
+        }
+    }
+
     // Ждём загрузки страницы
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCaseAnimation);
+        document.addEventListener('DOMContentLoaded', addAnimationArea);
     } else {
-        initCaseAnimation();
+        addAnimationArea();
     }
 
-    function initCaseAnimation() {
-        // Используем правильный ID страницы деталей кейса
-        const caseDetailPage = document.getElementById('case-detail-page');
-        if (!caseDetailPage) {
-            console.log('Страница деталей кейса не найдена');
-            return;
-        }
-
-        // Создаём контейнер для анимации, если его ещё нет
-        if (!document.getElementById('case-animation')) {
-            const animationHTML = 
-                '<div id="case-animation" class="case-animation-area" style="display: none;">' +
-                '<div class="case-spinner" id="case-spinner"></div>' +
-                '<div class="case-result" id="case-result"></div>' +
-                '</div>';
-            
-            // Вставляем после карусели (ищем правильный класс)
-            const carousel = caseDetailPage.querySelector('.carousel');
-            if (carousel) {
-                carousel.insertAdjacentHTML('afterend', animationHTML);
-                console.log('Анимационная область добавлена');
-            } else {
-                console.log('Карусель не найдена');
-            }
-        }
-
-        // Переопределяем обработчик кнопки "ОТКРЫТЬ"
+    // Переопределяем кнопку открытия (ждём немного, чтобы старый код успел выполниться)
+    setTimeout(function() {
         const openBtn = document.getElementById('open-case-btn');
         if (openBtn) {
-            // Удаляем старые обработчики и добавляем новый
-            const newBtn = openBtn.cloneNode(true);
-            openBtn.parentNode.replaceChild(newBtn, openBtn);
-            newBtn.addEventListener('click', handleOpenCase);
-            console.log('Новый обработчик кнопки установлен');
-        }
-    }
-
-    function handleOpenCase() {
-        // Используем глобальные переменные из старого кода
-        if (typeof window.currentCaseId === 'undefined') {
-            alert('Ошибка: кейс не выбран');
-            return;
-        }
-        
-        const caseId = window.currentCaseId;
-        const data = window.caseData[caseId];
-        if (!data) return;
-
-        const totalPrice = data.price * (window.selectedMultiplier || 1);
-        if (window.currentBalance < totalPrice) {
-            alert('Недостаточно звёзд!');
-            return;
-        }
-
-        // Списываем звёзды
-        if (typeof window.updateBalances === 'function') {
-            window.updateBalances(window.currentBalance - totalPrice);
-        }
-
-        // Показываем анимационную область
-        const animDiv = document.getElementById('case-animation');
-        const spinner = document.getElementById('case-spinner');
-        const resultDiv = document.getElementById('case-result');
-        
-        if (!animDiv  !spinner  !resultDiv) {
-            alert('Ошибка инициализации анимации');
-            return;
-        }
-        
-        animDiv.style.display = 'block';
-        resultDiv.innerHTML = '';
-
-        // Заполняем спиннер копиями подарков
-        spinner.innerHTML = '';
-        for (let i = 0; i < 20; i++) {
-            data.items.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'spinner-item';
-                
-                if (item.img) {
-                    const img = document.createElement('img');
-                    img.src = item.img;
-                    img.alt = item.name;
-                    div.appendChild(img);
-                } else {
-                    const iconDiv = document.createElement('div');
-                    iconDiv.className = 'gift-icon';
-                    iconDiv.style.fontSize = '3rem';
-                    iconDiv.textContent = item.icon || '🎁';
-                    div.appendChild(iconDiv);
-                    }
-                
-                const nameDiv = document.createElement('div');
-                nameDiv.className = 'gift-name';
-                nameDiv.textContent = item.name;
-                
-                const valueDiv = document.createElement('div');
-                valueDiv.className = 'gift-value';
-                valueDiv.textContent = item.value + ' ★';
-                
-                div.appendChild(nameDiv);
-                div.appendChild(valueDiv);
-                spinner.appendChild(div);
-            });
-        }
-
-        // Анимация прокрутки
-        let startTime = Date.now();
-        const duration = 2000;
-        let animationFrame;
-
-        function scroll() {
-            const elapsed = Date.now() - startTime;
-            spinner.scrollLeft += 20;
+            // Сохраняем старую функцию, если нужно
+            const oldHandler = openBtn.onclick;
             
-            if (elapsed < duration) {
-                animationFrame = requestAnimationFrame(scroll);
-            } else {
-                cancelAnimationFrame(animationFrame);
-                showRandomResult(data.items);
-            }
-        }
-
-        animationFrame = requestAnimationFrame(scroll);
-
-        function showRandomResult(items) {
-            // Выбор с учётом шансов
-            const totalChance = items.reduce((sum, i) => sum + (i.chance || 1), 0);
-            let rand = Math.random() * totalChance;
-            let selected = items[0];
-            
-            for (let item of items) {
-                if (rand < (item.chance || 1)) {
-                    selected = item;
-                    break;
+            openBtn.onclick = function(e) {
+                e.preventDefault();
+                
+                // Проверяем, есть ли данные кейса
+                if (!window.currentCaseId  !window.caseData  !window.caseData[window.currentCaseId]) {
+                    alert('Кейс не выбран');
+                    return;
                 }
-                rand -= (item.chance || 1);
-            }
-
-            resultDiv.innerHTML = 
-                '<div class="result-item">' +
-                (selected.img ? '<img src="' + selected.img + '" alt="' + selected.name + '">' : '<div class="gift-icon" style="font-size:4rem;">' + (selected.icon || '🎁') + '</div>') +
-                '<div>' +
-                '<div class="result-text">' + selected.name + '</div>' +
-                '<div class="result-value">' + selected.value + ' ★</div>' +
-                '</div>' +
-                '</div>';
+                
+                const data = window.caseData[window.currentCaseId];
+                const price = data.price * (window.selectedMultiplier || 1);
+                
+                // Проверка баланса
+                if (window.currentBalance < price) {
+                    alert('Недостаточно звёзд!');
+                    return;
+                }
+                
+                // Списываем звёзды
+                window.updateBalances(window.currentBalance - price);
+                
+                // Показываем анимацию
+                const animDiv = document.getElementById('case-animation');
+                const spinner = document.getElementById('case-spinner');
+                const resultDiv = document.getElementById('case-result');
+                
+                if (!animDiv  !spinner  !resultDiv) {
+                    alert('Ошибка анимации');
+                    return;
+                }
+                
+                animDiv.style.display = 'block';
+                resultDiv.innerHTML = '';
+                
+                // Заполняем спиннер
+                spinner.innerHTML = '';
+                for (let i = 0; i < 30; i++) {
+                    data.items.forEach(function(item) {
+                        const div = document.createElement('div');
+                        div.className = 'spinner-item';
+                        
+                        if (item.img) {
+                            const img = document.createElement('img');
+                            img.src = item.img;
+                            img.alt = item.name || '';
+                            div.appendChild(img);
+                            } else {
+                            div.textContent = item.icon || '🎁';
+                            div.style.fontSize = '3rem';
+                        }
+                        
+                        spinner.appendChild(div);
+                    });
+                }
+                
+                // Анимация прокрутки
+                let count = 0;
+                function animate() {
+                    spinner.scrollLeft += 15;
+                    count++;
+                    
+                    if (count < 100) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        // Выбор случайного предмета
+                        const items = data.items;
+                        const randomIndex = Math.floor(Math.random() * items.length);
+                        const selected = items[randomIndex];
+                        
+                        // Показываем результат
+                        resultDiv.innerHTML = '';
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'result-item';
+                        
+                        if (selected.img) {
+                            const img = document.createElement('img');
+                            img.src = selected.img;
+                            img.alt = selected.name || '';
+                            resultItem.appendChild(img);
+                        } else {
+                            const icon = document.createElement('div');
+                            icon.className = 'gift-icon';
+                            icon.textContent = selected.icon || '🎁';
+                            icon.style.fontSize = '4rem';
+                            resultItem.appendChild(icon);
+                        }
+                        
+                        const textDiv = document.createElement('div');
+                        textDiv.innerHTML = '<div class="result-text">' + (selected.name || 'Подарок') + '</div>' +
+                                          '<div class="result-value">' + (selected.value || 0) + ' ★</div>';
+                        resultItem.appendChild(textDiv);
+                        resultDiv.appendChild(resultItem);
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            };
+            
+            console.log('Обработчик кнопки переопределён');
+        } else {
+            console.log('Кнопка открытия не найдена');
         }
-    }
+    }, 500);
 })();
