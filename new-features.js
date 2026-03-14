@@ -74,7 +74,7 @@ window.addEventListener('load', function() {
             var spinner = document.getElementById('case-spinner');
             var resultDiv = document.getElementById('case-result');
             
-            if (!animDiv  !spinner  !resultDiv) return;
+            if (!animDiv || !spinner || !resultDiv) return;
             
             animDiv.style.display = 'block';
             spinner.innerHTML = '';
