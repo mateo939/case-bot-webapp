@@ -121,3 +121,92 @@ body {
 .open-case-btn:active {
     transform: translateY(0);
 }
+/* ===== ПЕРЕОПРЕДЕЛЕНИЕ СТИЛЕЙ ДЛЯ КЕЙСОВ ===== */
+/* Убираем золотые рамки со всего */
+.case-card, .case-detail-container, .gift-item, .multiplier-item, .back-button, .bottom-nav-fixed, .nav-item-fixed {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Стили для спиннера (подарки) */
+#case-spinner {
+    display: flex !important;
+    gap: 15px !important;
+    overflow-x: auto !important;
+    padding: 15px !important;
+    min-height: 140px !important;
+    align-items: center !important;
+    scroll-behavior: auto !important;
+}
+
+.spinner-item {
+    flex: 0 0 auto !important;
+    width: 120px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 25px !important;
+    padding: 15px 10px !important;
+    text-align: center !important;
+    border: none !important;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3) !important;
+}
+
+.spinner-item img {
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: contain !important;
+    margin-bottom: 10px !important;
+}
+
+.spinner-item .gift-name,
+.spinner-item .gift-value {
+    color: #fff !important;
+}
+
+.spinner-item .gift-value {
+    color: #ffd700 !important;
+    font-weight: 600 !important;
+}
+
+/* Контейнер анимации */
+.case-animation-area {
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 30px !important;
+    padding: 20px !important;
+    margin: 20px 0 !important;
+    border: none !important;
+}
+
+/* Результат открытия */
+.case-result {
+    margin-top: 20px !important;
+    min-height: 100px !important;
+}
+
+.result-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-radius: 50px !important;
+    padding: 15px 30px !important;
+    border: none !important;
+}
+
+.result-item img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: contain !important;
+}
+
+.result-text {
+    font-size: 1.2rem !important;
+    color: #fff !important;
+}
+
+.result-value {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #ffd700 !important;
+}
