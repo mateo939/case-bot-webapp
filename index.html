@@ -1818,24 +1818,6 @@
                 });
             });
 
-            // Обработчик открытия кейса
-            addHandler('open-case-btn', 'click', () => {
-                if (!currentCaseId) return;
-                const data = caseData[currentCaseId];
-                const totalPrice = data.price * selectedMultiplier;
-                if (currentBalance < totalPrice) {
-                    alert('Недостаточно звёзд!');
-                    return;
-                }
-                updateBalances(currentBalance - totalPrice);
-                let results = [];
-                for (let i = 0; i < selectedMultiplier; i++) {
-                    const item = getRandomItem(data.items);
-                    results.push('${item.name} (${item.value} ★)');
-                }
-                alert(`Вы получили:\n${results.join('\n')}`);
-            });
-
             // Показываем главную
             showCasesHome();
         })();
