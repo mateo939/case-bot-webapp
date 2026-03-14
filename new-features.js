@@ -59,7 +59,7 @@ window.addEventListener('load', function() {
             e.preventDefault();
             
             // Проверяем, есть ли данные
-            if (!window.currentCaseId  !window.caseData  !window.caseData[window.currentCaseId]) {
+            if (!window.currentCaseId || !window.caseData || !window.caseData[window.currentCaseId]) {
                 alert('Кейс не выбран');
                 return;
             }
