@@ -1,7 +1,7 @@
-// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА (с реальным инвентарём) =====
+// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА + ИНВЕНТАРЬ =====
 console.log('Анимация с инвентарём загружена');
 
-// Глобальный массив инвентаря (будет хранить все полученные предметы)
+// Глобальный массив инвентаря
 window.userInventory = window.userInventory || [];
 
 // Данные для всех кейсов
@@ -58,16 +58,108 @@ var caseDatabase = {
     }
 };
 
-// Функция обновления баланса на странице
+// Функция обновления баланса
 function updateBalanceDisplay(amount) {
     var balanceEl = document.getElementById('balance-display');
     if (balanceEl) {
         balanceEl.textContent = amount + ' ★';
     }
-    // Если есть глобальная переменная баланса — обновим и её
     if (typeof currentBalance !== 'undefined') {
         currentBalance = amount;
     }
+}
+
+// Функция обновления инвентаря на странице
+function renderInventory() {
+    var inventoryGrid = document.getElementById('inventory-grid');
+    if (!inventoryGrid) return;
+
+    inventoryGrid.innerHTML = '';
+
+    window.userInventory.forEach(function (item, index) {
+        var card = document.createElement('div');
+        card.className = 'inventory-item';
+
+        if (item.img) {
+            var img = document.createElement('img');
+            img.src = item.img;
+            img.alt = item.name;
+            card.appendChild(img);
+        } else {
+            var iconDiv = document.createElement('div');
+            iconDiv.className = 'inventory-icon';
+            iconDiv.textContent = item.icon || '🎁';
+            card.appendChild(iconDiv);
+        }
+
+        var nameDiv = document.createElement('div');
+        nameDiv.className = 'inventory-item-name';
+        nameDiv.textContent = item.name;
+
+        var valueDiv = document.createElement('div');
+        valueDiv.className = 'inventory-item-value';
+        valueDiv.textContent = item.value + ' ★';
+
+        card.appendChild(nameDiv);
+        card.appendChild(valueDiv);
+        // Клик по предмету — продажа
+        card.addEventListener('click', function () {
+            sellItem(index);
+        });
+
+        inventoryGrid.appendChild(card);
+    });
+
+    // Обновляем общую стоимость
+    updateTotalCost();
+}
+
+// Функция продажи предмета
+function sellItem(index) {
+    var item = window.userInventory[index];
+    if (!item) return;
+
+    var sellPrice = Math.floor(item.value * 0.5);
+
+    // Получаем текущий баланс
+    var balanceEl = document.getElementById('balance-display');
+    var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
+    var currentBalance = parseInt(balanceText) || 0;
+
+    // Начисляем звёзды
+    updateBalanceDisplay(currentBalance + sellPrice);
+
+    // Удаляем предмет из инвентаря
+    window.userInventory.splice(index, 1);
+
+    // Перерисовываем инвентарь
+    renderInventory();
+
+    alert('💰 Продано за ' + sellPrice + ' ★');
+}
+
+// Функция обновления общей стоимости
+function updateTotalCost() {
+    var totalCostEl = document.getElementById('inventory-cost');
+    if (!totalCostEl) return;
+
+    var total = window.userInventory.reduce(function (sum, item) {
+        return sum + item.value;
+    }, 0);
+
+    totalCostEl.textContent = total + ' ★';
+}
+
+// Добавляем предмет в инвентарь после открытия кейса
+function addToInventory(selected) {
+    window.userInventory.push({
+        name: selected.name,
+        value: selected.value,
+        img: selected.img,
+        icon: selected.icon,
+        obtained: new Date().toLocaleString()
+    });
+    renderInventory();
 }
 
 window.addEventListener('load', function () {
@@ -91,6 +183,7 @@ window.addEventListener('load', function () {
             var overlayContent = document.createElement('div');
             overlayContent.className = 'overlay-content';
             overlayContainer.appendChild(overlayContent);
+
             var carouselContainer = document.querySelector('.carousel');
             if (carouselContainer) {
                 carouselContainer.parentNode.insertBefore(overlayContainer, carouselContainer.nextSibling);
@@ -116,7 +209,6 @@ window.addEventListener('load', function () {
             var data = caseDatabase[caseId];
             if (!data) return;
 
-            // Проверка баланса (кроме бесплатного)
             if (caseId !== 'case0') {
                 var totalPrice = data.price * multiplier;
                 var balanceEl = document.getElementById('balance-display');
@@ -128,14 +220,10 @@ window.addEventListener('load', function () {
                     return;
                 }
 
-                // Списываем звёзды
                 updateBalanceDisplay(currentBalance - totalPrice);
             }
 
-            // Очищаем карусель
             carouselTrack.innerHTML = '';
-
-            // Заполняем карусель копиями предметов
             for (var i = 0; i < 30; i++) {
                 for (var j = 0; j < data.items.length; j++) {
                     var item = data.items[j];
@@ -172,7 +260,6 @@ window.addEventListener('load', function () {
             overlayContainer.style.display = 'none';
             overlayContainer.querySelector('.overlay-content').innerHTML = '';
 
-            // Анимация
             var startTime = Date.now();
             var duration = 3000;
             var container = document.querySelector('.carousel');
@@ -184,7 +271,6 @@ window.addEventListener('load', function () {
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Выбор предмета с учётом шансов
                     var items = data.items;
                     var totalChance = items.reduce(function (sum, item) {
                         return sum + (item.chance || 1);
@@ -192,6 +278,7 @@ window.addEventListener('load', function () {
 
                     var rand = Math.random() * totalChance;
                     var selected = items[0];
+
                     for (var k = 0; k < items.length; k++) {
                         if (rand < (items[k].chance || 1)) {
                             selected = items[k];
@@ -200,7 +287,6 @@ window.addEventListener('load', function () {
                         rand -= (items[k].chance || 1);
                     }
 
-                    // Показываем результат
                     overlayContainer.style.display = 'flex';
                     var overlayContent = overlayContainer.querySelector('.overlay-content');
                     overlayContent.innerHTML = '';
@@ -232,43 +318,27 @@ window.addEventListener('load', function () {
                     resultDiv.appendChild(nameSpan);
                     resultDiv.appendChild(valueSpan);
                     overlayContent.appendChild(resultDiv);
-
-                    // Кнопки с реальной логикой
                     var buttonsDiv = document.createElement('div');
                     buttonsDiv.className = 'result-buttons';
 
-                    // Кнопка "В ИНВЕНТАРЬ"
                     var invBtn = document.createElement('button');
                     invBtn.className = 'result-btn inventory-btn';
                     invBtn.textContent = 'В ИНВЕНТАРЬ';
                     invBtn.onclick = function () {
-                        // Добавляем предмет в инвентарь
-                        window.userInventory.push({
-                            name: selected.name,
-                            value: selected.value,
-                            img: selected.img,
-                            icon: selected.icon,
-                            obtained: new Date().toLocaleString()
-                        });
+                        addToInventory(selected);
                         alert('✅ Предмет добавлен в инвентарь!');
                         overlayContainer.style.display = 'none';
                     };
 
-                    // Кнопка "ПРОДАТЬ"
                     var sellBtn = document.createElement('button');
                     sellBtn.className = 'result-btn sell-btn';
                     sellBtn.textContent = 'ПРОДАТЬ';
                     sellBtn.onclick = function () {
-                        var sellPrice = Math.floor(selected.value * 0.5); // 50% стоимости
-
-                        // Получаем текущий баланс
+                        var sellPrice = Math.floor(selected.value * 0.5);
                         var balanceEl = document.getElementById('balance-display');
                         var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
                         var currentBalance = parseInt(balanceText) || 0;
-
-                        // Начисляем звёзды
                         updateBalanceDisplay(currentBalance + sellPrice);
-
                         alert('💰 Продано за ' + sellPrice + ' ★');
                         overlayContainer.style.display = 'none';
                     };
@@ -276,7 +346,7 @@ window.addEventListener('load', function () {
                     buttonsDiv.appendChild(invBtn);
                     buttonsDiv.appendChild(sellBtn);
                     overlayContent.appendChild(buttonsDiv);
-                    // Восстанавливаем карусель
+
                     setTimeout(function () {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
@@ -285,5 +355,18 @@ window.addEventListener('load', function () {
 
             requestAnimationFrame(animate);
         };
+
+        // Перехватываем открытие страницы инвентаря
+        var inventoryBtn = document.getElementById('nav-inventory');
+        if (inventoryBtn) {
+            inventoryBtn.addEventListener('click', function () {
+                setTimeout(renderInventory, 100);
+            });
+        }
+
+        // Если инвентарь уже открыт при загрузке
+        if (document.getElementById('inventory-page').style.display === 'block') {
+            renderInventory();
+        }
     }, 1000);
 });
