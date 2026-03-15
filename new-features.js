@@ -1,33 +1,33 @@
-// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ (ИСПРАВЛЕННАЯ) =====
+// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ (ПОЛНАЯ ИСПРАВЛЕННАЯ) =====
 console.log('Анимация с встроенными данными загружена');
 
-// Данные для всех кейсов
+// Данные для всех кейсов — уникальные предметы для каждого
 var caseDatabase = {
     'case0': {
         name: 'бесплатный',
         price: 0,
         items: [
             { img: 'instant-ramens.png', name: 'instant ramens', value: 50, chance: 10 },
-            { img: 'diamond.png', name: 'Алмаз', value: 100, chance: 5 },
-            { img: 'cup.png', name: 'Кубок', value: 100, chance: 8 },
-            { img: 'rocket.png', name: 'Ракета', value: 50, chance: 12 },
-            { img: 'rose.png', name: 'Роза', value: 25, chance: 15 },
-            { img: 'stars10.png', name: '10 звёзд', value: 10, chance: 20 },
-            { img: 'stars5.png', name: '5 звёзд', value: 5, chance: 25 },
-            { img: 'stars.png', name: '1 звезда', value: 1, chance: 30 }
+            { img: 'diamond.png', name: 'diamond', value: 100, chance: 5 },
+            { img: 'cup.png', name: 'cup', value: 100, chance: 8 },
+            { img: 'rocket.png', name: 'rocket', value: 50, chance: 12 },
+            { img: 'rose.png', name: 'rose', value: 25, chance: 15 },
+            { img: 'stars10.png', name: 'stars10', value: 10, chance: 20 },
+            { img: 'stars5.png', name: 'stars5', value: 5, chance: 25 },
+            { img: 'stars.png', name: 'stars', value: 1, chance: 30 }
         ]
     },
     'case1': {
         name: 'обычный кейс',
         price: 140,
         items: [
-            { img: 'diamond.png', name: 'Алмаз', value: 100, chance: 5 },
-            { img: 'cup.png', name: 'Кубок', value: 100, chance: 8 },
-            { img: 'rocket.png', name: 'Ракета', value: 50, chance: 12 },
-            { img: 'rose.png', name: 'Роза', value: 25, chance: 15 },
-            { img: 'stars10.png', name: '10 звёзд', value: 10, chance: 20 },
-            { img: 'stars5.png', name: '5 звёзд', value: 5, chance: 25 },
-            { img: 'stars.png', name: '1 звезда', value: 1, chance: 30 }
+            { img: 'diamond.png', name: 'diamond', value: 100, chance: 5 },
+            { img: 'cup.png', name: 'cup', value: 100, chance: 8 },
+            { img: 'rocket.png', name: 'rocket', value: 50, chance: 12 },
+            { img: 'rose.png', name: 'rose', value: 25, chance: 15 },
+            { img: 'stars10.png', name: 'stars10', value: 10, chance: 20 },
+            { img: 'stars5.png', name: 'stars5', value: 5, chance: 25 },
+            { img: 'stars.png', name: 'stars', value: 1, chance: 30 }
         ]
     },
     'case2': {
@@ -136,7 +136,7 @@ window.addEventListener('load', function () {
 
             var totalPrice = data.price * multiplier;
 
-            // === ИСПРАВЛЕНО: ПОЛУЧЕНИЕ БАЛАНСА ===
+            // Получение баланса
             var currentBalance = 0;
 
             if (window.currentBalance !== undefined) {
