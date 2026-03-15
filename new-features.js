@@ -1,7 +1,48 @@
-// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА (в существующей карусели) =====
-console.log('Скрипт анимации загружен');
+// ===== НОВАЯ АНИМАЦИЯ, НЕ ЗАВИСЯЩАЯ ОТ СТАРОГО КОДА =====
+console.log('Новая анимация загружена');
 
 window.addEventListener('load', function() {
+    // Функция для получения данных текущего кейса
+    function getCurrentCaseData() {
+        // Пробуем получить из глобальных переменных (если они есть)
+        if (window.currentCaseId && window.caseData && window.caseData[window.currentCaseId]) {
+            return window.caseData[window.currentCaseId];
+        }
+        
+        // Если нет, пробуем получить из DOM
+        var caseName = document.querySelector('.case-detail-title');
+        if (!caseName) return null;
+        
+        // Возвращаем тестовые данные (замените на реальные)
+        return {
+            name: 'обычный кейс',
+            price: 140,
+            items: [
+                { img: 'diamond.png', name: 'Алмаз', value: 100, chance: 5 },
+                { img: 'cup.png', name: 'Кубок', value: 100, chance: 8 },
+                { img: 'rocket.png', name: 'Ракета', value: 50, chance: 12 },
+                { img: 'rose.png', name: 'Роза', value: 25, chance: 15 },
+                { img: 'stars10.png', name: '10 звёзд', value: 10, chance: 20 },
+                { img: 'stars5.png', name: '5 звёзд', value: 5, chance: 25 },
+                { img: 'stars.png', name: '1 звезда', value: 1, chance: 30 }
+            ]
+        };
+    }
+
+    // Функция для обновления баланса
+    function updateBalance(amount) {
+        if (window.updateBalances) {
+            window.updateBalances(amount);
+        } else {
+            // Если нет функции, пробуем найти элемент баланса
+            var balanceEl = document.getElementById('balance-display');
+            if (balanceEl) {
+                var current = parseInt(balanceEl.textContent) || 0;
+                balanceEl.textContent = amount + ' ★';
+            }
+        }
+    }
+
     setTimeout(function() {
         var openBtn = document.getElementById('open-case-btn');
         if (!openBtn) {
@@ -11,7 +52,6 @@ window.addEventListener('load', function() {
         
         console.log('Кнопка найдена');
         
-        // Сохраняем оригинальные предметы карусели
         var carouselTrack = document.querySelector('.carousel-track');
         if (!carouselTrack) {
             console.log('Карусель не найдена');
@@ -20,46 +60,64 @@ window.addEventListener('load', function() {
         
         var originalItems = carouselTrack.innerHTML;
         
-        // Создаём контейнер для результата, если его ещё нет
+        // Создаём контейнер для результата
         var resultContainer = document.getElementById('case-result-display');
         if (!resultContainer) {
             resultContainer = document.createElement('div');
             resultContainer.id = 'case-result-display';
             resultContainer.className = 'case-result-display';
-            
-            // Вставляем после карусели
             var carousel = document.querySelector('.carousel');
             if (carousel) {
                 carousel.parentNode.insertBefore(resultContainer, carousel.nextSibling);
             }
         }
         
+        // Получаем множитель (X)
+        var multiplier = 1;
+        document.querySelectorAll('.multiplier-item').forEach(function(el) {
+            el.addEventListener('click', function() {
+                document.querySelectorAll('.multiplier-item').forEach(function(item) {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                multiplier = parseInt(this.dataset.x) || 1;
+            });
+        });
+        
         openBtn.onclick = function(e) {
             e.preventDefault();
             
-            // Получаем данные текущего кейса
-            if (!window.currentCaseId || !window.caseData || !window.caseData[window.currentCaseId]) {
-                alert('Кейс не выбран');
+            var data = getCurrentCaseData();
+            if (!data) {
+                alert('Данные кейса не найдены');
                 return;
             }
             
-            var data = window.caseData[window.currentCaseId];
-            var price = data.price * (window.selectedMultiplier || 1);
+            var totalPrice = data.price * multiplier;
             
-            if (window.currentBalance < price) {
+            // Проверяем баланс (пробуем разные способы)
+            var currentBalance = 0;
+            if (window.currentBalance !== undefined) {
+                currentBalance = window.currentBalance;
+            } else {
+                var balanceEl = document.getElementById('balance-display');
+                if (balanceEl) {
+                    currentBalance = parseInt(balanceEl.textContent) || 0;
+                }
+            }
+            
+            if (currentBalance < totalPrice) {
                 alert('Недостаточно звёзд!');
                 return;
             }
             
             // Списываем звёзды
-            if (window.updateBalances) {
-                window.updateBalances(window.currentBalance - price);
-            }
+            updateBalance(currentBalance - totalPrice);
             
-            // Очищаем предыдущий результат
+            // Очищаем результат
             resultContainer.innerHTML = '';
             
-            // Заполняем карусель копиями предметов для анимации
+            // Заполняем карусель
             carouselTrack.innerHTML = '';
             for (var i = 0; i < 30; i++) {
                 for (var j = 0; j < data.items.length; j++) {
@@ -71,12 +129,12 @@ window.addEventListener('load', function() {
                         var img = document.createElement('img');
                         img.src = item.img;
                         img.alt = item.name;
-                        img.className = 'gift-image';
                         div.appendChild(img);
                     } else {
                         var iconDiv = document.createElement('div');
                         iconDiv.className = 'gift-icon';
                         iconDiv.textContent = item.icon || '🎁';
+                        iconDiv.style.fontSize = '3rem';
                         div.appendChild(iconDiv);
                     }
                     
@@ -90,11 +148,11 @@ window.addEventListener('load', function() {
                     
                     div.appendChild(nameDiv);
                     div.appendChild(valueDiv);
-                    
                     carouselTrack.appendChild(div);
                 }
             }
-            // Анимация прокрутки
+            
+            // Анимация
             var startTime = Date.now();
             var duration = 2000;
             var container = document.querySelector('.carousel');
@@ -106,7 +164,7 @@ window.addEventListener('load', function() {
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Выбираем случайный предмет с учётом шансов
+                    // Выбор предмета с учётом шансов
                     var items = data.items;
                     var totalChance = items.reduce(function(sum, item) {
                         return sum + (item.chance || 1);
@@ -116,15 +174,14 @@ window.addEventListener('load', function() {
                     var selected = items[0];
                     
                     for (var k = 0; k < items.length; k++) {
-                        var item = items[k];
-                        if (rand < (item.chance || 1)) {
-                            selected = item;
+                        if (rand < (items[k].chance || 1)) {
+                            selected = items[k];
                             break;
                         }
-                        rand -= (item.chance || 1);
+                        rand -= (items[k].chance || 1);
                     }
                     
-                    // Красивое отображение результата
+                    // Показываем результат
                     resultContainer.innerHTML = '';
                     var resultDiv = document.createElement('div');
                     resultDiv.className = 'result-item';
@@ -149,14 +206,14 @@ window.addEventListener('load', function() {
                     resultDiv.appendChild(textDiv);
                     resultContainer.appendChild(resultDiv);
                     
-                    // Добавляем анимацию появления
+                    // Анимация появления
                     resultContainer.style.opacity = '0';
                     resultContainer.style.transition = 'opacity 0.5s';
                     setTimeout(function() {
                         resultContainer.style.opacity = '1';
                     }, 50);
                     
-                    // Восстанавливаем оригинальную карусель через 3 секунды
+                    // Восстанавливаем карусель
                     setTimeout(function() {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
