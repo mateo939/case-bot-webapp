@@ -1,7 +1,7 @@
-// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ (ФИНАЛ) =====
+// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА (в существующей карусели) =====
 console.log('Анимация с встроенными данными загружена');
 
-// Данные для всех кейсов — уникальные предметы для каждого
+// Данные для всех кейсов
 var caseDatabase = {
     'case0': {
         name: 'бесплатный',
@@ -56,19 +56,12 @@ var caseDatabase = {
 };
 
 window.addEventListener('load', function () {
-    console.log('Событие load сработало');
-
-    // Ждём немного, чтобы старый код точно выполнился
     setTimeout(function () {
-        console.log('Ищем кнопку...');
-
         var openBtn = document.getElementById('open-case-btn');
         if (!openBtn) {
             console.log('Кнопка не найдена');
             return;
         }
-
-        console.log('Кнопка найдена, устанавливаем обработчик');
 
         var carouselTrack = document.querySelector('.carousel-track');
         if (!carouselTrack) {
@@ -78,15 +71,21 @@ window.addEventListener('load', function () {
 
         var originalItems = carouselTrack.innerHTML;
 
-        // Контейнер для результата
-        var resultContainer = document.getElementById('case-result-display');
-        if (!resultContainer) {
-            resultContainer = document.createElement('div');
-            resultContainer.id = 'case-result-display';
-            resultContainer.className = 'case-result-display';
-            var carousel = document.querySelector('.carousel');
-            if (carousel) {
-                carousel.parentNode.insertBefore(resultContainer, carousel.nextSibling);
+        // Создаём контейнер для результата (поверх карусели)
+        var overlayContainer = document.getElementById('case-result-overlay');
+        if (!overlayContainer) {
+            overlayContainer = document.createElement('div');
+            overlayContainer.id = 'case-result-overlay';
+            overlayContainer.className = 'case-result-overlay';
+            overlayContainer.style.display = 'none';
+
+            var overlayContent = document.createElement('div');
+            overlayContent.className = 'overlay-content';
+            overlayContainer.appendChild(overlayContent);
+
+            var carouselContainer = document.querySelector('.carousel');
+            if (carouselContainer) {
+                carouselContainer.parentNode.insertBefore(overlayContainer, carouselContainer.nextSibling);
             }
         }
         // Множитель X
@@ -103,53 +102,32 @@ window.addEventListener('load', function () {
 
         openBtn.onclick = function (e) {
             e.preventDefault();
-            console.log('Клик по кнопке!');
 
-            // Получаем ID кейса из старого кода
             var caseId = window.caseIdFromOld || 'case1';
-            console.log('caseId:', caseId);
-
             var data = caseDatabase[caseId];
-            if (!data) {
-                alert('Ошибка: данные кейса не найдены');
-                return;
-            }
+            if (!data) return;
 
-            console.log('Данные кейса:', data.name, data.price);
-
-            // Если это бесплатный кейс — пропускаем проверку баланса
-            if (caseId === 'case0') {
-                console.log('Бесплатный кейс — открываем без проверки');
-            } else {
+            // Проверка баланса
+            if (caseId !== 'case0') {
                 var totalPrice = data.price * multiplier;
-
                 var balanceEl = document.getElementById('balance-display');
                 var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
                 var currentBalance = parseInt(balanceText) || 0;
-
-                console.log('Баланс:', currentBalance, 'Цена:', totalPrice);
 
                 if (currentBalance < totalPrice) {
                     alert('Недостаточно звёзд!');
                     return;
                 }
 
-                // Обновляем баланс
-                if (typeof updateBalances === 'function') {
-                    updateBalances(currentBalance - totalPrice);
-                } else if (window.updateBalances) {
-                    window.updateBalances(currentBalance - totalPrice);
-                } else if (balanceEl) {
+                if (balanceEl) {
                     balanceEl.textContent = (currentBalance - totalPrice) + ' ★';
                 }
             }
 
-            resultContainer.innerHTML = '';
-
             // Очищаем карусель
             carouselTrack.innerHTML = '';
 
-            // Заполняем карусель копиями предметов из ЭТОГО кейса
+            // Заполняем карусель копиями предметов (больше копий, чтобы прокрутка была длиннее)
             for (var i = 0; i < 30; i++) {
                 for (var j = 0; j < data.items.length; j++) {
                     var item = data.items[j];
@@ -183,18 +161,23 @@ window.addEventListener('load', function () {
                 }
             }
 
-            // Анимация прокрутки
+            // Прячем оверлей, если был виден
+            overlayContainer.style.display = 'none';
+            overlayContainer.innerHTML = '<div class="overlay-content"></div>';
+
+            // Анимация прокрутки (медленнее)
             var startTime = Date.now();
-            var duration = 2000;
+            var duration = 3000; // 3 секунды
             var container = document.querySelector('.carousel');
 
             function animate() {
                 var elapsed = Date.now() - startTime;
-                container.scrollLeft += 8;
+                container.scrollLeft += 5; // медленнее
+
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Выбор предмета с учётом шансов
+                    // Выбор предмета
                     var items = data.items;
                     var totalChance = items.reduce(function (sum, item) {
                         return sum + (item.chance || 1);
@@ -202,7 +185,6 @@ window.addEventListener('load', function () {
 
                     var rand = Math.random() * totalChance;
                     var selected = items[0];
-
                     for (var k = 0; k < items.length; k++) {
                         if (rand < (items[k].chance || 1)) {
                             selected = items[k];
@@ -211,10 +193,13 @@ window.addEventListener('load', function () {
                         rand -= (items[k].chance || 1);
                     }
 
-                    // Показываем результат
-                    resultContainer.innerHTML = '';
+                    // Показываем результат поверх карусели
+                    overlayContainer.style.display = 'flex';
+                    var overlayContent = overlayContainer.querySelector('.overlay-content');
+                    overlayContent.innerHTML = '';
+
                     var resultDiv = document.createElement('div');
-                    resultDiv.className = 'result-item';
+                    resultDiv.className = 'result-overlay-item';
 
                     if (selected.img) {
                         var img = document.createElement('img');
@@ -229,20 +214,44 @@ window.addEventListener('load', function () {
                         resultDiv.appendChild(iconDiv);
                     }
 
-                    var textDiv = document.createElement('div');
-                    textDiv.className = 'result-text';
-                    textDiv.innerHTML = '<strong>' + selected.name + '</strong><br><span class="result-value">' + selected.value + ' ★</span>';
+                    var nameSpan = document.createElement('div');
+                    nameSpan.className = 'result-name';
+                    nameSpan.textContent = selected.name;
 
-                    resultDiv.appendChild(textDiv);
-                    resultContainer.appendChild(resultDiv);
+                    var valueSpan = document.createElement('div');
+                    valueSpan.className = 'result-price';
+                    valueSpan.textContent = selected.value + ' ★';
 
-                    resultContainer.style.opacity = '0';
-                    resultContainer.style.transition = 'opacity 0.5s';
-                    setTimeout(function () {
-                        resultContainer.style.opacity = '1';
-                    }, 50);
+                    resultDiv.appendChild(nameSpan);
+                    resultDiv.appendChild(valueSpan);
+                    overlayContent.appendChild(resultDiv);
 
-                    // Восстанавливаем оригинальную карусель через 3 секунды
+                    // Кнопки действий
+                    var buttonsDiv = document.createElement('div');
+                    buttonsDiv.className = 'result-buttons';
+
+                    var invBtn = document.createElement('button');
+                    invBtn.className = 'result-btn inventory-btn';
+                    invBtn.textContent = 'В ИНВЕНТАРЬ';
+                    invBtn.onclick = function () {
+                        alert('Добавлено в инвентарь: ' + selected.name);
+                        overlayContainer.style.display = 'none';
+                    };
+
+                    var sellBtn = document.createElement('button');
+                    sellBtn.className = 'result-btn sell-btn';
+                    sellBtn.textContent = 'ПРОДАТЬ';
+                    sellBtn.onclick = function () {
+                        var price = selected.value * 0.5; // продажа за полцены
+                        alert('Продано за ' + Math.floor(price) + ' ★');
+                        overlayContainer.style.display = 'none';
+                    };
+
+                    buttonsDiv.appendChild(invBtn);
+                    buttonsDiv.appendChild(sellBtn);
+                    overlayContent.appendChild(buttonsDiv);
+
+                    // Восстанавливаем карусель через 3 секунды
                     setTimeout(function () {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
@@ -253,5 +262,5 @@ window.addEventListener('load', function () {
         };
 
         console.log('Обработчик установлен');
-    }, 1000); // ждём 1 секунду
+    }, 1000);
 });
