@@ -114,12 +114,12 @@ function renderInventory() {
     updateTotalCost();
 }
 
-// Функция продажи предмета
+// Функция продажи предмета (полная стоимость)
 function sellItem(index) {
     var item = window.userInventory[index];
     if (!item) return;
 
-    var sellPrice = Math.floor(item.value * 0.5);
+    var sellPrice = item.value; // ← полная стоимость
 
     // Получаем текущий баланс
     var balanceEl = document.getElementById('balance-display');
@@ -334,7 +334,7 @@ window.addEventListener('load', function () {
                     sellBtn.className = 'result-btn sell-btn';
                     sellBtn.textContent = 'ПРОДАТЬ';
                     sellBtn.onclick = function () {
-                        var sellPrice = Math.floor(selected.value * 0.5);
+                        var sellPrice = selected.value; // ← полная стоимость
                         var balanceEl = document.getElementById('balance-display');
                         var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
                         var currentBalance = parseInt(balanceText) || 0;
