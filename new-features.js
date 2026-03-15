@@ -97,10 +97,8 @@ window.addEventListener('load', function () {
             console.log('Карусель не найдена');
             return;
         }
-        // Сохраняем оригинальные предметы (статичные)
-        var originalItems = carouselTrack.innerHTML;
 
-        // Контейнер для результата
+        var originalItems = carouselTrack.innerHTML;
         var resultContainer = document.getElementById('case-result-display');
         if (!resultContainer) {
             resultContainer = document.createElement('div');
@@ -135,39 +133,39 @@ window.addEventListener('load', function () {
                 return;
             }
 
-            var totalPrice = data.price * multiplier;
-
-            // Получение баланса
-            var currentBalance = 0;
-
-            if (window.currentBalance !== undefined) {
-                currentBalance = window.currentBalance;
+            // === ЖЁСТКАЯ ПРОВЕРКА: если кейс называется "бесплатный" — игнорируем баланс ===
+            if (data.name === 'бесплатный') {
+                console.log('Бесплатный кейс — пропускаем проверку баланса');
             } else {
-                var balanceEl = document.getElementById('balance-display');
-                if (balanceEl) {
-                    var balanceText = balanceEl.textContent.replace(/[^0-9]/g, '');
-                    currentBalance = parseInt(balanceText) || 0;
+                var totalPrice = data.price * multiplier;
+
+                // Получение баланса
+                var currentBalance = 0;
+
+                if (window.currentBalance !== undefined) {
+                    currentBalance = window.currentBalance;
+                } else {
+                    var balanceEl = document.getElementById('balance-display');
+                    if (balanceEl) {
+                        var balanceText = balanceEl.textContent.replace(/[^0-9]/g, '');
+                        currentBalance = parseInt(balanceText) || 0;
+                    }
                 }
-            }
 
-            console.log('Баланс:', currentBalance, 'Цена:', data.price, 'Множитель:', multiplier);
+                console.log('Баланс:', currentBalance, 'Цена:', data.price, 'Множитель:', multiplier);
 
-            // Бесплатный кейс — пропускаем проверку
-            if (data.price === 0) {
-                // ничего не делаем
-            } else if (currentBalance < totalPrice) {
-                alert('Недостаточно звёзд!');
-                return;
-            }
+                if (currentBalance < totalPrice) {
+                    alert('Недостаточно звёзд!');
+                    return;
+                }
 
-            // Списываем звёзды, если цена > 0
-            if (data.price > 0) {
+                // Списываем звёзды
                 updateBalance(currentBalance - totalPrice);
             }
 
             resultContainer.innerHTML = '';
 
-            // ПОЛНОСТЬЮ ОЧИЩАЕМ КАРУСЕЛЬ перед анимацией
+            // Очищаем карусель
             carouselTrack.innerHTML = '';
 
             // Заполняем карусель копиями предметов из ЭТОГО кейса
