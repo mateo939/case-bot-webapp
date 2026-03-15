@@ -246,3 +246,38 @@ body {
     padding: 15px !important;
     min-height: 160px !important;
 }
+/* ===== КНОПКИ X1-X5 ===== */
+.multiplier-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.multiplier-item {
+    width: 30px !important;        /* уменьшено в 2 раза (было 60px) */
+    height: 30px !important;       /* уменьшено в 2 раза */
+    background: rgba(255, 255, 255, 0.1) !important; /* серый фон вместо золотого */
+    border-radius: 15px !important; /* скругление под новый размер */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem !important;   /* уменьшен шрифт */
+    font-weight: 600;
+    color: #fff !important;         /* белый текст вместо золотого */
+    border: none !important;        /* убираем все границы */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.multiplier-item.active {
+    background: var(--tg-theme-button-color, #40a7e3) !important; /* активный — синий */
+    color: #fff !important;
+    transform: scale(1.1);
+}
+
+.multiplier-item:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.2) !important;
+}
