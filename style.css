@@ -210,3 +210,39 @@ body {
     font-weight: 700 !important;
     color: #ffd700 !important;
 }
+/* ПОДАРКИ ДОЛЖНЫ БЫТЬ КВАДРАТНЫМИ */
+.spinner-item {
+    width: 120px !important;
+    height: 140px !important;
+    background: #2a2a4a !important;
+    border-radius: 25px !important;
+    border: 2px solid #40a7e3 !important; /* временная рамка для видимости */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+.spinner-item img {
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: contain !important;
+}
+
+/* ОБЛАСТЬ АНИМАЦИИ */
+.case-animation-area {
+    background: #1a1a2e !important;
+    border-radius: 30px !important;
+    padding: 20px !important;
+    margin: 20px 0 !important;
+    border: 2px solid #40a7e3 !important; /* временная рамка */
+}
+
+#case-spinner {
+    display: flex !important;
+    gap: 15px !important;
+    overflow-x: auto !important;
+    padding: 15px !important;
+    min-height: 160px !important;
+}
