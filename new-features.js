@@ -1,43 +1,87 @@
-// ===== НОВАЯ АНИМАЦИЯ, НЕ ЗАВИСЯЩАЯ ОТ СТАРОГО КОДА =====
-console.log('Новая анимация загружена');
+// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ =====
+console.log('Анимация с встроенными данными загружена');
+
+// Данные для всех кейсов
+var caseDatabase = {
+    'case0': {
+        name: 'бесплатный',
+        price: 0,
+        items: [
+            { img: 'instant-ramens.png', name: 'instant ramens', value: 50, chance: 10 },
+            { img: 'diamond.png', name: 'Алмаз', value: 100, chance: 5 },
+            { img: 'cup.png', name: 'Кубок', value: 100, chance: 8 },
+            { img: 'rocket.png', name: 'Ракета', value: 50, chance: 12 },
+            { img: 'rose.png', name: 'Роза', value: 25, chance: 15 },
+            { img: 'stars10.png', name: '10 звёзд', value: 10, chance: 20 },
+            { img: 'stars5.png', name: '5 звёзд', value: 5, chance: 25 },
+            { img: 'stars.png', name: '1 звезда', value: 1, chance: 30 }
+        ]
+    },
+    'case1': {
+        name: 'обычный кейс',
+        price: 140,
+        items: [
+            { img: 'diamond.png', name: 'Алмаз', value: 100, chance: 5 },
+            { img: 'cup.png', name: 'Кубок', value: 100, chance: 8 },
+            { img: 'rocket.png', name: 'Ракета', value: 50, chance: 12 },
+            { img: 'rose.png', name: 'Роза', value: 25, chance: 15 },
+            { img: 'stars10.png', name: '10 звёзд', value: 10, chance: 20 },
+            { img: 'stars5.png', name: '5 звёзд', value: 5, chance: 25 },
+            { img: 'stars.png', name: '1 звезда', value: 1, chance: 30 }
+        ]
+    },
+    'case2': {
+        name: 'сигара',
+        price: 140,
+        items: [
+            { img: 'westside-sign.png', name: 'westside sign', value: 11698, chance: 5 },
+            { img: 'low-raider.png', name: 'low raider', value: 6530, chance: 8 },
+            { img: 'low-raider-silver-angel.png', name: 'low raider silver angel', value: 4620, chance: 10 },
+            { img: 'vintage-sigar-red-devil.png', name: 'vintage sigar red devil', value: 2770, chance: 12 },
+            { img: 'swag-bag.png', name: 'swag bag', value: 950, chance: 15 },
+            { img: 'snoop-dogg.png', name: 'snoop dogg', value: 390, chance: 18 },
+            { img: 'b-day-onyx.png', name: 'b-day onyx', value: 320, chance: 20 },
+            { img: 'ring.png', name: 'ring', value: 100, chance: 25 }
+        ]
+    },
+    'case3': {
+        name: 'клевер',
+        price: 140,
+        items: [
+            { icon: '🍀', name: 'FOUR LEAF', value: 7777, chance: 10 },
+            { icon: '🍀', name: 'CLOVER', value: 3333, chance: 20 },
+            { icon: '🍀', name: 'SHAMROCK', value: 1111, chance: 30 }
+        ]
+    }
+};
 
 window.addEventListener('load', function() {
-    // Функция для получения данных текущего кейса
-    function getCurrentCaseData() {
-        // Пробуем получить из глобальных переменных (если они есть)
-        if (window.currentCaseId && window.caseData && window.caseData[window.currentCaseId]) {
-            return window.caseData[window.currentCaseId];
+    // Функция получения ID текущего кейса из URL или DOM
+    function getCurrentCaseId() {
+        // Пробуем получить из глобальной переменной
+        if (window.currentCaseId) return window.currentCaseId;
+        
+        // Пробуем найти по классу на странице
+        var caseTitle = document.querySelector('.case-detail-title');
+        if (caseTitle) {
+            var title = caseTitle.textContent.toLowerCase();
+            if (title.includes('бесплатный')) return 'case0';
+            if (title.includes('обычный')) return 'case1';
+            if (title.includes('сигар')) return 'case2';
+            if (title.includes('клевер')) return 'case3';
         }
         
-        // Если нет, пробуем получить из DOM
-        var caseName = document.querySelector('.case-detail-title');
-        if (!caseName) return null;
-        
-        // Возвращаем тестовые данные (замените на реальные)
-        return {
-            name: 'обычный кейс',
-            price: 140,
-            items: [
-                { img: 'diamond.png', name: 'Алмаз', value: 100, chance: 5 },
-                { img: 'cup.png', name: 'Кубок', value: 100, chance: 8 },
-                { img: 'rocket.png', name: 'Ракета', value: 50, chance: 12 },
-                { img: 'rose.png', name: 'Роза', value: 25, chance: 15 },
-                { img: 'stars10.png', name: '10 звёзд', value: 10, chance: 20 },
-                { img: 'stars5.png', name: '5 звёзд', value: 5, chance: 25 },
-                { img: 'stars.png', name: '1 звезда', value: 1, chance: 30 }
-            ]
-        };
+        // По умолчанию возвращаем case1
+        return 'case1';
     }
 
-    // Функция для обновления баланса
+    // Функция обновления баланса
     function updateBalance(amount) {
         if (window.updateBalances) {
             window.updateBalances(amount);
         } else {
-            // Если нет функции, пробуем найти элемент баланса
             var balanceEl = document.getElementById('balance-display');
             if (balanceEl) {
-                var current = parseInt(balanceEl.textContent) || 0;
                 balanceEl.textContent = amount + ' ★';
             }
         }
@@ -60,7 +104,7 @@ window.addEventListener('load', function() {
         
         var originalItems = carouselTrack.innerHTML;
         
-        // Создаём контейнер для результата
+        // Контейнер для результата
         var resultContainer = document.getElementById('case-result-display');
         if (!resultContainer) {
             resultContainer = document.createElement('div');
@@ -72,7 +116,7 @@ window.addEventListener('load', function() {
             }
         }
         
-        // Получаем множитель (X)
+        // Множитель
         var multiplier = 1;
         document.querySelectorAll('.multiplier-item').forEach(function(el) {
             el.addEventListener('click', function() {
@@ -87,15 +131,17 @@ window.addEventListener('load', function() {
         openBtn.onclick = function(e) {
             e.preventDefault();
             
-            var data = getCurrentCaseData();
+            var caseId = getCurrentCaseId();
+            var data = caseDatabase[caseId];
+            
             if (!data) {
-                alert('Данные кейса не найдены');
+                alert('Ошибка: данные кейса не найдены');
                 return;
             }
             
             var totalPrice = data.price * multiplier;
             
-            // Проверяем баланс (пробуем разные способы)
+            // Получаем текущий баланс
             var currentBalance = 0;
             if (window.currentBalance !== undefined) {
                 currentBalance = window.currentBalance;
@@ -111,10 +157,8 @@ window.addEventListener('load', function() {
                 return;
             }
             
-            // Списываем звёзды
             updateBalance(currentBalance - totalPrice);
             
-            // Очищаем результат
             resultContainer.innerHTML = '';
             
             // Заполняем карусель
@@ -164,7 +208,7 @@ window.addEventListener('load', function() {
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Выбор предмета с учётом шансов
+                    // Выбор предмета
                     var items = data.items;
                     var totalChance = items.reduce(function(sum, item) {
                         return sum + (item.chance || 1);
@@ -181,7 +225,7 @@ window.addEventListener('load', function() {
                         rand -= (items[k].chance || 1);
                     }
                     
-                    // Показываем результат
+                    // Результат
                     resultContainer.innerHTML = '';
                     var resultDiv = document.createElement('div');
                     resultDiv.className = 'result-item';
@@ -206,14 +250,12 @@ window.addEventListener('load', function() {
                     resultDiv.appendChild(textDiv);
                     resultContainer.appendChild(resultDiv);
                     
-                    // Анимация появления
                     resultContainer.style.opacity = '0';
                     resultContainer.style.transition = 'opacity 0.5s';
                     setTimeout(function() {
                         resultContainer.style.opacity = '1';
                     }, 50);
                     
-                    // Восстанавливаем карусель
                     setTimeout(function() {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
