@@ -1,6 +1,7 @@
-// ===== АНИМАЦИЯ — ПОЛНОСТЬЮ РАБОЧАЯ =====
+// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ (ФИНАЛ) =====
 console.log('Анимация с встроенными данными загружена');
 
+// Данные для всех кейсов — уникальные предметы для каждого
 var caseDatabase = {
     'case0': {
         name: 'бесплатный',
@@ -55,47 +56,40 @@ var caseDatabase = {
 };
 
 window.addEventListener('load', function () {
-    function getCurrentCaseId() {
-        if (window.currentCaseId) return window.currentCaseId;
+    console.log('Событие load сработало');
 
-        var caseTitle = document.querySelector('.case-detail-title');
-        if (caseTitle) {
-            var title = caseTitle.textContent.toLowerCase();
-            if (title.includes('бесплатный')) return 'case0';
-            if (title.includes('обычный')) return 'case1';
-            if (title.includes('сигар')) return 'case2';
-            if (title.includes('клевер')) return 'case3';
-        }
-        return 'case1';
-    }
-
-    function updateBalance(amount) {
-        if (window.updateBalances) {
-            window.updateBalances(amount);
-        } else {
-            var balanceEl = document.getElementById('balance-display');
-            if (balanceEl) balanceEl.textContent = amount + ' ★';
-        }
-    }
-
+    // Ждём немного, чтобы старый код точно выполнился
     setTimeout(function () {
+        console.log('Ищем кнопку...');
+
         var openBtn = document.getElementById('open-case-btn');
-        if (!openBtn) return;
+        if (!openBtn) {
+            console.log('Кнопка не найдена');
+            return;
+        }
+
+        console.log('Кнопка найдена, устанавливаем обработчик');
 
         var carouselTrack = document.querySelector('.carousel-track');
-        if (!carouselTrack) return;
+        if (!carouselTrack) {
+            console.log('Карусель не найдена');
+            return;
+        }
 
         var originalItems = carouselTrack.innerHTML;
 
+        // Контейнер для результата
         var resultContainer = document.getElementById('case-result-display');
         if (!resultContainer) {
             resultContainer = document.createElement('div');
             resultContainer.id = 'case-result-display';
             resultContainer.className = 'case-result-display';
             var carousel = document.querySelector('.carousel');
-            if (carousel) carousel.parentNode.insertBefore(resultContainer, carousel.nextSibling);
+            if (carousel) {
+                carousel.parentNode.insertBefore(resultContainer, carousel.nextSibling);
+            }
         }
-
+        // Множитель X
         var multiplier = 1;
         document.querySelectorAll('.multiplier-item').forEach(function (el) {
             el.addEventListener('click', function () {
@@ -109,32 +103,53 @@ window.addEventListener('load', function () {
 
         openBtn.onclick = function (e) {
             e.preventDefault();
+            console.log('Клик по кнопке!');
 
-            var caseId = window.caseIdFromOld || 'case';
+            // Получаем ID кейса из старого кода
+            var caseId = window.caseIdFromOld || 'case1';
+            console.log('caseId:', caseId);
+
             var data = caseDatabase[caseId];
+            if (!data) {
+                alert('Ошибка: данные кейса не найдены');
+                return;
+            }
 
-            if (!data) return;
+            console.log('Данные кейса:', data.name, data.price);
 
-            // ⚠️ ВАЖНО: если это case0 — игнорируем баланс ПОЛНОСТЬЮ
+            // Если это бесплатный кейс — пропускаем проверку баланса
             if (caseId === 'case0') {
                 console.log('Бесплатный кейс — открываем без проверки');
             } else {
                 var totalPrice = data.price * multiplier;
+
                 var balanceEl = document.getElementById('balance-display');
                 var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
                 var currentBalance = parseInt(balanceText) || 0;
+
+                console.log('Баланс:', currentBalance, 'Цена:', totalPrice);
 
                 if (currentBalance < totalPrice) {
                     alert('Недостаточно звёзд!');
                     return;
                 }
 
-                updateBalance(currentBalance - totalPrice);
+                // Обновляем баланс
+                if (typeof updateBalances === 'function') {
+                    updateBalances(currentBalance - totalPrice);
+                } else if (window.updateBalances) {
+                    window.updateBalances(currentBalance - totalPrice);
+                } else if (balanceEl) {
+                    balanceEl.textContent = (currentBalance - totalPrice) + ' ★';
+                }
             }
 
             resultContainer.innerHTML = '';
+
+            // Очищаем карусель
             carouselTrack.innerHTML = '';
 
+            // Заполняем карусель копиями предметов из ЭТОГО кейса
             for (var i = 0; i < 30; i++) {
                 for (var j = 0; j < data.items.length; j++) {
                     var item = data.items[j];
@@ -168,6 +183,7 @@ window.addEventListener('load', function () {
                 }
             }
 
+            // Анимация прокрутки
             var startTime = Date.now();
             var duration = 2000;
             var container = document.querySelector('.carousel');
@@ -175,10 +191,10 @@ window.addEventListener('load', function () {
             function animate() {
                 var elapsed = Date.now() - startTime;
                 container.scrollLeft += 8;
-
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
+                    // Выбор предмета с учётом шансов
                     var items = data.items;
                     var totalChance = items.reduce(function (sum, item) {
                         return sum + (item.chance || 1);
@@ -186,6 +202,7 @@ window.addEventListener('load', function () {
 
                     var rand = Math.random() * totalChance;
                     var selected = items[0];
+
                     for (var k = 0; k < items.length; k++) {
                         if (rand < (items[k].chance || 1)) {
                             selected = items[k];
@@ -194,6 +211,7 @@ window.addEventListener('load', function () {
                         rand -= (items[k].chance || 1);
                     }
 
+                    // Показываем результат
                     resultContainer.innerHTML = '';
                     var resultDiv = document.createElement('div');
                     resultDiv.className = 'result-item';
@@ -214,6 +232,7 @@ window.addEventListener('load', function () {
                     var textDiv = document.createElement('div');
                     textDiv.className = 'result-text';
                     textDiv.innerHTML = '<strong>' + selected.name + '</strong><br><span class="result-value">' + selected.value + ' ★</span>';
+
                     resultDiv.appendChild(textDiv);
                     resultContainer.appendChild(resultDiv);
 
@@ -223,6 +242,7 @@ window.addEventListener('load', function () {
                         resultContainer.style.opacity = '1';
                     }, 50);
 
+                    // Восстанавливаем оригинальную карусель через 3 секунды
                     setTimeout(function () {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
@@ -231,5 +251,7 @@ window.addEventListener('load', function () {
 
             requestAnimationFrame(animate);
         };
-    }, 1000);
+
+        console.log('Обработчик установлен');
+    }, 1000); // ждём 1 секунду
 });
