@@ -1,5 +1,8 @@
-// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА (в существующей карусели) =====
-console.log('Анимация с встроенными данными загружена');
+// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА (с реальным инвентарём) =====
+console.log('Анимация с инвентарём загружена');
+
+// Глобальный массив инвентаря (будет хранить все полученные предметы)
+window.userInventory = window.userInventory || [];
 
 // Данные для всех кейсов
 var caseDatabase = {
@@ -55,23 +58,29 @@ var caseDatabase = {
     }
 };
 
+// Функция обновления баланса на странице
+function updateBalanceDisplay(amount) {
+    var balanceEl = document.getElementById('balance-display');
+    if (balanceEl) {
+        balanceEl.textContent = amount + ' ★';
+    }
+    // Если есть глобальная переменная баланса — обновим и её
+    if (typeof currentBalance !== 'undefined') {
+        currentBalance = amount;
+    }
+}
+
 window.addEventListener('load', function () {
     setTimeout(function () {
         var openBtn = document.getElementById('open-case-btn');
-        if (!openBtn) {
-            console.log('Кнопка не найдена');
-            return;
-        }
+        if (!openBtn) return;
 
         var carouselTrack = document.querySelector('.carousel-track');
-        if (!carouselTrack) {
-            console.log('Карусель не найдена');
-            return;
-        }
+        if (!carouselTrack) return;
 
         var originalItems = carouselTrack.innerHTML;
 
-        // Создаём контейнер для результата (поверх карусели)
+        // Оверлей для результата
         var overlayContainer = document.getElementById('case-result-overlay');
         if (!overlayContainer) {
             overlayContainer = document.createElement('div');
@@ -82,12 +91,12 @@ window.addEventListener('load', function () {
             var overlayContent = document.createElement('div');
             overlayContent.className = 'overlay-content';
             overlayContainer.appendChild(overlayContent);
-
             var carouselContainer = document.querySelector('.carousel');
             if (carouselContainer) {
                 carouselContainer.parentNode.insertBefore(overlayContainer, carouselContainer.nextSibling);
             }
         }
+
         // Множитель X
         var multiplier = 1;
         document.querySelectorAll('.multiplier-item').forEach(function (el) {
@@ -107,7 +116,7 @@ window.addEventListener('load', function () {
             var data = caseDatabase[caseId];
             if (!data) return;
 
-            // Проверка баланса
+            // Проверка баланса (кроме бесплатного)
             if (caseId !== 'case0') {
                 var totalPrice = data.price * multiplier;
                 var balanceEl = document.getElementById('balance-display');
@@ -119,15 +128,14 @@ window.addEventListener('load', function () {
                     return;
                 }
 
-                if (balanceEl) {
-                    balanceEl.textContent = (currentBalance - totalPrice) + ' ★';
-                }
+                // Списываем звёзды
+                updateBalanceDisplay(currentBalance - totalPrice);
             }
 
             // Очищаем карусель
             carouselTrack.innerHTML = '';
 
-            // Заполняем карусель копиями предметов (больше копий, чтобы прокрутка была длиннее)
+            // Заполняем карусель копиями предметов
             for (var i = 0; i < 30; i++) {
                 for (var j = 0; j < data.items.length; j++) {
                     var item = data.items[j];
@@ -161,23 +169,22 @@ window.addEventListener('load', function () {
                 }
             }
 
-            // Прячем оверлей, если был виден
             overlayContainer.style.display = 'none';
-            overlayContainer.innerHTML = '<div class="overlay-content"></div>';
+            overlayContainer.querySelector('.overlay-content').innerHTML = '';
 
-            // Анимация прокрутки (медленнее)
+            // Анимация
             var startTime = Date.now();
-            var duration = 3000; // 3 секунды
+            var duration = 3000;
             var container = document.querySelector('.carousel');
 
             function animate() {
                 var elapsed = Date.now() - startTime;
-                container.scrollLeft += 5; // медленнее
+                container.scrollLeft += 5;
 
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Выбор предмета
+                    // Выбор предмета с учётом шансов
                     var items = data.items;
                     var totalChance = items.reduce(function (sum, item) {
                         return sum + (item.chance || 1);
@@ -193,7 +200,7 @@ window.addEventListener('load', function () {
                         rand -= (items[k].chance || 1);
                     }
 
-                    // Показываем результат поверх карусели
+                    // Показываем результат
                     overlayContainer.style.display = 'flex';
                     var overlayContent = overlayContainer.querySelector('.overlay-content');
                     overlayContent.innerHTML = '';
@@ -226,32 +233,50 @@ window.addEventListener('load', function () {
                     resultDiv.appendChild(valueSpan);
                     overlayContent.appendChild(resultDiv);
 
-                    // Кнопки действий
+                    // Кнопки с реальной логикой
                     var buttonsDiv = document.createElement('div');
                     buttonsDiv.className = 'result-buttons';
 
+                    // Кнопка "В ИНВЕНТАРЬ"
                     var invBtn = document.createElement('button');
                     invBtn.className = 'result-btn inventory-btn';
                     invBtn.textContent = 'В ИНВЕНТАРЬ';
                     invBtn.onclick = function () {
-                        alert('Добавлено в инвентарь: ' + selected.name);
+                        // Добавляем предмет в инвентарь
+                        window.userInventory.push({
+                            name: selected.name,
+                            value: selected.value,
+                            img: selected.img,
+                            icon: selected.icon,
+                            obtained: new Date().toLocaleString()
+                        });
+                        alert('✅ Предмет добавлен в инвентарь!');
                         overlayContainer.style.display = 'none';
                     };
 
+                    // Кнопка "ПРОДАТЬ"
                     var sellBtn = document.createElement('button');
                     sellBtn.className = 'result-btn sell-btn';
                     sellBtn.textContent = 'ПРОДАТЬ';
                     sellBtn.onclick = function () {
-                        var price = selected.value * 0.5; // продажа за полцены
-                        alert('Продано за ' + Math.floor(price) + ' ★');
+                        var sellPrice = Math.floor(selected.value * 0.5); // 50% стоимости
+
+                        // Получаем текущий баланс
+                        var balanceEl = document.getElementById('balance-display');
+                        var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
+                        var currentBalance = parseInt(balanceText) || 0;
+
+                        // Начисляем звёзды
+                        updateBalanceDisplay(currentBalance + sellPrice);
+
+                        alert('💰 Продано за ' + sellPrice + ' ★');
                         overlayContainer.style.display = 'none';
                     };
 
                     buttonsDiv.appendChild(invBtn);
                     buttonsDiv.appendChild(sellBtn);
                     overlayContent.appendChild(buttonsDiv);
-
-                    // Восстанавливаем карусель через 3 секунды
+                    // Восстанавливаем карусель
                     setTimeout(function () {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
@@ -260,7 +285,5 @@ window.addEventListener('load', function () {
 
             requestAnimationFrame(animate);
         };
-
-        console.log('Обработчик установлен');
     }, 1000);
 });
