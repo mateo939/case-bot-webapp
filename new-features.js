@@ -133,13 +133,12 @@ window.addEventListener('load', function () {
                 return;
             }
 
-            // === ЖЁСТКАЯ ПРОВЕРКА: если кейс называется "бесплатный" — игнорируем баланс ===
-            if (data.name === 'бесплатный') {
-                console.log('Бесплатный кейс — пропускаем проверку баланса');
+            // ✅ ЕСЛИ ЦЕНА 0 — ПРОПУСКАЕМ ВСЕ ПРОВЕРКИ
+            if (data.price === 0) {
+                console.log('Бесплатный кейс (цена 0) — открываем без проверки баланса');
             } else {
                 var totalPrice = data.price * multiplier;
 
-                // Получение баланса
                 var currentBalance = 0;
 
                 if (window.currentBalance !== undefined) {
@@ -159,7 +158,6 @@ window.addEventListener('load', function () {
                     return;
                 }
 
-                // Списываем звёзды
                 updateBalance(currentBalance - totalPrice);
             }
 
