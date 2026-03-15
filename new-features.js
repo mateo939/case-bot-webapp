@@ -1,4 +1,4 @@
-// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ (ПОЛНАЯ ИСПРАВЛЕННАЯ) =====
+// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ (ФИНАЛ) =====
 console.log('Анимация с встроенными данными загружена');
 
 // Данные для всех кейсов — уникальные предметы для каждого
@@ -97,8 +97,9 @@ window.addEventListener('load', function () {
             console.log('Карусель не найдена');
             return;
         }
-
+        // Сохраняем оригинальные предметы (статичные)
         var originalItems = carouselTrack.innerHTML;
+
         // Контейнер для результата
         var resultContainer = document.getElementById('case-result-display');
         if (!resultContainer) {
@@ -166,8 +167,10 @@ window.addEventListener('load', function () {
 
             resultContainer.innerHTML = '';
 
-            // Заполняем карусель
+            // ПОЛНОСТЬЮ ОЧИЩАЕМ КАРУСЕЛЬ перед анимацией
             carouselTrack.innerHTML = '';
+
+            // Заполняем карусель копиями предметов из ЭТОГО кейса
             for (var i = 0; i < 30; i++) {
                 for (var j = 0; j < data.items.length; j++) {
                     var item = data.items[j];
@@ -200,11 +203,11 @@ window.addEventListener('load', function () {
                     carouselTrack.appendChild(div);
                 }
             }
-
             // Анимация прокрутки
             var startTime = Date.now();
             var duration = 2000;
             var container = document.querySelector('.carousel');
+
             function animate() {
                 var elapsed = Date.now() - startTime;
                 container.scrollLeft += 8;
@@ -260,6 +263,7 @@ window.addEventListener('load', function () {
                         resultContainer.style.opacity = '1';
                     }, 50);
 
+                    // Восстанавливаем оригинальную карусель
                     setTimeout(function () {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
