@@ -1,7 +1,6 @@
-// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ (ФИНАЛ) =====
+// ===== АНИМАЦИЯ — ПОЛНОСТЬЮ РАБОЧАЯ =====
 console.log('Анимация с встроенными данными загружена');
 
-// Данные для всех кейсов — уникальные предметы для каждого
 var caseDatabase = {
     'case0': {
         name: 'бесплатный',
@@ -56,7 +55,6 @@ var caseDatabase = {
 };
 
 window.addEventListener('load', function () {
-    // Функция получения ID текущего кейса
     function getCurrentCaseId() {
         if (window.currentCaseId) return window.currentCaseId;
 
@@ -71,46 +69,33 @@ window.addEventListener('load', function () {
         return 'case1';
     }
 
-    // Функция обновления баланса
     function updateBalance(amount) {
         if (window.updateBalances) {
             window.updateBalances(amount);
         } else {
             var balanceEl = document.getElementById('balance-display');
-            if (balanceEl) {
-                balanceEl.textContent = amount + ' ★';
-            }
+            if (balanceEl) balanceEl.textContent = amount + ' ★';
         }
     }
 
     setTimeout(function () {
         var openBtn = document.getElementById('open-case-btn');
-        if (!openBtn) {
-            console.log('Кнопка не найдена');
-            return;
-        }
-
-        console.log('Кнопка найдена');
+        if (!openBtn) return;
 
         var carouselTrack = document.querySelector('.carousel-track');
-        if (!carouselTrack) {
-            console.log('Карусель не найдена');
-            return;
-        }
+        if (!carouselTrack) return;
 
         var originalItems = carouselTrack.innerHTML;
+
         var resultContainer = document.getElementById('case-result-display');
         if (!resultContainer) {
             resultContainer = document.createElement('div');
             resultContainer.id = 'case-result-display';
             resultContainer.className = 'case-result-display';
             var carousel = document.querySelector('.carousel');
-            if (carousel) {
-                carousel.parentNode.insertBefore(resultContainer, carousel.nextSibling);
-            }
+            if (carousel) carousel.parentNode.insertBefore(resultContainer, carousel.nextSibling);
         }
 
-        // Множитель X
         var multiplier = 1;
         document.querySelectorAll('.multiplier-item').forEach(function (el) {
             el.addEventListener('click', function () {
@@ -128,30 +113,16 @@ window.addEventListener('load', function () {
             var caseId = getCurrentCaseId();
             var data = caseDatabase[caseId];
 
-            if (!data) {
-                alert('Ошибка: данные кейса не найдены');
-                return;
-            }
+            if (!data) return;
 
-            // ✅ ЕСЛИ ЦЕНА 0 — ПРОПУСКАЕМ ВСЕ ПРОВЕРКИ
-            if (data.price === 0) {
-                console.log('Бесплатный кейс (цена 0) — открываем без проверки баланса');
+            // ⚠️ ВАЖНО: если это case0 — игнорируем баланс ПОЛНОСТЬЮ
+            if (caseId === 'case0') {
+                console.log('Бесплатный кейс — открываем без проверки');
             } else {
                 var totalPrice = data.price * multiplier;
-
-                var currentBalance = 0;
-
-                if (window.currentBalance !== undefined) {
-                    currentBalance = window.currentBalance;
-                } else {
-                    var balanceEl = document.getElementById('balance-display');
-                    if (balanceEl) {
-                        var balanceText = balanceEl.textContent.replace(/[^0-9]/g, '');
-                        currentBalance = parseInt(balanceText) || 0;
-                    }
-                }
-
-                console.log('Баланс:', currentBalance, 'Цена:', data.price, 'Множитель:', multiplier);
+                var balanceEl = document.getElementById('balance-display');
+                var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
+                var currentBalance = parseInt(balanceText) || 0;
 
                 if (currentBalance < totalPrice) {
                     alert('Недостаточно звёзд!');
@@ -162,11 +133,8 @@ window.addEventListener('load', function () {
             }
 
             resultContainer.innerHTML = '';
-
-            // Очищаем карусель
             carouselTrack.innerHTML = '';
 
-            // Заполняем карусель копиями предметов из ЭТОГО кейса
             for (var i = 0; i < 30; i++) {
                 for (var j = 0; j < data.items.length; j++) {
                     var item = data.items[j];
@@ -199,7 +167,7 @@ window.addEventListener('load', function () {
                     carouselTrack.appendChild(div);
                 }
             }
-            // Анимация прокрутки
+
             var startTime = Date.now();
             var duration = 2000;
             var container = document.querySelector('.carousel');
@@ -211,7 +179,6 @@ window.addEventListener('load', function () {
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Выбор предмета с учётом шансов
                     var items = data.items;
                     var totalChance = items.reduce(function (sum, item) {
                         return sum + (item.chance || 1);
@@ -219,7 +186,6 @@ window.addEventListener('load', function () {
 
                     var rand = Math.random() * totalChance;
                     var selected = items[0];
-
                     for (var k = 0; k < items.length; k++) {
                         if (rand < (items[k].chance || 1)) {
                             selected = items[k];
@@ -228,7 +194,6 @@ window.addEventListener('load', function () {
                         rand -= (items[k].chance || 1);
                     }
 
-                    // Показываем результат
                     resultContainer.innerHTML = '';
                     var resultDiv = document.createElement('div');
                     resultDiv.className = 'result-item';
@@ -249,7 +214,6 @@ window.addEventListener('load', function () {
                     var textDiv = document.createElement('div');
                     textDiv.className = 'result-text';
                     textDiv.innerHTML = '<strong>' + selected.name + '</strong><br><span class="result-value">' + selected.value + ' ★</span>';
-
                     resultDiv.appendChild(textDiv);
                     resultContainer.appendChild(resultDiv);
 
@@ -259,7 +223,6 @@ window.addEventListener('load', function () {
                         resultContainer.style.opacity = '1';
                     }, 50);
 
-                    // Восстанавливаем оригинальную карусель
                     setTimeout(function () {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
@@ -268,7 +231,5 @@ window.addEventListener('load', function () {
 
             requestAnimationFrame(animate);
         };
-
-        console.log('Обработчик установлен');
     }, 1000);
 });
