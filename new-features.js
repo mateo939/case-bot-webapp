@@ -1,4 +1,4 @@
-// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ =====
+// ===== АНИМАЦИЯ С ВСТРОЕННЫМИ ДАННЫМИ (ИСПРАВЛЕННАЯ) =====
 console.log('Анимация с встроенными данными загружена');
 
 // Данные для всех кейсов
@@ -55,13 +55,11 @@ var caseDatabase = {
     }
 };
 
-window.addEventListener('load', function() {
-    // Функция получения ID текущего кейса из URL или DOM
+window.addEventListener('load', function () {
+    // Функция получения ID текущего кейса
     function getCurrentCaseId() {
-        // Пробуем получить из глобальной переменной
         if (window.currentCaseId) return window.currentCaseId;
-        
-        // Пробуем найти по классу на странице
+
         var caseTitle = document.querySelector('.case-detail-title');
         if (caseTitle) {
             var title = caseTitle.textContent.toLowerCase();
@@ -70,8 +68,6 @@ window.addEventListener('load', function() {
             if (title.includes('сигар')) return 'case2';
             if (title.includes('клевер')) return 'case3';
         }
-        
-        // По умолчанию возвращаем case1
         return 'case1';
     }
 
@@ -87,23 +83,22 @@ window.addEventListener('load', function() {
         }
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
         var openBtn = document.getElementById('open-case-btn');
         if (!openBtn) {
             console.log('Кнопка не найдена');
             return;
         }
-        
+
         console.log('Кнопка найдена');
-        
+
         var carouselTrack = document.querySelector('.carousel-track');
         if (!carouselTrack) {
             console.log('Карусель не найдена');
             return;
         }
-        
+
         var originalItems = carouselTrack.innerHTML;
-        
         // Контейнер для результата
         var resultContainer = document.getElementById('case-result-display');
         if (!resultContainer) {
@@ -115,52 +110,62 @@ window.addEventListener('load', function() {
                 carousel.parentNode.insertBefore(resultContainer, carousel.nextSibling);
             }
         }
-        
-        // Множитель
+
+        // Множитель X
         var multiplier = 1;
-        document.querySelectorAll('.multiplier-item').forEach(function(el) {
-            el.addEventListener('click', function() {
-                document.querySelectorAll('.multiplier-item').forEach(function(item) {
+        document.querySelectorAll('.multiplier-item').forEach(function (el) {
+            el.addEventListener('click', function () {
+                document.querySelectorAll('.multiplier-item').forEach(function (item) {
                     item.classList.remove('active');
                 });
                 this.classList.add('active');
                 multiplier = parseInt(this.dataset.x) || 1;
             });
         });
-        
-        openBtn.onclick = function(e) {
+
+        openBtn.onclick = function (e) {
             e.preventDefault();
-            
+
             var caseId = getCurrentCaseId();
             var data = caseDatabase[caseId];
-            
+
             if (!data) {
                 alert('Ошибка: данные кейса не найдены');
                 return;
             }
-            
+
             var totalPrice = data.price * multiplier;
-            
-            // Получаем текущий баланс
+
+            // === ИСПРАВЛЕНО: ПОЛУЧЕНИЕ БАЛАНСА ===
             var currentBalance = 0;
+
             if (window.currentBalance !== undefined) {
                 currentBalance = window.currentBalance;
             } else {
                 var balanceEl = document.getElementById('balance-display');
                 if (balanceEl) {
-                    currentBalance = parseInt(balanceEl.textContent) || 0;
+                    var balanceText = balanceEl.textContent.replace(/[^0-9]/g, '');
+                    currentBalance = parseInt(balanceText) || 0;
                 }
             }
-            
-            if (currentBalance < totalPrice) {
+
+            console.log('Баланс:', currentBalance, 'Цена:', data.price, 'Множитель:', multiplier);
+
+            // Бесплатный кейс — пропускаем проверку
+            if (data.price === 0) {
+                // ничего не делаем
+            } else if (currentBalance < totalPrice) {
                 alert('Недостаточно звёзд!');
                 return;
             }
-            
-            updateBalance(currentBalance - totalPrice);
-            
+
+            // Списываем звёзды, если цена > 0
+            if (data.price > 0) {
+                updateBalance(currentBalance - totalPrice);
+            }
+
             resultContainer.innerHTML = '';
-            
+
             // Заполняем карусель
             carouselTrack.innerHTML = '';
             for (var i = 0; i < 30; i++) {
@@ -168,7 +173,7 @@ window.addEventListener('load', function() {
                     var item = data.items[j];
                     var div = document.createElement('div');
                     div.className = 'gift-item spinner-item';
-                    
+
                     if (item.img) {
                         var img = document.createElement('img');
                         img.src = item.img;
@@ -181,42 +186,41 @@ window.addEventListener('load', function() {
                         iconDiv.style.fontSize = '3rem';
                         div.appendChild(iconDiv);
                     }
-                    
+
                     var nameDiv = document.createElement('div');
                     nameDiv.className = 'gift-name';
                     nameDiv.textContent = item.name;
-                    
+
                     var valueDiv = document.createElement('div');
                     valueDiv.className = 'gift-value';
                     valueDiv.textContent = item.value + ' ★';
-                    
+
                     div.appendChild(nameDiv);
                     div.appendChild(valueDiv);
                     carouselTrack.appendChild(div);
                 }
             }
-            
-            // Анимация
+
+            // Анимация прокрутки
             var startTime = Date.now();
             var duration = 2000;
             var container = document.querySelector('.carousel');
-            
             function animate() {
                 var elapsed = Date.now() - startTime;
                 container.scrollLeft += 8;
-                
+
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Выбор предмета
+                    // Выбор предмета с учётом шансов
                     var items = data.items;
-                    var totalChance = items.reduce(function(sum, item) {
+                    var totalChance = items.reduce(function (sum, item) {
                         return sum + (item.chance || 1);
                     }, 0);
-                    
+
                     var rand = Math.random() * totalChance;
                     var selected = items[0];
-                    
+
                     for (var k = 0; k < items.length; k++) {
                         if (rand < (items[k].chance || 1)) {
                             selected = items[k];
@@ -224,12 +228,12 @@ window.addEventListener('load', function() {
                         }
                         rand -= (items[k].chance || 1);
                     }
-                    
-                    // Результат
+
+                    // Показываем результат
                     resultContainer.innerHTML = '';
                     var resultDiv = document.createElement('div');
                     resultDiv.className = 'result-item';
-                    
+
                     if (selected.img) {
                         var img = document.createElement('img');
                         img.src = selected.img;
@@ -242,29 +246,29 @@ window.addEventListener('load', function() {
                         iconDiv.style.fontSize = '4rem';
                         resultDiv.appendChild(iconDiv);
                     }
-                    
+
                     var textDiv = document.createElement('div');
                     textDiv.className = 'result-text';
                     textDiv.innerHTML = '<strong>' + selected.name + '</strong><br><span class="result-value">' + selected.value + ' ★</span>';
-                    
+
                     resultDiv.appendChild(textDiv);
                     resultContainer.appendChild(resultDiv);
-                    
+
                     resultContainer.style.opacity = '0';
                     resultContainer.style.transition = 'opacity 0.5s';
-                    setTimeout(function() {
+                    setTimeout(function () {
                         resultContainer.style.opacity = '1';
                     }, 50);
-                    
-                    setTimeout(function() {
+
+                    setTimeout(function () {
                         carouselTrack.innerHTML = originalItems;
                     }, 3000);
                 }
             }
-            
+
             requestAnimationFrame(animate);
         };
-        
+
         console.log('Обработчик установлен');
     }, 1000);
 });
