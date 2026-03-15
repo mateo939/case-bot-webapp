@@ -110,7 +110,7 @@ window.addEventListener('load', function () {
         openBtn.onclick = function (e) {
             e.preventDefault();
 
-            var caseId = getCurrentCaseId();
+            var caseId = window.caseIdFromOld || 'case';
             var data = caseDatabase[caseId];
 
             if (!data) return;
