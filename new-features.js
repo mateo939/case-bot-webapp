@@ -1,12 +1,9 @@
-// Скрипт для анимации открытия кейсов (упрощённый)
-console.log('Скрипт анимации загружен');
+// ===== УПРОЩЁННАЯ АНИМАЦИЯ (БЕЗ ПРОВЕРОК) =====
+console.log('Тестовая анимация загружена');
 
 function addAnimationArea() {
     var casePage = document.getElementById('case-detail-page');
-    if (!casePage) {
-        console.log('Страница кейса не найдена');
-        return;
-    }
+    if (!casePage) return;
     
     if (document.getElementById('case-animation')) return;
     
@@ -38,67 +35,44 @@ window.addEventListener('load', function() {
     
     setTimeout(function() {
         var openBtn = document.getElementById('open-case-btn');
-        if (!openBtn) {
-            console.log('Кнопка открытия не найдена');
-            return;
-        }
+        if (!openBtn) return;
         
         console.log('Кнопка найдена');
         
         openBtn.onclick = function(e) {
             e.preventDefault();
+            console.log('Клик по кнопке');
             
-            // Получаем данные из глобальных переменных (должны быть в старом коде)
-            if (!window.currentCaseId) {
-                alert('Кейс не выбран (ошибка)');
-                return;
-            }
-            
-            var data = window.caseData[window.currentCaseId];
-            if (!data) {
-                alert('Данные кейса не найдены');
-                return;
-            }
-            
-            var price = data.price * (window.selectedMultiplier || 1);
-            if (window.currentBalance < price) {
-                alert('Недостаточно звёзд!');
-                return;
-            }
-            
-            if (window.updateBalances) {
-                window.updateBalances(window.currentBalance - price);
-            }
+            // Используем тестовые данные, если глобальных нет
+            var testItems = [
+                { img: 'diamond.png', name: 'Алмаз', value: 100 },
+                { img: 'cup.png', name: 'Кубок', value: 100 },
+                { img: 'rocket.png', name: 'Ракета', value: 50 },
+                { img: 'rose.png', name: 'Роза', value: 25 }
+            ];
             
             var animDiv = document.getElementById('case-animation');
             var spinner = document.getElementById('case-spinner');
             var resultDiv = document.getElementById('case-result');
             
-            if (!animDiv || !spinner || !resultDiv) return;
+            if (!animDiv  !spinner  !resultDiv) return;
             
             animDiv.style.display = 'block';
             spinner.innerHTML = '';
             resultDiv.innerHTML = '';
             
-            // Заполняем спиннер
+            // Заполняем спиннер тестовыми предметами
             for (var i = 0; i < 30; i++) {
-                for (var j = 0; j < data.items.length; j++) {
-                    var item = data.items[j];
+                for (var j = 0; j < testItems.length; j++) {
+                    var item = testItems[j];
                     var div = document.createElement('div');
                     div.className = 'spinner-item';
                     
-                    if (item.img) {
-                        var img = document.createElement('img');
-                        img.src = item.img;
-                        img.style.width = '80px';
-                        img.style.height = '80px';
-                        div.appendChild(img);
-                    } else {
-                        var iconDiv = document.createElement('div');
-                        iconDiv.textContent = item.icon || '🎁';
-                        iconDiv.style.fontSize = '3rem';
-                        div.appendChild(iconDiv);
-                    }
+                    var img = document.createElement('img');
+                    img.src = item.img;
+                    img.style.width = '80px';
+                    img.style.height = '80px';
+                    div.appendChild(img);
                     
                     spinner.appendChild(div);
                 }
@@ -112,37 +86,21 @@ window.addEventListener('load', function() {
                 if (count < 70) {
                     requestAnimationFrame(animate);
                 } else {
-                    var items = data.items;
-                    var randomIndex = Math.floor(Math.random() * items.length);
-                    var selected = items[randomIndex];
+                    var randomIndex = Math.floor(Math.random() * testItems.length);
+                    var selected = testItems[randomIndex];
                     
                     var resultItem = document.createElement('div');
                     resultItem.className = 'result-item';
                     
-                    if (selected.img) {
-                        var img = document.createElement('img');
-                        img.src = selected.img;
-                        img.style.width = '60px';
-                        img.style.height = '60px';
-                        resultItem.appendChild(img);
-                    } else {
-                        var icon = document.createElement('div');
-                        icon.textContent = selected.icon || '🎁';
-                        icon.style.fontSize = '4rem';
-                        resultItem.appendChild(icon);
-                    }
+                    var img = document.createElement('img');
+                    img.src = selected.img;
+                    img.style.width = '60px';
+                    img.style.height = '60px';
+                    resultItem.appendChild(img);
                     
                     var textDiv = document.createElement('div');
-                    var nameSpan = document.createElement('div');
-                    nameSpan.className = 'result-text';
-                    nameSpan.textContent = selected.name || 'Подарок';
-                    
-                    var valueSpan = document.createElement('div');
-                    valueSpan.className = 'result-value';
-                    valueSpan.textContent = (selected.value || 0) + ' ★';
-                    
-                    textDiv.appendChild(nameSpan);
-                    textDiv.appendChild(valueSpan);
+                    textDiv.innerHTML = '<div class="result-text">' + selected.name + '</div>' +
+                        '<div class="result-value">' + selected.value + ' ★</div>';
                     resultItem.appendChild(textDiv);
                     resultDiv.appendChild(resultItem);
                 }
