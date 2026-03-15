@@ -1,9 +1,12 @@
-// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСОВ =====
-console.log('Скрипт анимации загружен');
+// ===== ТЕСТОВАЯ АНИМАЦИЯ (БЕЗ ГЛОБАЛЬНЫХ ПЕРЕМЕННЫХ) =====
+console.log('Тестовая анимация загружена');
 
 function addAnimationArea() {
     var casePage = document.getElementById('case-detail-page');
-    if (!casePage) return;
+    if (!casePage) {
+        console.log('Страница кейса не найдена');
+        return;
+    }
     
     if (document.getElementById('case-animation')) return;
     
@@ -27,6 +30,10 @@ function addAnimationArea() {
     if (carousel) {
         carousel.parentNode.insertBefore(animDiv, carousel.nextSibling);
         console.log('Анимация добавлена');
+    } else {
+        // Если нет карусели, вставляем в начало
+        casePage.insertBefore(animDiv, casePage.firstChild);
+        console.log('Анимация добавлена в начало');
     }
 }
 
@@ -44,98 +51,82 @@ window.addEventListener('load', function() {
         
         openBtn.onclick = function(e) {
             e.preventDefault();
+            console.log('Клик по кнопке!');
             
-            // Проверяем глобальные переменные
-            if (!window.currentCaseId || !window.caseData || !window.caseData[window.currentCaseId]) {
-                alert('Кейс не выбран');
-                return;
-            }
-            
-            var data = window.caseData[window.currentCaseId];
-            var price = data.price * (window.selectedMultiplier || 1);
-            
-            if (window.currentBalance < price) {
-                alert('Недостаточно звёзд!');
-                return;
-            }
-            
-            if (window.updateBalances) {
-                window.updateBalances(window.currentBalance - price);
-            }
+            // Тестовые данные (замените пути на реальные файлы)
+            var testItems = [
+                { img: 'diamond.png', name: 'Алмаз', value: 100 },
+                { img: 'cup.png', name: 'Кубок', value: 100 },
+                { img: 'rocket.png', name: 'Ракета', value: 50 },
+                { img: 'rose.png', name: 'Роза', value: 25 },
+                { img: 'stars10.png', name: '10 звёзд', value: 10 },
+                { img: 'stars5.png', name: '5 звёзд', value: 5 },
+                { img: 'stars.png', name: '1 звезда', value: 1 }
+            ];
             
             var animDiv = document.getElementById('case-animation');
             var spinner = document.getElementById('case-spinner');
             var resultDiv = document.getElementById('case-result');
             
-            if (!animDiv || !spinner || !resultDiv) return;
+            if (!animDiv || !spinner || !resultDiv) {
+                alert('Ошибка: анимация не найдена');
+                return;
+            }
             
             animDiv.style.display = 'block';
             spinner.innerHTML = '';
             resultDiv.innerHTML = '';
             
-            // Заполняем спиннер
+            // Заполняем спиннер (20 копий всех предметов)
             for (var i = 0; i < 20; i++) {
-                for (var j = 0; j < data.items.length; j++) {
-                    var item = data.items[j];
+                for (var j = 0; j < testItems.length; j++) {
+                    var item = testItems[j];
                     var div = document.createElement('div');
                     div.className = 'spinner-item';
                     
-                    if (item.img) {
-                        var img = document.createElement('img');
-                        img.src = item.img;
-                        img.alt = item.name;
-                        img.style.width = '80px';
-                        img.style.height = '80px';
-                        div.appendChild(img);
-                    } else {
-                        div.textContent = item.icon || '🎁';
-                        div.style.fontSize = '3rem';
-                    }
+                    var img = document.createElement('img');
+                    img.src = item.img;
+                    img.alt = item.name;
+                    img.style.width = '80px';
+                    img.style.height = '80px';
+                    div.appendChild(img);
                     
                     spinner.appendChild(div);
                 }
             }
             
-            // Медленная анимация (2 секунды)
+            // Медленная анимация (2.5 секунды)
             var startTime = Date.now();
-            var duration = 2000;
+            var duration = 2500;
             
             function animate() {
                 var elapsed = Date.now() - startTime;
-                spinner.scrollLeft += 5;  // медленно
+                spinner.scrollLeft += 5;
                 
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
                 } else {
-                    var items = data.items;
-                    var randomIndex = Math.floor(Math.random() * items.length);
-                    var selected = items[randomIndex];
+                    var randomIndex = Math.floor(Math.random() * testItems.length);
+                    var selected = testItems[randomIndex];
                     
                     var resultItem = document.createElement('div');
                     resultItem.className = 'result-item';
                     
-                    if (selected.img) {
-                        var img = document.createElement('img');
-                        img.src = selected.img;
-                        img.alt = selected.name;
-                        img.style.width = '60px';
-                        img.style.height = '60px';
-                        resultItem.appendChild(img);
-                    } else {
-                        var icon = document.createElement('div');
-                        icon.textContent = selected.icon || '🎁';
-                        icon.style.fontSize = '4rem';
-                        resultItem.appendChild(icon);
-                    }
+                    var img = document.createElement('img');
+                    img.src = selected.img;
+                    img.alt = selected.name;
+                    img.style.width = '60px';
+                    img.style.height = '60px';
+                    resultItem.appendChild(img);
                     
                     var textDiv = document.createElement('div');
                     var nameSpan = document.createElement('div');
                     nameSpan.className = 'result-text';
-                    nameSpan.textContent = selected.name || 'Подарок';
+                    nameSpan.textContent = selected.name;
                     
                     var valueSpan = document.createElement('div');
                     valueSpan.className = 'result-value';
-                    valueSpan.textContent = (selected.value || 0) + ' ★';
+                    valueSpan.textContent = selected.value + ' ★';
                     
                     textDiv.appendChild(nameSpan);
                     textDiv.appendChild(valueSpan);
