@@ -1,4 +1,4 @@
-// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА (исправленная) =====
+// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА (исправленная, с инвентарём) =====
 console.log('Анимация с инвентарём загружена');
 
 // Глобальный массив инвентаря
@@ -116,7 +116,7 @@ function sellItem(index) {
     var item = window.userInventory[index];
     if (!item) return;
 
-    var sellPrice = item.value;
+    var sellPrice = item.value; // полная стоимость
     var balanceEl = document.getElementById('balance-display');
     var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
     var currentBalance = parseInt(balanceText) || 0;
@@ -186,6 +186,13 @@ window.addEventListener('load', function () {
                 });
                 this.classList.add('active');
                 multiplier = parseInt(this.dataset.x) || 1;
+
+                // Обновляем цену под кнопкой при смене множителя
+                var caseId = window.caseIdFromOld || 'case1';
+                var data = caseDatabase[caseId];
+                if (data) {
+                    openBtn.setAttribute('data-price', (data.price * multiplier) + ' ★');
+                }
             });
         });
 
@@ -195,6 +202,9 @@ window.addEventListener('load', function () {
             var caseId = window.caseIdFromOld || 'case1';
             var data = caseDatabase[caseId];
             if (!data) return;
+
+            // Устанавливаем цену под кнопкой (на случай, если не обновилась)
+            openBtn.setAttribute('data-price', (data.price * multiplier) + ' ★');
 
             if (caseId !== 'case0') {
                 var totalPrice = data.price * multiplier;
@@ -206,7 +216,6 @@ window.addEventListener('load', function () {
                     alert('Недостаточно звёзд!');
                     return;
                 }
-
                 updateBalanceDisplay(currentBalance - totalPrice);
             }
 
@@ -217,6 +226,7 @@ window.addEventListener('load', function () {
                     var item = data.items[j];
                     var div = document.createElement('div');
                     div.className = 'gift-item spinner-item';
+
                     if (item.img) {
                         var img = document.createElement('img');
                         img.src = item.img;
@@ -248,12 +258,12 @@ window.addEventListener('load', function () {
             overlayContainer.querySelector('.overlay-content').innerHTML = '';
 
             var startTime = Date.now();
-            var duration = 4000; // увеличено для медленной прокрутки
+            var duration = 4000; // медленная прокрутка
             var container = document.querySelector('.carousel');
 
             function animate() {
                 var elapsed = Date.now() - startTime;
-                container.scrollLeft += 3; // медленнее
+                container.scrollLeft += 3; // очень медленно
 
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
@@ -301,13 +311,13 @@ window.addEventListener('load', function () {
                     var valueSpan = document.createElement('div');
                     valueSpan.className = 'result-price';
                     valueSpan.textContent = selected.value + ' ★';
-
                     resultDiv.appendChild(nameSpan);
                     resultDiv.appendChild(valueSpan);
                     overlayContent.appendChild(resultDiv);
 
                     var buttonsDiv = document.createElement('div');
                     buttonsDiv.className = 'result-buttons';
+
                     var invBtn = document.createElement('button');
                     invBtn.className = 'result-btn inventory-btn';
                     invBtn.textContent = 'В ИНВЕНТАРЬ';
@@ -321,7 +331,7 @@ window.addEventListener('load', function () {
                     sellBtn.className = 'result-btn sell-btn';
                     sellBtn.textContent = 'ПРОДАТЬ';
                     sellBtn.onclick = function () {
-                        var sellPrice = selected.value;
+                        var sellPrice = selected.value; // полная стоимость
                         var balanceEl = document.getElementById('balance-display');
                         var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
                         var currentBalance = parseInt(balanceText) || 0;
@@ -343,6 +353,7 @@ window.addEventListener('load', function () {
             requestAnimationFrame(animate);
         };
 
+        // Перехватываем открытие страницы инвентаря
         var inventoryBtn = document.getElementById('nav-inventory');
         if (inventoryBtn) {
             inventoryBtn.addEventListener('click', function () {
@@ -350,6 +361,7 @@ window.addEventListener('load', function () {
             });
         }
 
+        // Если инвентарь уже открыт при загрузке
         if (document.getElementById('inventory-page').style.display === 'block') {
             renderInventory();
         }
