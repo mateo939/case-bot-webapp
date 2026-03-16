@@ -1,4 +1,4 @@
-// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА + ИНВЕНТАРЬ =====
+// ===== АНИМАЦИЯ ОТКРЫТИЯ КЕЙСА (исправленная) =====
 console.log('Анимация с инвентарём загружена');
 
 // Глобальный массив инвентаря
@@ -102,7 +102,6 @@ function renderInventory() {
 
         card.appendChild(nameDiv);
         card.appendChild(valueDiv);
-        // Клик по предмету — продажа
         card.addEventListener('click', function () {
             sellItem(index);
         });
@@ -110,35 +109,24 @@ function renderInventory() {
         inventoryGrid.appendChild(card);
     });
 
-    // Обновляем общую стоимость
     updateTotalCost();
 }
 
-// Функция продажи предмета (полная стоимость)
 function sellItem(index) {
     var item = window.userInventory[index];
     if (!item) return;
 
-    var sellPrice = item.value; // ← полная стоимость
-
-    // Получаем текущий баланс
+    var sellPrice = item.value;
     var balanceEl = document.getElementById('balance-display');
     var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
     var currentBalance = parseInt(balanceText) || 0;
 
-    // Начисляем звёзды
     updateBalanceDisplay(currentBalance + sellPrice);
-
-    // Удаляем предмет из инвентаря
     window.userInventory.splice(index, 1);
-
-    // Перерисовываем инвентарь
     renderInventory();
-
     alert('💰 Продано за ' + sellPrice + ' ★');
 }
 
-// Функция обновления общей стоимости
 function updateTotalCost() {
     var totalCostEl = document.getElementById('inventory-cost');
     if (!totalCostEl) return;
@@ -150,7 +138,6 @@ function updateTotalCost() {
     totalCostEl.textContent = total + ' ★';
 }
 
-// Добавляем предмет в инвентарь после открытия кейса
 function addToInventory(selected) {
     window.userInventory.push({
         name: selected.name,
@@ -224,12 +211,12 @@ window.addEventListener('load', function () {
             }
 
             carouselTrack.innerHTML = '';
-            for (var i = 0; i < 30; i++) {
+
+            for (var i = 0; i < 20; i++) {
                 for (var j = 0; j < data.items.length; j++) {
                     var item = data.items[j];
                     var div = document.createElement('div');
                     div.className = 'gift-item spinner-item';
-
                     if (item.img) {
                         var img = document.createElement('img');
                         img.src = item.img;
@@ -261,12 +248,12 @@ window.addEventListener('load', function () {
             overlayContainer.querySelector('.overlay-content').innerHTML = '';
 
             var startTime = Date.now();
-            var duration = 3000;
+            var duration = 4000; // увеличено для медленной прокрутки
             var container = document.querySelector('.carousel');
 
             function animate() {
                 var elapsed = Date.now() - startTime;
-                container.scrollLeft += 5;
+                container.scrollLeft += 3; // медленнее
 
                 if (elapsed < duration) {
                     requestAnimationFrame(animate);
@@ -318,9 +305,9 @@ window.addEventListener('load', function () {
                     resultDiv.appendChild(nameSpan);
                     resultDiv.appendChild(valueSpan);
                     overlayContent.appendChild(resultDiv);
+
                     var buttonsDiv = document.createElement('div');
                     buttonsDiv.className = 'result-buttons';
-
                     var invBtn = document.createElement('button');
                     invBtn.className = 'result-btn inventory-btn';
                     invBtn.textContent = 'В ИНВЕНТАРЬ';
@@ -334,7 +321,7 @@ window.addEventListener('load', function () {
                     sellBtn.className = 'result-btn sell-btn';
                     sellBtn.textContent = 'ПРОДАТЬ';
                     sellBtn.onclick = function () {
-                        var sellPrice = selected.value; // ← полная стоимость
+                        var sellPrice = selected.value;
                         var balanceEl = document.getElementById('balance-display');
                         var balanceText = balanceEl ? balanceEl.textContent.replace(/[^0-9]/g, '') : '0';
                         var currentBalance = parseInt(balanceText) || 0;
@@ -356,7 +343,6 @@ window.addEventListener('load', function () {
             requestAnimationFrame(animate);
         };
 
-        // Перехватываем открытие страницы инвентаря
         var inventoryBtn = document.getElementById('nav-inventory');
         if (inventoryBtn) {
             inventoryBtn.addEventListener('click', function () {
@@ -364,7 +350,6 @@ window.addEventListener('load', function () {
             });
         }
 
-        // Если инвентарь уже открыт при загрузке
         if (document.getElementById('inventory-page').style.display === 'block') {
             renderInventory();
         }
