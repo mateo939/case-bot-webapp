@@ -715,7 +715,7 @@
                     minesState.revealedCount++;
                     const multiplier = 1 + minesState.revealedCount * 0.2;
                     minesState.currentWin = Math.floor(minesState.bet * multiplier);
-                    minesState.actionBtn.textContent = ЗАБРАТЬ ${minesState.currentWin} ★;
+                    minesState.actionBtn.textContent = `ЗАБРАТЬ ${minesState.currentWin} ★`;
                     minesState.actionBtn.disabled = false; // активируем кнопку после каждой звезды
                 }
             }
