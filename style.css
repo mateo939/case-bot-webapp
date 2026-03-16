@@ -122,7 +122,7 @@ body {
     transform: scale(1.1);
 }
 
-/* Фиксированная нижняя навигация с горизонтальной прокруткой */
+/* Фиксированная нижняя навигация */
 .bottom-nav-fixed {
     position: fixed;
     bottom: 0;
@@ -200,11 +200,11 @@ body {
 .back-button:hover {
     background: rgba(0, 0, 0, 0.7);
 }
+
 .back-button span {
     font-size: 0.9rem;
     line-height: 1;
 }
-
 /* Главная страница (Кейсы) */
 .live-section {
     margin-bottom: 30px;
@@ -373,22 +373,41 @@ body {
 }
 
 .carousel {
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
     width: 100%;
     margin-bottom: 20px;
+}
+
+/* Маленькие синие треугольники */
+.carousel::before,
+.carousel::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    z-index: 10;
+}
+
+.carousel::before {
+    top: -8px;
+    border-bottom: 12px solid #40a7e3;
+}
+.carousel::after {
+    bottom: -8px;
+    border-top: 12px solid #40a7e3;
 }
 
 .carousel-track {
     display: flex;
     width: max-content;
-    animation: scroll 30s linear infinite;
+    animation: none; /* анимация отключается, прокрутка будет через JS */
 }
 
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
 .gift-item {
     flex: 0 0 auto;
     width: 70px;
@@ -455,7 +474,6 @@ body {
 
 .multiplier-item.active {
     background: #40a7e3 !important;
-    color: #fff !important;
     transform: scale(1.1);
 }
 
@@ -464,11 +482,11 @@ body {
     background: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Кнопка открытия */
+/* Кнопка открытия (тёмно-серая) */
 .open-button {
-    background: var(--tg-theme-button-color, #40a7e3);
-    color: var(--tg-theme-button-text-color, #fff);
-    border: none;
+    background: #2a2a2a !important;
+    color: #fff !important;
+    border: none !important;
     border-radius: 50px;
     padding: 16px 30px;
     font-size: 1.4rem;
@@ -476,17 +494,24 @@ body {
     cursor: pointer;
     width: 100%;
     max-width: 280px;
-    margin: 10px auto 20px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
+    margin: 10px auto 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     transition: transform 0.2s;
+    position: relative;
 }
 
 .open-button:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
 }
 
-.open-button:active {
-    transform: translateY(0);
+/* Цена под кнопкой */
+.open-button::after {
+    content: attr(data-price);
+    display: block;
+    font-size: 0.7rem;
+    color: #aaa;
+    margin-top: 4px;
+    font-weight: normal;
 }
 
 .gifts-title {
@@ -505,98 +530,56 @@ body {
     margin-bottom: 20px;
 }
 
-/* ===== НОВЫЕ СТИЛИ ДЛЯ АНИМАЦИИ ===== */
-.case-animation-area {
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    border-radius: 30px;
-    padding: 20px;
+/* ===== ИНВЕНТАРЬ ===== */
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
     margin: 20px 0;
-    border: none;
 }
 
-#case-spinner {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding: 15px;
-    min-height: 140px;
-    align-items: center;
-    scroll-behavior: auto;
-    -webkit-overflow-scrolling: touch;
+.inventory-item {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
-#case-spinner::-webkit-scrollbar {
-    display: none;
+.inventory-item:hover {
+    transform: translateY(-3px);
 }
 
-.spinner-item {
-    flex: 0 0 auto;
-    width: 120px;
-    height: 140px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-}
-
-.spinner-item img {
-    width: 80px;
-    height: 80px;
+.inventory-item img {
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     margin-bottom: 5px;
 }
 
-.spinner-item .gift-name,
-.spinner-item .gift-value {
-    display: none; /* скрываем текст, только картинки */
+.inventory-icon {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
 }
 
-.case-result {
-    margin-top: 20px;
-    min-height: 100px;
-}
-
-.result-item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50px;
-    padding: 15px 30px;
-    border: none;
-}
-
-.result-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-
-.result-text {
-    font-size: 1.2rem;
+.inventory-item-name {
+    font-size: 0.7rem;
     color: #fff;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.result-value {
-    font-size: 1.5rem;
-    font-weight: 700;
+.inventory-item-value {
+    font-size: 0.8rem;
+    font-weight: 600;
     color: #ffd700;
 }
-/* Убираем золотые рамки отовсюду */
-.case-card, .case-detail-container, .gift-item, 
-.multiplier-item, .back-button, .bottom-nav-fixed, 
-.nav-item-fixed, .mines-container, .mines-control-panel {
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
 
-/* Страница игр с двумя кнопками */
+/* Страница игр, MINES, профиль и т.д. (оставляем как есть) */
 .games-header {
     font-size: 2rem;
     font-weight: 700;
@@ -616,7 +599,6 @@ body {
     box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
     transition: transform 0.2s;
 }
-
 .game-button:hover {
     transform: translateY(-4px);
 }
@@ -633,7 +615,7 @@ body {
     color: rgba(255,255,255,0.9);
 }
 
-/* Страница MINES */
+/* MINES */
 .mines-container {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
@@ -776,6 +758,7 @@ body {
     opacity: 0.5;
     pointer-events: none;
 }
+
 /* Диалог ставки */
 .bet-dialog {
     position: fixed;
@@ -827,7 +810,6 @@ body {
     display: flex;
     gap: 10px;
 }
-
 .dialog-btn {
     flex: 1;
     padding: 12px;
@@ -848,70 +830,7 @@ body {
     color: #fff;
 }
 
-/* Страница инвентаря */
-.cost-block {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    border-radius: 40px;
-    padding: 24px 20px;
-    margin: 20px 0 30px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-}
-
-.cost-label {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--tg-theme-hint-color, #aaa);
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-
-.cost-value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #ffd700;
-    line-height: 1.2;
-}
-
-.refresh-btn-dark {
-    background: #333;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    padding: 14px 30px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    width: fit-content;
-    margin: 20px auto;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-    transition: background 0.2s;
-}
-
-.refresh-btn-dark:hover {
-    background: #444;
-}
-
-/* Страницы апгрейда, заданий (заглушки) */
-.placeholder-page {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    border-radius: 40px;
-    padding: 40px 20px;
-    margin: 20px 0;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-}
-
-.placeholder-page p {
-    font-size: 1.2rem;
-    color: #fff;
-}
-
-/* Страница профиля */
+/* Страница профиля и прочее */
 .profile-header {
     display: flex;
     align-items: center;
@@ -981,7 +900,9 @@ body {
     font-weight: 600;
     color: #fff;
     margin-top: 6px;
-}.invite-blue-block {
+}
+
+.invite-blue-block {
     background: var(--tg-theme-button-color, #40a7e3);
     border-radius: 50px;
     padding: 18px 24px;
@@ -1048,6 +969,66 @@ body {
     box-shadow: 0 8px 16px rgba(0,0,0,0.4);
 }
 
+.cost-block {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 40px;
+    padding: 24px 20px;
+    margin: 20px 0 30px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+}
+
+.cost-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--tg-theme-hint-color, #aaa);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.cost-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffd700;
+    line-height: 1.2;
+}
+
+.refresh-btn-dark {
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: fit-content;
+    margin: 20px auto;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    transition: background 0.2s;
+}
+
+.refresh-btn-dark:hover {
+    background: #444;
+}
+.placeholder-page {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 40px;
+    padding: 40px 20px;
+    margin: 20px 0;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+}
+
+.placeholder-page p {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
 .footer-copyright {
     text-align: center;
     font-size: 0.7rem;
@@ -1067,594 +1048,4 @@ body {
     .cost-value {
         font-size: 2.2rem;
     }
-}
-/* ===== КРАСИВОЕ ОТОБРАЖЕНИЕ РЕЗУЛЬТАТА ===== */
-.case-result-display {
-    margin: 20px 0;
-    padding: 10px;
-    text-align: center;
-}
-
-.case-result-display .result-item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    padding: 15px 30px;
-    max-width: 300px;
-    margin: 0 auto;
-    border: none;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-.case-result-display .result-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-
-.case-result-display .result-item .gift-icon {
-    font-size: 4rem;
-}
-
-.case-result-display .result-text {
-    font-size: 1.2rem;
-    color: #fff;
-}
-
-.case-result-display .result-text strong {
-    font-size: 1.4rem;
-    color: #ffd700;
-}
-
-.case-result-display .result-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ffd700;
-}
-
-/* Квадратные подарки в карусели */
-.carousel .gift-item.spinner-item {
-    width: 120px !important;
-    height: 140px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 25px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border: none !important;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
-}
-
-.carousel .gift-item.spinner-item img {
-    width: 80px !important;
-    height: 80px !important;
-    object-fit: contain !important;
-    margin-bottom: 5px !important;
-}
-
-.carousel .gift-item.spinner-item .gift-name {
-    font-size: 0.8rem !important;
-    color: #fff !important;
-    margin-bottom: 2px !important;
-}
-
-.carousel .gift-item.spinner-item .gift-value {
-    font-size: 0.8rem !important;
-    color: #ffd700 !important;
-    font-weight: 600 !important;
-}
-
-/* Убираем золотые рамки */
-.carousel .gift-item {
-    border: none !important;
-    outline: none !important;
-}
-
-/* Кнопки X1-X5 */
-.multiplier-item {
-    width: 30px !important;
-    height: 30px !important;
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 15px !important;
-    color: #fff !important;
-    font-size: 0.9rem !important;
-    font-weight: 600;
-    border: none !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-}
-
-.multiplier-item.active {
-    background: #40a7e3 !important;
-    transform: scale(1.1);
-}
-/* ===== ТРЕУГОЛЬНИКИ ===== */
-.carousel {
-    position: relative;
-}
-
-.carousel::before,
-.carousel::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    z-index: 5;
-}
-
-.carousel::before {
-    top: -5px;
-    border-bottom: 20px solid #ffd700;
-}
-
-.carousel::after {
-    bottom: -5px;
-    border-top: 20px solid #ffd700;
-}
-
-/* ===== ОВЕРЛЕЙ РЕЗУЛЬТАТА ===== */
-.case-result-overlay {
-    position: relative;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 30px;
-    padding: 20px;
-    border: 2px solid #ffd700;
-}
-
-.overlay-content {
-    text-align: center;
-    width: 100%;
-}
-
-.result-overlay-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.result-overlay-item img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 10px;
-}
-
-.result-overlay-item .gift-icon {
-    font-size: 4rem;
-    margin-bottom: 10px;
-}
-
-.result-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 5px;
-}
-
-.result-price {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #ffd700;
-    margin-bottom: 20px;
-}
-
-.result-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-.result-btn {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 40px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.result-btn:hover {
-    transform: translateY(-2px);
-}
-
-.inventory-btn {
-    background: #40a7e3;
-    color: #fff;
-}
-
-.sell-btn {
-    background: #ff6b6b;
-    color: #fff;
-}
-
-/* ===== КВАДРАТНЫЕ ПОДАРКИ В КАРУСЕЛИ ===== */
-.gift-item.spinner-item {
-    width: 120px !important;
-    height: 140px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 25px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border: none !important;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
-}
-
-.gift-item.spinner-item img {
-    width: 80px !important;
-    height: 80px !important;
-    object-fit: contain !important;
-    margin-bottom: 5px !important;
-}
-
-.gift-item.spinner-item .gift-name {
-    font-size: 0.8rem !important;
-    color: #fff !important;
-    margin-bottom: 2px !important;
-}
-
-.gift-item.spinner-item .gift-value {
-    font-size: 0.8rem !important;
-    color: #ffd700 !important;
-    font-weight: 600 !important;
-}
-
-/* Убираем золотые рамки со всего лишнего */
-.carousel .gift-item {
-    border: none !important;
-    outline: none !important;
-}
-/* ===== ИНВЕНТАРЬ ===== */
-#inventory-page .cost-block {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    border-radius: 40px;
-    padding: 20px;
-    margin: 20px 0;
-    border: 2px solid rgba(255, 215, 0, 0.3);
-}
-
-#inventory-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    padding: 10px 0;
-    margin-bottom: 20px;
-}
-
-.inventory-item {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    border-radius: 20px;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-}
-
-.inventory-item:hover {
-    transform: translateY(-3px);
-}
-
-.inventory-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    margin-bottom: 5px;
-}
-
-.inventory-icon {
-    font-size: 2.5rem;
-    margin-bottom: 5px;
-}
-
-.inventory-item-name {
-    font-size: 0.7rem;
-    color: #fff;
-    margin-bottom: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.inventory-item-value {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #ffd700;
-}
-
-/* ===== ТРЕУГОЛЬНИКИ ===== */
-.carousel {
-    position: relative;
-}
-
-.carousel::before,
-.carousel::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    z-index: 5;
-}
-
-.carousel::before {
-    top: -5px;
-    border-bottom: 20px solid #ffd700;
-}
-
-.carousel::after {
-    bottom: -5px;
-    border-top: 20px solid #ffd700;
-}
-
-/* ===== ОВЕРЛЕЙ РЕЗУЛЬТАТА ===== */
-.case-result-overlay {
-    position: relative;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 30px;
-    padding: 20px;
-    border: 2px solid #ffd700;
-}
-
-.overlay-content {
-    text-align: center;
-    width: 100%;
-}
-
-.result-overlay-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.result-overlay-item img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 10px;
-}
-
-.result-overlay-item .gift-icon {
-    font-size: 4rem;
-    margin-bottom: 10px;
-}
-
-.result-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 5px;
-}
-
-.result-price {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #ffd700;
-    margin-bottom: 20px;
-}
-
-.result-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-.result-btn {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 40px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.result-btn:hover {
-    transform: translateY(-2px);
-}
-
-.inventory-btn {
-    background: #40a7e3;
-    color: #fff;
-}
-
-.sell-btn {
-    background: #ff6b6b;
-    color: #fff;
-}
-
-/* ===== КВАДРАТНЫЕ ПОДАРКИ В КАРУСЕЛИ ===== */
-.gift-item.spinner-item {
-    width: 120px !important;
-    height: 140px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 25px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border: none !important;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
-}
-
-.gift-item.spinner-item img {
-    width: 80px !important;
-    height: 80px !important;
-    object-fit: contain !important;
-    margin-bottom: 5px !important;
-}
-
-.gift-item.spinner-item .gift-name {
-    font-size: 0.8rem !important;
-    color: #fff !important;
-    margin-bottom: 2px !important;
-}
-
-.gift-item.spinner-item .gift-value {
-    font-size: 0.8rem !important;
-    color: #ffd700 !important;
-    font-weight: 600 !important;
-}
-
-/* Убираем золотые рамки со всего лишнего */
-.carousel .gift-item {
-    border: none !important;
-    outline: none !important;
-}
-/* ===== МАЛЕНЬКИЕ СИНИЕ ТРЕУГОЛЬНИКИ ===== */
-.carousel {
-    position: relative;
-}
-
-.carousel::before,
-.carousel::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 12px solid transparent;  /* маленькие */
-    border-right: 12px solid transparent;
-    z-index: 10;
-}
-
-.carousel::before {
-    top: -8px;
-    border-bottom: 12px solid #40a7e3;  /* синие */
-}
-
-.carousel::after {
-    bottom: -8px;
-    border-top: 12px solid #40a7e3;
-}
-
-/* ===== ТЁМНО-СЕРАЯ КНОПКА ===== */
-.open-button {
-    background: #2a2a2a !important;  /* тёмно-серая */
-    color: #fff !important;
-    border: none !important;
-    border-radius: 50px;
-    padding: 16px 30px;
-    font-size: 1.4rem;
-    font-weight: 600;
-    cursor: pointer;
-    width: 100%;
-    max-width: 280px;
-    margin: 10px auto 5px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
-    position: relative;
-}
-
-.open-button:hover {
-    transform: translateY(-2px);
-}
-
-/* Цена под кнопкой */
-.open-button + .case-price {
-    font-size: 0.8rem;
-    color: #aaa;
-    margin-bottom: 10px;
-}
-
-/* Если нет отдельного элемента, добавим через псевдоэлемент */
-.open-button::after {
-    content: attr(data-price);
-    display: block;
-    font-size: 0.7rem;
-    color: #aaa;
-    margin-top: 4px;
-    font-weight: normal;
-}
-
-/* ===== ОСТАЛЬНЫЕ СТИЛИ (без изменений) ===== */
-.inventory-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.inventory-item {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.inventory-item:hover {
-    transform: translateY(-3px);
-}
-
-.inventory-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-}
-
-.inventory-item-name {
-    font-size: 0.7rem;
-    color: #fff;
-    margin: 5px 0 2px;
-}
-
-.inventory-item-value {
-    font-size: 0.8rem;
-    color: #ffd700;
-    font-weight: 600;
-}
-
-.carousel .gift-item.spinner-item {
-    width: 120px !important;
-    height: 140px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 25px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border: none !important;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
-}
-
-.gift-item.spinner-item img {
-    width: 80px !important;
-    height: 80px !important;
-    object-fit: contain !important;
 }
