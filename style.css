@@ -1658,3 +1658,207 @@ body {
     height: 80px !important;
     object-fit: contain !important;
 }
+/* ===== МАЛЕНЬКИЕ СИНИЕ ТРЕУГОЛЬНИКИ ===== */
+.carousel {
+    position: relative;
+}
+
+.carousel::before,
+.carousel::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    z-index: 10;
+}
+
+.carousel::before {
+    top: -8px;
+    border-bottom: 12px solid #40a7e3;
+}
+
+.carousel::after {
+    bottom: -8px;
+    border-top: 12px solid #40a7e3;
+}
+
+/* ===== ТЁМНО-СЕРАЯ КНОПКА С ЦЕНОЙ ===== */
+.open-button {
+    background: #2a2a2a !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 50px;
+    padding: 16px 30px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    max-width: 280px;
+    margin: 10px auto 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+    position: relative;
+}
+
+.open-button:hover {
+    transform: translateY(-2px);
+}
+
+.open-button::after {
+    content: attr(data-price);
+    display: block;
+    font-size: 0.7rem;
+    color: #aaa;
+    margin-top: 4px;
+    font-weight: normal;
+}
+
+/* ===== ИНВЕНТАРЬ (4 ряда) ===== */
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.inventory-item {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.inventory-item:hover {
+    transform: translateY(-3px);
+}
+
+.inventory-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.inventory-icon {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.inventory-item-name {
+    font-size: 0.7rem;
+    color: #fff;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inventory-item-value {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffd700;
+}
+
+/* ===== КВАДРАТНЫЕ ПОДАРКИ В КАРУСЕЛИ ===== */
+.gift-item.spinner-item {
+    width: 120px !important;
+    height: 140px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 25px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+.gift-item.spinner-item img {
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: contain !important;
+    margin-bottom: 5px !important;
+}
+
+.gift-item.spinner-item .gift-name {
+    font-size: 0.8rem !important;
+    color: #fff !important;
+    margin-bottom: 2px !important;
+}
+
+.gift-item.spinner-item .gift-value {
+    font-size: 0.8rem !important;
+    color: #ffd700 !important;
+    font-weight: 600 !important;
+}
+
+/* ===== ОВЕРЛЕЙ РЕЗУЛЬТАТА ===== */
+.case-result-overlay {
+    position: relative;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 20px;
+    border: 2px solid #ffd700;
+}
+
+.overlay-content {
+    text-align: center;
+    width: 100%;
+}
+
+.result-overlay-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.result-overlay-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.result-overlay-item .gift-icon {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.result-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.result-price {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ffd700;
+    margin-bottom: 20px;
+}
+
+.result-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.result-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 40px;
