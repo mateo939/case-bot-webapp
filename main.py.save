@@ -11,7 +11,7 @@ from flask_cors import CORS
 import cases_data 
 
 # --- КОНФИГУРАЦИЯ ---
-API_TOKEN = '8683357071:AAGZDrkshFjbL4wfgtlLunOCD0ZaiQxBh1k'
+API_TOKEN = '8683357071:AAGrfQ_qBVWOvHV0cymHgbueKIOjxM6jRmI'
 ADMIN_ID = 1326919289
 WEB_APP_URL = "https://mateo939.github.io/case-bot-webapp/"
 DB_NAME = 'case_bot.db'
@@ -19,6 +19,7 @@ DB_NAME = 'case_bot.db'
 logging.basicConfig(level=logging.INFO)
 app = Flask("stars_app") 
 CORS(app)
+
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
