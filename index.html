@@ -213,9 +213,13 @@
         <div class="back-button" id="back-to-cases"><span>←</span> К КЕЙСАМ</div>
         
         <div class="case-detail-container">
-            <div class="carousel">
-                <div class="carousel-track" id="carousel-track"></div>
-            </div>
+            <div class="carousel-container">
+    <div class="center-marker top">▼</div>
+    <div class="carousel">
+        <div class="carousel-track" id="carousel-track"></div>
+    </div>
+    <div class="center-marker bottom">▲</div>
+</div>
             <div class="multiplier-row" id="multiplier-row">
                 <div class="multiplier-item active" data-x="1">X1</div>
                 <div class="multiplier-item" data-x="2">X2</div>
@@ -635,7 +639,77 @@
             addHandler('case1', 'click', () => showCaseDetail('case1'));
             addHandler('case2', 'click', () => showCaseDetail('case2'));
             addHandler('case3', 'click', () => showCaseDetail('case3'));
+            // --- ПОЛНАЯ ЛОГИКА КЕЙСА: РУЛЕТКА + ФИНАЛ (ВСТАВЛЯТЬ В СТРОКУ 642) ---
+const openBtn = document.getElementById('open-case-btn');
+const track = document.getElementById('carousel-track');
 
+if (openBtn) {
+    openBtn.onclick = function() {
+        if (openBtn.disabled || !currentCaseId) return;
+
+        // 1. Блокировка и списание (визуальное)
+        openBtn.disabled = true;
+        openBtn.style.opacity = '0.5';
+
+        const data = caseData[currentCaseId];
+        const winner = getRandomItem(data.items); 
+        
+        // 2. Наполнение ленты
+        track.innerHTML = '';
+        const itemWidth = 130; 
+        for (let i = 0; i < 60; i++) {
+            const item = (i === 55) ? winner : data.items[Math.floor(Math.random() * data.items.length)];
+            const div = document.createElement('div');
+            div.className = 'gift-item';
+            div.innerHTML = '<img src="' + (item.img || '') + '" class="gift-image"><div class="gift-name">' + item.name + '</div>';
+            track.appendChild(div);
+        }
+
+        // 3. Анимация прокрутки
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(0)';
+        
+        setTimeout(function() {
+            const carouselWidth = document.querySelector('.carousel').offsetWidth;
+            const finalX = (55 * itemWidth) - (carouselWidth / 2) + (itemWidth / 2);
+            track.style.transition = 'transform 5s cubic-bezier(0.15, 0, 0.15, 1)';
+            track.style.transform = 'translateX(-' + finalX + 'px)';
+        }, 50);
+
+        // 4. ФИНАЛЬНАЯ ЛОГИКА (Вместо alert — твоё окно с кнопками)
+        setTimeout(function() {
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#1a1a1a; padding:20px; border-radius:15px; border:2px solid #00d2ff; z-index:10000; text-align:center; color:white; min-width:250px; box-shadow: 0 0 20px rgba(0,210,255,0.5);';
+            
+            modal.innerHTML = 
+                '<h2 style="color:#00d2ff; margin-top:0;">ВЫИГРЫШ!</h2>' +
+                '<img src="' + (winner.img || '') + '" style="width:120px; margin-bottom:10px; border-radius:10px;">' +
+                '<div style="font-size:18px; margin-bottom:20px; font-weight:bold;">' + winner.name + '</div>' +
+                '<div style="display:flex; gap:10px; justify-content:center;">' +
+                    '<button id="btn-to-inv" style="background:#00d2ff; color:black; border:none; padding:12px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">В ИНВЕНТАРЬ</button>' +
+                    '<button id="btn-sell" style="background:#333; color:white; border:none; padding:12px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">ПРОДАТЬ ЗА ' + winner.value + ' ★</button>' +
+                '</div>';
+            
+            document.body.appendChild(modal);
+
+            // Клик "В инвентарь"
+            document.getElementById('btn-to-inv').onclick = function() {
+                document.body.removeChild(modal);
+                openBtn.disabled = false;
+                openBtn.style.opacity = '1';
+                // Здесь потом добавим запрос к БД
+            };
+
+            // Клик "Продать"
+            document.getElementById('btn-sell').onclick = function() {
+                updateBalances(currentBalance + winner.value); // Прибавляем звезды
+                document.body.removeChild(modal);
+                openBtn.disabled = false;
+                openBtn.style.opacity = '1';
+            };
+        }, 5500);
+    };
+}
             // === НОВАЯ ЛОГИКА MINES ===
             const minesState = {
                 gameActive: false,
@@ -834,4 +908,3 @@
     <script src="new-features.js"></script>
 </body>
 </html>
-Remote - SSH

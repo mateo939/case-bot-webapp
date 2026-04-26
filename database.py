@@ -8,7 +8,7 @@ async def init_db():
         await db.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 user_id INTEGER PRIMARY KEY,
-                balance INTEGER DEFAULT 100,
+                balance INTEGER DEFAULT 0,
                 opened_cases INTEGER DEFAULT 0
             )
         ''')
@@ -32,9 +32,9 @@ async def get_user(user_id: int):
         if row:
             return dict(row)
         else:
-            await db.execute('INSERT INTO users (user_id, balance) VALUES (?, ?)', (user_id, 100))
+            await db.execute('INSERT INTO users (user_id, balance) VALUES (?, ?)', (user_id, 0))
             await db.commit()
-            return {"user_id": user_id, "balance": 100, "opened_cases": 0}
+            return {"user_id": user_id, "balance": 0, "opened_cases": 0}
 
 async def update_balance(user_id: int, new_balance: int):
     async with aiosqlite.connect(DB_NAME) as db:

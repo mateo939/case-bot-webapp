@@ -1863,3 +1863,41 @@ body {
     border: none;
     border-radius: 40px;
 }
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.center-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #00d2ff; /* Голубой цвет как на фото */
+    z-index: 10;
+    font-size: 20px;
+}
+.center-marker.top { top: -10px; }
+.center-marker.bottom { bottom: -10px; }
+
+.carousel-track {
+    display: flex;
+    transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); /* Плавная остановка */
+    will-change: transform;
+}
+
+/* Стиль для окна выигрыша */
+.win-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #00d2ff;
+    z-index: 1000;
+    text-align: center;
+    display: none;
+}
